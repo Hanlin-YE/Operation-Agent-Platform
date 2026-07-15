@@ -57,6 +57,80 @@ npm run typecheck
 npm run build
 ```
 
+## Cloudflare 上线
+
+这个项目可以作为 Cloudflare Workers 上的在线演示版运行：
+
+- 页面和本地 API 可直接部署到 Cloudflare
+- 部署到 Cloudflare 时，数据层会自动切换为“内存演示模式”
+- 这意味着线索、话术、跟进记录在运行时可写，但不会像本地 `data/app-data.json` 那样持久保存
+
+首次配置：
+
+```bash
+npm install
+npx wrangler login
+```
+
+本地预览 Cloudflare 产物：
+
+```bash
+npm run preview:cloudflare
+```
+
+正式部署：
+
+```bash
+npm run deploy:cloudflare
+```
+
+## GitHub 上线流程
+
+仓库已经补齐了 GitHub Actions 工作流：
+
+- `/.github/workflows/ci.yml`
+- `/.github/workflows/deploy-cloudflare.yml`
+
+在推送到 GitHub 前，先把本地仓库绑定到你的远程仓库：
+
+```bash
+git remote add origin <你的-github-repo-url>
+git add .
+git commit -m "Add Cloudflare deployment pipeline"
+git push -u origin main
+```
+
+首次在 GitHub 启用自动部署时，需要在仓库 `Settings -> Secrets and variables -> Actions` 中添加：
+
+```bash
+CLOUDFLARE_ACCOUNT_ID=...
+CLOUDFLARE_API_TOKEN=...
+```
+
+推荐的触发方式：
+
+- 每次推送到 `main` 时先跑 CI
+- 同一次推送会触发 Cloudflare 自动部署
+- 也可以在 GitHub Actions 页面手动执行 `Deploy Cloudflare Worker`
+
+如需接入远端 Python Agent API，可在 Cloudflare Worker 环境变量中设置：
+
+```bash
+AGENT_API_BASE_URL=https://your-agent-api.example.com
+OPENAI_API_KEY=...
+OPENAI_BASE_URL=https://api.openai.com/v1/chat/completions
+OPENAI_MODEL=gpt-4o-mini
+```
+
+如果要把这些变量也放到 Cloudflare 线上环境：
+
+```bash
+npx wrangler secret put OPENAI_API_KEY
+npx wrangler secret put AGENT_API_BASE_URL
+npx wrangler secret put OPENAI_BASE_URL
+npx wrangler secret put OPENAI_MODEL
+```
+
 ## 演示流程
 
 1. 打开 `http://localhost:3000/leads`

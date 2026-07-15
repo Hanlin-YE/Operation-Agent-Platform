@@ -1,6 +1,8 @@
 # JavaScript build output and dependencies
 node_modules/
 .next/
+.open-next/
+.wrangler/
 dist/
 build/
 *.tsbuildinfo
