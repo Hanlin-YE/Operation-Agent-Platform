@@ -1,0 +1,90 @@
+"use client";
+
+import {
+  BookOpen,
+  Bot,
+  CircleHelp,
+  Command,
+  FileSearch,
+  Files,
+  LayoutDashboard,
+  Network,
+  Newspaper,
+  Settings2,
+  Sparkles,
+  Target,
+  UploadCloud,
+  Users,
+  Workflow
+} from "lucide-react";
+import { usePathname } from "next/navigation";
+
+type NavigationItem = { href: string; title: string; meta: string; icon: typeof LayoutDashboard };
+
+const acquisitionNavigation: NavigationItem[] = [
+  { href: "/", title: "工作总览", meta: "今日转化优先级", icon: LayoutDashboard },
+  { href: "/leads", title: "线索与账户", meta: "客户分层与跟进", icon: Users },
+  { href: "/agent", title: "销售智能体", meta: "推荐、话术与客服", icon: Bot },
+  { href: "/agent/runs", title: "运营任务", meta: "采集与人工审核", icon: Workflow },
+  { href: "/graph", title: "关系图谱", meta: "Neo4j 实体与关系", icon: Network },
+  { href: "/knowledge", title: "销售知识", meta: "产品与销售资料", icon: BookOpen }
+];
+
+const contentNavigation: NavigationItem[] = [
+  { href: "/content", title: "内容总览", meta: "素材到知识的工作流", icon: LayoutDashboard },
+  { href: "/content/inbox", title: "素材输入", meta: "会议、活动与多媒体", icon: UploadCloud },
+  { href: "/content/library", title: "论文与专利 RAG", meta: "来源、切片与证据", icon: Files },
+  { href: "/content/review", title: "证据审核", meta: "引用与发布前确认", icon: FileSearch }
+];
+
+function isActive(pathname: string, href: string) {
+  return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+}
+
+export function OperationsShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isContentWorkspace = pathname === "/content" || pathname.startsWith("/content/");
+  const navigation = isContentWorkspace ? contentNavigation : acquisitionNavigation;
+  const active = navigation.find((item) => isActive(pathname, item.href)) ?? navigation[0];
+  const ActiveIcon = active.icon;
+  const workspaceName = isContentWorkspace ? "内容运营 Agent" : "获客 Agent";
+
+  return (
+    <div className="app-shell">
+      <aside className="app-rail platform-rail" aria-label="平台工作台">
+        <a className="app-logo" href="/" aria-label="Friction X Agent 平台"><Sparkles size={20} /></a>
+        <p className="rail-caption">工作台</p>
+        <nav className="platform-switcher">
+          <a className={!isContentWorkspace ? "active" : ""} href="/" aria-label="切换到获客 Agent" title="获客 Agent"><Target size={19} /><span>获客</span></a>
+          <a className={isContentWorkspace ? "active" : ""} href="/content" aria-label="切换到内容运营 Agent" title="内容运营 Agent"><Newspaper size={19} /><span>内容</span></a>
+        </nav>
+        <div className="rail-bottom">
+          <a href={isContentWorkspace ? "/content" : "/agent"} aria-label="帮助" title="帮助"><CircleHelp size={18} /></a>
+          <a href={isContentWorkspace ? "/content" : "/agent"} aria-label="设置" title="设置"><Settings2 size={18} /></a>
+        </div>
+      </aside>
+
+      <aside className="context-sidebar">
+        <div className="context-title"><Command size={16} /><span>Friction X · {workspaceName}</span></div>
+        <label className="command-search"><span>⌕</span><input aria-label="搜索工作台" placeholder={isContentWorkspace ? "搜索素材、论文或专利" : "搜索线索、任务或图谱"} /><kbd>⌘ K</kbd></label>
+        <div className="context-section">
+          <p>当前模块</p>
+          <a className="pinned-workspace" href={active.href}><ActiveIcon size={14} /><span><strong>{active.title}</strong><small>{active.meta}</small></span></a>
+        </div>
+        <div className="context-section workspace-list">
+          <p>{isContentWorkspace ? "内容运营模块" : "获客运营模块"}</p>
+          {navigation.map((item) => {
+            const Icon = item.icon;
+            return <a key={item.href} className={isActive(pathname, item.href) ? "selected" : ""} href={item.href}><Icon size={14} /><span><strong>{item.title}</strong><small>{item.meta}</small></span></a>;
+          })}
+        </div>
+        <div className="context-status"><span className="status-dot" />{isContentWorkspace ? "内容知识层已连接" : "获客控制面已连接"}<span>v4.0</span></div>
+      </aside>
+
+      <main className="workspace-main">
+        <header className="workspace-topbar"><span>{workspaceName} / {active.title}</span><div><span className="live-dot" />运营数据实时同步</div></header>
+        <div className="workspace-content">{children}</div>
+      </main>
+    </div>
+  );
+}

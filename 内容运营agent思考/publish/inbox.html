@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AfterMeet | 素材报告工作台</title>
+    <link rel="stylesheet" href="./styles.css?v=20260609-codex-handoff" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="素材报告工作台">
+        <aside class="sidebar-panel" aria-label="一级模块总览">
+          <div class="brand-row">
+            <div class="brand-mark" aria-hidden="true">A</div>
+            <div>
+              <p class="eyebrow">AfterMeet</p>
+              <h1>素材报告</h1>
+            </div>
+          </div>
+
+          <nav class="side-nav" aria-label="全局模块 1 到 9">
+            <a class="side-link" href="./index.html"><span>01</span>内容总览</a>
+            <a class="side-link is-active" href="./inbox.html"><span>02</span>素材输入</a>
+            <a class="side-link" href="./index.html#cards"><span>03</span>知识卡片</a>
+            <a class="side-link" href="./index.html#topics"><span>04</span>选题池</a>
+            <a class="side-link" href="./index.html#writing"><span>05</span>写作台</a>
+            <a class="side-link" href="./index.html#evidence"><span>06</span>证据库</a>
+            <a class="side-link" href="./index.html#publish"><span>07</span>发布计划</a>
+            <a class="side-link" href="./index.html#review"><span>08</span>数据复盘</a>
+            <a class="side-link" href="./index.html#settings"><span>09</span>系统设置</a>
+          </nav>
+
+          <div class="inbox-progress" aria-label="素材处理进度">
+            <div class="progress-row is-active">
+              <span>01</span>
+              <strong>批量导入</strong>
+            </div>
+            <div class="progress-row">
+              <span>02</span>
+              <strong>识别整理</strong>
+            </div>
+            <div class="progress-row">
+              <span>03</span>
+              <strong>生成报告</strong>
+            </div>
+            <div class="progress-row">
+              <span>04</span>
+              <strong>导出归档</strong>
+            </div>
+          </div>
+        </aside>
+
+        <section class="source-panel" aria-label="素材库">
+          <nav class="workflow-rail module-flow" aria-label="素材输入模块工作流">
+            <button class="workflow-step is-active" type="button"><span>01</span>导入素材</button>
+            <button class="workflow-step" type="button"><span>02</span>预览识别</button>
+            <button class="workflow-step" type="button"><span>03</span>补充文本</button>
+            <button class="workflow-step" type="button"><span>04</span>生成报告</button>
+          </nav>
+
+          <header class="source-header">
+            <div>
+              <p class="eyebrow">Material Library</p>
+              <h2>批量素材库</h2>
+            </div>
+            <div class="topbar-tools">
+              <div class="status-pill" id="status-pill">等待素材</div>
+              <button class="icon-button" id="export-button" type="button" title="导出 Markdown" aria-label="导出 Markdown">
+                <span aria-hidden="true">↓</span>
+              </button>
+            </div>
+          </header>
+
+          <label class="dropzone" id="dropzone" for="file-input">
+            <input
+              id="file-input"
+              type="file"
+              multiple
+              accept="image/*,audio/*,video/*,.txt,.md,.csv,.json,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.pdf"
+            />
+            <span class="drop-icon" aria-hidden="true">+</span>
+            <strong>选择或拖入视频、音频、图片、文档</strong>
+            <small>导入后立即预览；点击按钮后把素材包交给本机 Codex 处理。</small>
+          </label>
+
+          <div class="input-toolbar">
+            <button class="button button-primary" id="demo-button" type="button">加载演示素材</button>
+            <button class="button button-ghost" id="clear-button" type="button">清空</button>
+          </div>
+
+          <div class="source-context">
+            <div class="input-stack">
+              <label for="meeting-context">报告背景</label>
+              <textarea id="meeting-context" rows="4">这是一批会议/活动/内容素材。请把视频、音频、图片、文本里的信息汇总成一份清晰报告，重点提炼：发生了什么、哪些观点重要、有哪些行动项、哪些内容值得沉淀到知识库。</textarea>
+            </div>
+          </div>
+
+          <div class="analysis-notice" id="analysis-notice" aria-live="polite">
+            <strong>导入即预览，处理交给 Codex</strong>
+            <span>网页负责整理素材包；Codex 负责读取图片、音频、视频和文本并生成报告。</span>
+          </div>
+
+          <section class="source-feed">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Sources</p>
+                <h3>已导入素材</h3>
+              </div>
+              <span id="file-count-label">0 个文件</span>
+            </div>
+            <div class="source-summary-grid" id="source-summary-grid"></div>
+            <div class="file-grid" id="file-grid">
+              <div class="empty-state">
+                <span>导入一批素材后，这里会显示预览、类型、时长/尺寸和识别文本。</span>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section class="workbench-panel" aria-label="报告生成面板">
+          <header class="workbench-header">
+            <div>
+              <p class="eyebrow">Report</p>
+              <h2>清晰报告</h2>
+            </div>
+            <span id="digest-confidence">未生成</span>
+          </header>
+
+          <div class="hero-digest report-hero" id="hero-digest">
+            <p>导入素材后，点击交给 Codex。网页会保存本地素材包，我会读取材料并生成报告。</p>
+          </div>
+
+          <div class="input-stack project-memory">
+            <label for="project-memory">知识库栏目 / 关注方向</label>
+            <textarea id="project-memory" rows="6">内容生产：选题、观点、案例、发布草稿
+AIGC workflow：分镜、角色一致性、批量生成、审核成本
+Agent 自动化：会议助手、素材处理、任务委派
+商业机会：合作方、招聘、活动报名、潜在客户
+个人知识库：可搜索、可回顾、可行动、证据索引</textarea>
+          </div>
+
+          <button class="button button-generate" id="digest-button" type="button">交给 Codex 一键总结</button>
+
+          <nav class="tabbar report-tabs" aria-label="报告视图">
+            <button class="tab is-active" type="button" data-tab="summary">总览</button>
+            <button class="tab" type="button" data-tab="actions">行动</button>
+            <button class="tab" type="button" data-tab="opportunities">机会</button>
+            <button class="tab" type="button" data-tab="publish">内容</button>
+            <button class="tab" type="button" data-tab="evidence">证据</button>
+          </nav>
+
+          <section class="tab-panel is-active" id="summary-panel">
+            <div class="metric-grid report-grid" id="metric-grid"></div>
+          </section>
+
+          <section class="tab-panel" id="actions-panel">
+            <div class="table-toolbar">
+              <h3>行动清单</h3>
+              <span>从素材中提取下一步</span>
+            </div>
+            <div class="action-list" id="action-list"></div>
+          </section>
+
+          <section class="tab-panel" id="opportunities-panel">
+            <div class="table-toolbar">
+              <h3>机会与栏目匹配</h3>
+              <span>匹配知识库关注方向</span>
+            </div>
+            <div class="opportunity-list" id="opportunity-list"></div>
+          </section>
+
+          <section class="tab-panel" id="publish-panel">
+            <div class="publish-grid" id="publish-grid"></div>
+          </section>
+
+          <section class="tab-panel" id="evidence-panel">
+            <div class="table-toolbar">
+              <h3>证据索引</h3>
+              <input id="search-input" type="search" placeholder="搜索文件名、结论、关键词" />
+            </div>
+            <div class="evidence-list" id="evidence-list"></div>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <template id="file-card-template">
+      <article class="file-card">
+        <div class="thumb"></div>
+        <div class="file-card-body">
+          <div class="file-card-head">
+            <strong class="file-name"></strong>
+            <span class="type-badge"></span>
+          </div>
+          <p class="file-meta"></p>
+          <p class="file-insights"></p>
+          <textarea class="source-note" rows="4" placeholder="补充这份素材识别出的文字、录音转写、画面信息或你记得的重点"></textarea>
+        </div>
+      </article>
+    </template>
+
+    <dialog class="preview-dialog" id="preview-dialog" aria-label="素材大图预览">
+      <div class="preview-dialog-head">
+        <strong id="preview-dialog-title">素材预览</strong>
+        <button class="icon-button" id="preview-close-button" type="button" aria-label="关闭预览">×</button>
+      </div>
+      <img id="preview-dialog-image" alt="" />
+    </dialog>
+
+    <script src="./app.js?v=20260609-codex-handoff"></script>
+  </body>
+</html>
