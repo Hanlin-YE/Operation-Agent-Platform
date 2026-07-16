@@ -31,9 +31,12 @@ jobs:
           npm run typecheck
           npm run build
 
+      - name: Build Cloudflare Worker
+        run: npx opennextjs-cloudflare build
+
       - name: Deploy to Cloudflare
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: npm run deploy:cloudflare
+          command: deploy
