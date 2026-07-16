@@ -8,6 +8,9 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  "vars": {
+    "DEMO_EPHEMERAL_STORE": "true"
+  },
   "observability": {
     "enabled": true
   }

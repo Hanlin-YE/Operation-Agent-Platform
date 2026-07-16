@@ -10,9 +10,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN">
-      <head>
-        <link rel="stylesheet" href="/copilot.css?v=4" />
-      </head>
       <body>
         <OperationsShell>{children}</OperationsShell>
       </body>

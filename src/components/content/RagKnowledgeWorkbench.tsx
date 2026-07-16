@@ -4,7 +4,7 @@ import { FileSearch, FileUp, LoaderCircle, Search, ShieldCheck } from "lucide-re
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 
 type RagHealth = { status: string; embedding_model: string; embedding_dimensions: number; parser: string; parser_status: string };
-type UploadedDocument = { id: string; title: string; document_type: string; review_status: string; metadata: { parse_status?: string; parser_target?: string } };
+type UploadedDocument = { id: string; title: string; document_type: string; review_status: string; metadata: { parse_status?: string; parser_target?: string; page_count?: number } };
 type BatchUploadResult = { created_count: number; failed_count: number; documents: UploadedDocument[]; failures: { filename: string; message: string }[] };
 type SearchHit = { chunk_id: string; text: string; score: number; citation: { title: string; document_type: string; page_number: number; claim_number?: string | null; quote: string; source_url?: string | null } };
 
@@ -27,7 +27,7 @@ export function RagKnowledgeWorkbench() {
     fetch("/api/rag/health", { cache: "no-store" })
       .then(async (response) => {
         const payload = await readJson(response);
-        if (!response.ok) throw new Error(payload.detail || payload.message || "RAG 服务未就绪");
+        if (!response.ok) throw new Error(payload.detail || payload.message || "知识库服务暂时不可用");
         setHealth(payload);
       })
       .catch((reason: Error) => setError(reason.message));
@@ -87,7 +87,7 @@ export function RagKnowledgeWorkbench() {
           {selectedFiles.length ? <div className="rag-file-queue"><div className="rag-file-queue-head"><strong>待登记文件</strong><span>{selectedFiles.length} / 20</span></div>{selectedFiles.map((file) => <div className="rag-file-row" key={`${file.name}-${file.lastModified}`}><FileSearch size={15} /><span><strong>{previewTitle(file.name)}</strong><small>{file.name} · {(file.size / 1024 / 1024).toFixed(2)} MB</small></span><em>标题待识别</em></div>)}</div> : <div className="rag-file-empty">可按住 Shift 或 Command 一次选择多份 PDF</div>}
           <button className="button" disabled={uploading || !selectedFiles.length}>{uploading ? <LoaderCircle className="spin" size={16} /> : <FileUp size={16} />}{uploading ? `正在登记 ${selectedFiles.length} 份…` : `批量登记${selectedFiles.length ? ` ${selectedFiles.length} 份` : ""}`}</button>
         </form>
-        {uploadResult && <div className="rag-batch-result"><div className="rag-success"><ShieldCheck size={18} /><div><strong>已登记 {uploadResult.created_count} 份资料</strong><span>{uploadResult.failed_count ? `${uploadResult.failed_count} 份失败` : "全部文件已进入待解析队列"}</span></div></div>{uploadResult.documents.map((document) => <div className="rag-uploaded-row" key={document.id}><strong>{document.title}</strong><span>{document.document_type} · {document.review_status}</span></div>)}{uploadResult.failures.map((failure) => <div className="rag-uploaded-row is-error" key={failure.filename}><strong>{failure.filename}</strong><span>{failure.message}</span></div>)}</div>}
+        {uploadResult && <div className="rag-batch-result"><div className="rag-success"><ShieldCheck size={18} /><div><strong>已登记 {uploadResult.created_count} 份资料</strong><span>{uploadResult.failed_count ? `${uploadResult.failed_count} 份未能解析` : "全部文件已完成解析，等待人工审核"}</span></div></div>{uploadResult.documents.map((document) => <div className="rag-uploaded-row" key={document.id}><strong>{document.title}</strong><span>{document.document_type} · {document.metadata.page_count || 1} 页 · {document.review_status}</span></div>)}{uploadResult.failures.map((failure) => <div className="rag-uploaded-row is-error" key={failure.filename}><strong>{failure.filename}</strong><span>{failure.message}</span></div>)}</div>}
       </section>
 
       <section className="panel rag-search-panel">

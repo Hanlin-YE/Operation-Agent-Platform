@@ -1,13 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
+import { handleDemoRagGet, handleDemoRagPost } from "@/server/rag/demoRouteHandlers";
 
-const agentApiBaseUrl = process.env.AGENT_API_BASE_URL || "http://127.0.0.1:8001";
+export const runtime = "nodejs";
+
+const agentApiBaseUrl = process.env.AGENT_API_BASE_URL?.trim() || "http://127.0.0.1:8001";
 
 async function forward(request: NextRequest, path: string[]) {
   const hasBody = !["GET", "HEAD"].includes(request.method);
+  const headers = new Headers();
   const contentType = request.headers.get("content-type");
+  if (contentType) {
+    headers.set("content-type", contentType);
+  }
   const upstream = await fetch(`${agentApiBaseUrl}/api/rag/${path.join("/")}`, {
     method: request.method,
-    headers: contentType ? { "content-type": contentType } : undefined,
+    headers,
     body: hasBody ? await request.arrayBuffer() : undefined,
     cache: "no-store"
   });
@@ -21,14 +28,22 @@ export async function GET(request: NextRequest, context: { params: { path: strin
   try {
     return await forward(request, context.params.path);
   } catch {
-    return NextResponse.json({ message: "RAG 服务未就绪，请检查 agent_root API。" }, { status: 503 });
+    return handleDemoRagGet(context.params.path);
   }
 }
 
 export async function POST(request: NextRequest, context: { params: { path: string[] } }) {
+  const fallbackRequest = request.clone();
   try {
     return await forward(request, context.params.path);
   } catch {
-    return NextResponse.json({ message: "RAG 服务未就绪，请检查 agent_root API。" }, { status: 503 });
+    try {
+      return await handleDemoRagPost(fallbackRequest, context.params.path);
+    } catch (error) {
+      return NextResponse.json(
+        { detail: error instanceof Error ? error.message : "PDF 处理失败" },
+        { status: 500 }
+      );
+    }
   }
 }

@@ -20,6 +20,10 @@ venv/
 !.env.example
 agent_root/.env
 agent_root/rag-data/
+data/aigc-jobs.json
+data/rag-demo-data.json
+data/rag-demo-files/
+potential_customers.csv
 
 # Local material inboxes and operating-system artifacts
 .DS_Store
