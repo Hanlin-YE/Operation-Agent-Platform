@@ -101,6 +101,51 @@ export type FollowUp = {
   createdAt: string;
 };
 
+export type MarketFocus =
+  | "all"
+  | "robotics"
+  | "medical"
+  | "industrial"
+  | "automotive"
+  | "aerospace";
+
+export type MarketEvidenceLabel = "企业知识" | "公开资料" | "推断" | "待市场验证";
+
+export type MarketSegment = {
+  id: string;
+  name: string;
+  typicalCustomers: string[];
+  demandDrivers: string[];
+  painPoints: string[];
+  productFit: "高" | "中" | "待验证";
+  marketPriority: "P0" | "P1" | "P2";
+  evidenceLabel: MarketEvidenceLabel;
+  evidence: string[];
+  recommendedEntry: string;
+  openQuestions: string[];
+};
+
+export type CompetitorWatchItem = {
+  category: string;
+  marketSignal: string;
+  implication: string;
+  evidenceLabel: MarketEvidenceLabel;
+};
+
+export type MarketAnalysisReport = {
+  id: string;
+  focus: MarketFocus;
+  title: string;
+  executiveSummary: string;
+  segments: MarketSegment[];
+  competitorWatch: CompetitorWatchItem[];
+  recommendedActions: string[];
+  openQuestions: string[];
+  knowledgeCitations: string[];
+  modelVersion: string;
+  createdAt: string;
+};
+
 export type AppData = {
   leads: Lead[];
   products: Product[];
@@ -108,4 +153,5 @@ export type AppData = {
   scores: LeadScore[];
   pitches: GeneratedPitch[];
   followUps: FollowUp[];
+  marketReports: MarketAnalysisReport[];
 };
