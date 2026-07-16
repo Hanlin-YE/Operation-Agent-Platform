@@ -132,6 +132,26 @@ export type CompetitorWatchItem = {
   evidenceLabel: MarketEvidenceLabel;
 };
 
+/**
+ * 统一的小红书公开内容信号。来源可替换为真实服务，但市场 Agent 只依赖此契约。
+ * 第一版由本地 mock 提供，绝不在浏览器或服务端直接调用平台 API。
+ */
+export type XiaohongshuSignal = {
+  id: string;
+  accountName: string;
+  accountType: "企业" | "团队" | "个人开发者" | "待核验";
+  title: string;
+  noteUrl: string;
+  profileUrl: string;
+  publishedAt: string;
+  scenario: MarketFocus;
+  signalType: "需求表达" | "痛点表达" | "竞品评论" | "场景观察";
+  excerpt: string;
+  intentLevel: "高" | "中" | "低";
+  evidenceLabel: "公开资料" | "推断";
+  recommendedAction: string;
+};
+
 export type MarketAnalysisReport = {
   id: string;
   focus: MarketFocus;
@@ -142,6 +162,11 @@ export type MarketAnalysisReport = {
   recommendedActions: string[];
   openQuestions: string[];
   knowledgeCitations: string[];
+  xiaohongshuSignals: XiaohongshuSignal[];
+  sourceStatus: {
+    xiaohongshu: "本地演示数据" | "未配置";
+    note: string;
+  };
   modelVersion: string;
   createdAt: string;
 };

@@ -2,6 +2,7 @@ import { MarketAnalysisReport, MarketFocus, MarketSegment } from "@/server/data/
 import { listKnowledge } from "@/server/repositories/knowledge";
 import { listProducts } from "@/server/repositories/products";
 import { saveMarketReport } from "@/server/repositories/marketReports";
+import { LocalXiaohongshuSource, XiaohongshuSource } from "@/server/sources/xiaohongshu";
 
 type SegmentBlueprint = Omit<MarketSegment, "id" | "evidence"> & { focus: MarketFocus; evidenceKeywords: string[] };
 
@@ -77,8 +78,10 @@ function selectBlueprints(focus: MarketFocus) {
   return focus === "all" ? blueprints : blueprints.filter((item) => item.focus === focus);
 }
 
-export async function analyzeMarket(focus: MarketFocus = "all") {
-  const [products, knowledge] = await Promise.all([listProducts(), listKnowledge()]);
+export async function analyzeMarket(focus: MarketFocus = "all", xiaohongshuSource: XiaohongshuSource = new LocalXiaohongshuSource()) {
+  const [products, knowledge, xiaohongshuSignals] = await Promise.all([
+    listProducts(), listKnowledge(), xiaohongshuSource.searchSignals({ focus, limit: 8 })
+  ]);
   const selected = selectBlueprints(focus);
   const knowledgeText = knowledge.map((item) => `${item.title} ${item.content}`).join(" ");
   const citations = knowledge.slice(0, 5).map((item) => `企业知识：${item.title}`);
@@ -116,7 +119,9 @@ export async function analyzeMarket(focus: MarketFocus = "all") {
       "竞品、价格和目标客户名单由谁审核后进入知识库？"
     ],
     knowledgeCitations: citations.length ? citations : ["待上传企业产品手册、专利或业务资料"],
-    modelVersion: "market-analysis-rules-v1"
+    xiaohongshuSignals,
+    sourceStatus: { xiaohongshu: xiaohongshuSource.status().mode, note: xiaohongshuSource.status().note },
+    modelVersion: "market-analysis-rules-v2"
   });
   return report;
 }
