@@ -95,5 +95,6 @@ export const seedData: AppData = {
   ],
   scores: [],
   pitches: [],
-  followUps: []
+  followUps: [],
+  marketReports: []
 };

@@ -18,6 +18,7 @@ venv/
 .env
 .env.*
 !.env.example
+# Keep all local credentials, including .env.local, out of commits.
 agent_root/.env
 agent_root/rag-data/
 
