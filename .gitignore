@@ -2,6 +2,8 @@
 node_modules/
 vendor/
 .next/
+.next-dev/
+.next-verify/
 .open-next/
 .wrangler/
 dist/

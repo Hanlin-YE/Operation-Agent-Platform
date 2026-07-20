@@ -8,6 +8,7 @@ import {
   AigcShotSpec,
   AigcVideoType
 } from "@/server/aigc/types";
+import { buildSkillOrchestration } from "@/server/aigc/skillOrchestration";
 
 const videoTypeLabels: Record<AigcVideoType, string> = {
   product_ad: "卖点广告短片",
@@ -179,6 +180,7 @@ export function buildAigcCreationPlan(request: AigcCreationRequest): AigcCreatio
   const assets = buildAssets(request);
   const shots = buildShots(request);
   const execution = buildExecution(request, shots);
+  const skillOrchestration = buildSkillOrchestration({ requirement: normalized });
 
   return {
     projectTitle: `${videoTypeLabels[request.videoType]} · ${request.platform.toUpperCase()} 执行封装`,
@@ -192,6 +194,7 @@ export function buildAigcCreationPlan(request: AigcCreationRequest): AigcCreatio
     assets,
     shots,
     execution,
-    adapter: buildAdapter(request.platform)
+    adapter: buildAdapter(request.platform),
+    skillOrchestration
   };
 }
