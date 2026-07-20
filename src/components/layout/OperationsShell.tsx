@@ -5,18 +5,12 @@ import {
   BookOpen,
   Bot,
   ChevronDown,
-  FileText,
-  FolderOpen,
   LayoutDashboard,
   LineChart,
-  MessageSquareText,
   Network,
   Newspaper,
-  PenLine,
   Sparkles,
-  Target,
-  Users,
-  Video
+  Target
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -32,14 +26,7 @@ const navigationGroups: NavigationGroup[] = [
       { href: "/graph", title: "知识关系图谱", meta: "实体与关系检索", icon: Network }
     ]
   },
-  {
-    title: "AI 内容中心", icon: Sparkles, items: [
-      { href: "/aigc?type=text", title: "文本生成", meta: "选题、文案与脚本", icon: FileText },
-      { href: "/aigc?type=image", title: "图片生成", meta: "视觉资产与风格首帧", icon: Sparkles },
-      { href: "/aigc?type=video", title: "视频生成", meta: "分镜与视频任务", icon: Video },
-      { href: "/aigc", title: "内容一览", meta: "创作任务与生成记录", icon: FolderOpen }
-    ]
-  },
+  { title: "AI 内容中心", icon: Sparkles, href: "/aigc?type=text", meta: "文本、图片、视频生成与内容一览" },
   {
     title: "内容运营中心", icon: Newspaper, items: [
       { href: "/content", title: "发布记录", meta: "素材与内容工作流", icon: Newspaper },
@@ -47,16 +34,7 @@ const navigationGroups: NavigationGroup[] = [
       { href: "/content/inbox", title: "热门内容", meta: "市场素材与热点输入", icon: Target }
     ]
   },
-  {
-    title: "销售培训中心", icon: Bot, items: [
-      { href: "/agent", title: "产品学习", meta: "产品知识与销售流程", icon: BookOpen },
-      { href: "/marketing/strategy", title: "市场培训", meta: "市场判断与行动策略", icon: BarChart3 },
-      { href: "/leads", title: "客户问题", meta: "客户画像与异议记录", icon: MessageSquareText },
-      { href: "/agent", title: "营销话术", meta: "专业沟通与话术生成", icon: PenLine },
-      { href: "/agent/learning", title: "学习记录", meta: "历史对话与知识复习", icon: MessageSquareText },
-      { href: "/agent/runs", title: "销售复盘", meta: "任务执行与人工审核", icon: Users }
-    ]
-  }
+  { title: "销售培训中心", icon: Bot, href: "/agent", meta: "产品学习、市场培训、营销话术" }
 ];
 
 function isActive(pathname: string, href: string) {

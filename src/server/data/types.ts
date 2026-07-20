@@ -164,8 +164,9 @@ export type MarketAnalysisReport = {
   createdAt: string;
 };
 
+export type LearningCategory = "product" | "market" | "script";
 export type LearningMessage = { id: string; role: "learner" | "coach"; content: string; createdAt: string };
-export type LearningConversation = { id: string; title: string; messages: LearningMessage[]; createdAt: string; updatedAt: string };
+export type LearningConversation = { id: string; title: string; category?: LearningCategory; messages: LearningMessage[]; createdAt: string; updatedAt: string };
 
 export type AppData = {
   leads: Lead[];

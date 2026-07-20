@@ -1,4 +1,4 @@
-import { LearningConversation } from "@/server/data/types";
+import { LearningCategory, LearningConversation } from "@/server/data/types";
 import { makeId, readData, writeData } from "@/server/data/store";
 
 export async function listLearningConversations() {
@@ -6,9 +6,9 @@ export async function listLearningConversations() {
   return [...(data.learningConversations || [])].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
 
-export async function createLearningConversation() {
+export async function createLearningConversation(category: LearningCategory = "product") {
   const data = await readData(); const now = new Date().toISOString();
-  const item: LearningConversation = { id: makeId("learning"), title: "新的学习对话", messages: [], createdAt: now, updatedAt: now };
+  const item: LearningConversation = { id: makeId("learning"), title: "新的学习对话", category, messages: [], createdAt: now, updatedAt: now };
   data.learningConversations = [item, ...(data.learningConversations || [])];
   await writeData(data); return item;
 }
