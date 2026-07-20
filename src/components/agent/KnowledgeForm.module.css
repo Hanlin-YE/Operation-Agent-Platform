@@ -1,0 +1,24 @@
+.fileInput {
+  display: none;
+}
+
+.fileTrigger {
+  display: inline-flex;
+  max-width: min(52vw, 480px);
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #8290a0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileTrigger:hover {
+  color: var(--brand);
+}
