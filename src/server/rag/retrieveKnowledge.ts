@@ -1,6 +1,7 @@
 import { KnowledgeDocument, Lead, Product } from "@/server/data/types";
 import { listKnowledge } from "@/server/repositories/knowledge";
 import { listProducts } from "@/server/repositories/products";
+import { searchSalesKnowledge } from "@/server/rag/salesVectorIndex";
 
 function tokenize(text: string) {
   return text
@@ -18,6 +19,7 @@ export async function retrieveSalesContext(lead: Lead) {
   const [knowledge, products] = await Promise.all([listKnowledge(), listProducts()]);
   const query = `${lead.companyName} ${lead.industry} ${lead.tags.join(" ")} ${lead.notes}`;
   const tokens = tokenize(query);
+  const vectorHits = await searchSalesKnowledge(query, 3);
 
   const rankedProducts = products
     .map((product) => ({
@@ -34,7 +36,13 @@ export async function retrieveSalesContext(lead: Lead) {
     .sort((a, b) => b.score - a.score);
 
   const selectedProducts = rankedProducts.slice(0, 2).map((entry) => entry.item);
-  const selectedKnowledge = rankedKnowledge.slice(0, 3).map((entry) => entry.item);
+  const knowledgeById = new Map(knowledge.map((item) => [item.id, item]));
+  const selectedKnowledge = vectorHits.length
+    ? vectorHits.flatMap((hit) => {
+      const source = knowledgeById.get(hit.knowledgeId);
+      return source ? [{ ...source, title: `${source.title}（第 ${hit.pageNumber} 页）`, content: hit.text }] : [];
+    })
+    : rankedKnowledge.slice(0, 3).map((entry) => entry.item);
 
   return {
     products: selectedProducts.length ? selectedProducts : products.slice(0, 2),

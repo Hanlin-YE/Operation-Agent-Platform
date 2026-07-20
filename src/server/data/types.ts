@@ -61,6 +61,15 @@ export type KnowledgeDocument = {
   updatedAt: string;
 };
 
+export type KnowledgeVectorChunk = {
+  id: string;
+  knowledgeId: string;
+  sourceTitle: string;
+  pageNumber: number;
+  text: string;
+  embedding: number[];
+};
+
 export type LeadScore = {
   id: string;
   leadId: string;
@@ -168,13 +177,62 @@ export type LearningCategory = "product" | "market" | "script";
 export type LearningMessage = { id: string; role: "learner" | "coach"; content: string; createdAt: string };
 export type LearningConversation = { id: string; title: string; category?: LearningCategory; messages: LearningMessage[]; createdAt: string; updatedAt: string };
 
+export type ContentStrategyPlatform = "xiaohongshu" | "wechat" | "douyin" | "other";
+export type ContentStrategyStatus = "model_not_configured" | "needs_review" | "approved" | "error" | "superseded" | "rework_pending" | "rework_processing" | "rework_failed";
+export type ContentStrategyImage = { filename: string; mimeType: string; size: number };
+export type ContentStrategyMetrics = { views?: number; likes?: number; comments?: number; saves?: number; shares?: number };
+export type ContentStrategyPack = {
+  id: string;
+  status: ContentStrategyStatus;
+  sample: { platform: ContentStrategyPlatform; title: string; content: string; sourceUrl?: string; metrics: ContentStrategyMetrics; images: ContentStrategyImage[] };
+  analysis?: {
+    confidence: "high" | "medium" | "low";
+    missingData: string[];
+    evidence: string[];
+    hook: string;
+    structure: string[];
+    rhythm: string;
+    audience: string;
+    reusableMethods: string[];
+    b2bRisks: string[];
+    evidenceRequirements: string[];
+    recommendations: { wechat: string; xhsImage: string; xhsVideo: string };
+  };
+  error?: string;
+  review?: { operator: string; note?: string; reviewedAt: string };
+  productionConfirmation?: { operator: string; confirmedAt: string };
+  productionDraft?: { createdAt: string; invalidatedAt?: string };
+  version: number;
+  parentId?: string;
+  rework?: { operator: string; stage: "strategy_review" | "production_confirmation" | "production_draft"; reason: string; requestedAt: string; targetVersion?: number };
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type WechatCommentStatus = "visible" | "hidden" | "deleted" | "selected";
+export type WechatArticle = { id: string; title: string; publishedAt: string; url?: string; commentEnabled?: boolean; syncedAt: string };
+export type WechatComment = { id: string; articleId: string; parentCommentId?: string; content: string; createdAt: string; status: WechatCommentStatus; syncedAt: string };
+export type CommentAnalysis = { commentId: string; themes: string[]; sentiment: "positive" | "neutral" | "negative"; signals: ("潜在线索" | "投诉风险" | "技术问题")[]; generatedAt: string; model: "rules-v1" };
+export type CommentSyncRun = { id: string; source: "local_import" | "official_api"; articleId: string; cursor?: string; inserted: number; duplicates: number; status: "success" | "failed"; error?: string; createdAt: string };
+export type WechatOperatorJob = {
+  id: string; status: "queued" | "running" | "completed" | "failed"; articleQuery: string; dateFrom?: string; dateTo?: string; maxPages: number;
+  requestedBy: string; requestedAt: string; completedAt?: string; inserted?: number; duplicates?: number; error?: string; leadCreation: "disabled";
+};
+
 export type AppData = {
   leads: Lead[];
   products: Product[];
   knowledge: KnowledgeDocument[];
+  knowledgeChunks?: KnowledgeVectorChunk[];
   scores: LeadScore[];
   pitches: GeneratedPitch[];
   followUps: FollowUp[];
   marketReports: MarketAnalysisReport[];
+  contentStrategies?: ContentStrategyPack[];
   learningConversations?: LearningConversation[];
+  wechatArticles?: WechatArticle[];
+  wechatComments?: WechatComment[];
+  commentAnalyses?: CommentAnalysis[];
+  commentSyncRuns?: CommentSyncRun[];
+  wechatOperatorJobs?: WechatOperatorJob[];
 };
