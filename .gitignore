@@ -1,5 +1,6 @@
 # JavaScript build output and dependencies
 node_modules/
+vendor/
 .next/
 .open-next/
 .wrangler/
@@ -35,4 +36,3 @@ potential_customers.csv
 .env
 .edgeone/*
 .tef_dist/*
-  
