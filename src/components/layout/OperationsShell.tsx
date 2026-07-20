@@ -21,10 +21,10 @@ import {
 import { usePathname } from "next/navigation";
 
 type NavigationItem = { href: string; title: string; meta: string; icon: typeof LayoutDashboard };
-type NavigationGroup = { title: string; icon: typeof LayoutDashboard; items: NavigationItem[] };
+type NavigationGroup = { title: string; icon: typeof LayoutDashboard; href?: string; meta?: string; items?: NavigationItem[] };
 
 const navigationGroups: NavigationGroup[] = [
-  { title: "首页", icon: LayoutDashboard, items: [{ href: "/", title: "运营总览", meta: "计划、市场与生成记录", icon: LayoutDashboard }] },
+  { title: "首页", icon: LayoutDashboard, href: "/", meta: "计划、市场与生成记录" },
   {
     title: "知识资产中心", icon: BookOpen, items: [
       { href: "/knowledge", title: "产品知识", meta: "产品资料、案例与选型经验", icon: BookOpen },
@@ -65,13 +65,14 @@ function isActive(pathname: string, href: string) {
 }
 
 function currentGroup(pathname: string) {
-  return navigationGroups.find((group) => group.items.some((item) => isActive(pathname, item.href))) ?? navigationGroups[0];
+  return navigationGroups.find((group) => group.href ? isActive(pathname, group.href) : group.items?.some((item) => isActive(pathname, item.href))) ?? navigationGroups[0];
 }
 
 export function OperationsShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const activeGroup = currentGroup(pathname);
-  const active = activeGroup.items.find((item) => isActive(pathname, item.href)) ?? activeGroup.items[0];
+  const active = activeGroup.items?.find((item) => isActive(pathname, item.href)) ?? activeGroup.items?.[0];
+  const topbarTitle = active ? `${activeGroup.title} / ${active.title}` : activeGroup.title;
 
   return (
     <div className="app-shell">
@@ -83,10 +84,13 @@ export function OperationsShell({ children }: { children: React.ReactNode }) {
           {navigationGroups.map((group) => {
             const GroupIcon = group.icon;
             const groupActive = group.title === activeGroup.title;
+            if (group.href) {
+              return <a key={group.title} className={`nav-home-link ${groupActive ? "selected" : ""}`} href={group.href}><GroupIcon size={14} /><span><strong>{group.title}</strong><small>{group.meta}</small></span></a>;
+            }
             return <details key={group.title} className="nav-group" open={groupActive}>
               <summary><GroupIcon size={14} /><strong>{group.title}</strong><ChevronDown size={14} /></summary>
               <div className="workspace-list">
-                {group.items.map((item) => {
+                {group.items?.map((item) => {
                   const Icon = item.icon;
                   return <a key={`${item.href}-${item.title}`} className={isActive(pathname, item.href) ? "selected" : ""} href={item.href}><Icon size={14} /><span><strong>{item.title}</strong><small>{item.meta}</small></span></a>;
                 })}
@@ -98,7 +102,7 @@ export function OperationsShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       <main className="workspace-main">
-        <header className="workspace-topbar"><span>{activeGroup.title} / {active.title}</span><div><span className="live-dot" />运营数据实时同步</div></header>
+        <header className="workspace-topbar"><span>{topbarTitle}</span><div><span className="live-dot" />运营数据实时同步</div></header>
         <div className="workspace-content">{children}</div>
       </main>
     </div>
