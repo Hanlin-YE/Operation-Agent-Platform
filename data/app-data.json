@@ -141,6 +141,14 @@
   ],
   "knowledge": [
     {
+      "id": "knowledge-1784448244927-im2ren",
+      "title": "1",
+      "type": "faq",
+      "content": "1",
+      "createdAt": "2026-07-19T08:04:04.927Z",
+      "updatedAt": "2026-07-19T08:04:04.927Z"
+    },
+    {
       "id": "knowledge-1",
       "title": "泵用电机选型要点",
       "type": "selection",
@@ -422,5 +430,4792 @@
       "createdAt": "2026-07-12T11:07:42.008Z"
     }
   ],
-  "followUps": []
+  "followUps": [],
+  "marketReports": [
+    {
+      "focus": "medical",
+      "title": "医疗机器人与精密医疗设备分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-medical-01",
+          "accountName": "医疗器械产品笔记",
+          "accountType": "企业",
+          "title": "精密微泵原型机的长期运行测试",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-medical-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-medical",
+          "publishedAt": "2026-07-09",
+          "scenario": "medical",
+          "signalType": "场景观察",
+          "excerpt": "[公开资料] 展示精密运动与可靠性验证场景，未出现采购或替换表达。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "补充认证阶段、关键部件规格和供应商准入信息后再评估。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784275770907-1v0l72",
+      "createdAt": "2026-07-17T08:09:30.907Z"
+    },
+    {
+      "focus": "robotics",
+      "title": "人形机器人与灵巧手分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784275756907-y84toa",
+      "createdAt": "2026-07-17T08:09:16.907Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        },
+        {
+          "id": "xhs-demo-automotive-01",
+          "accountName": "座舱执行器实验室",
+          "accountType": "待核验",
+          "title": "电动出风口执行器的异响排查记录",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-auto-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-auto",
+          "publishedAt": "2026-07-11",
+          "scenario": "automotive",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 内容提及低噪声、重复动作一致性与验证周期；与空心杯适配性属于 [推断]。",
+          "intentLevel": "中",
+          "evidenceLabel": "推断",
+          "recommendedAction": "先确认具体执行器、车规要求和既有供应链，不能直接承诺产品适配。"
+        },
+        {
+          "id": "xhs-demo-medical-01",
+          "accountName": "医疗器械产品笔记",
+          "accountType": "企业",
+          "title": "精密微泵原型机的长期运行测试",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-medical-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-medical",
+          "publishedAt": "2026-07-09",
+          "scenario": "medical",
+          "signalType": "场景观察",
+          "excerpt": "[公开资料] 展示精密运动与可靠性验证场景，未出现采购或替换表达。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "补充认证阶段、关键部件规格和供应商准入信息后再评估。"
+        },
+        {
+          "id": "xhs-demo-industrial-01",
+          "accountName": "设备工程师小周",
+          "accountType": "个人开发者",
+          "title": "自动化设备调试日常",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-industrial-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-industrial",
+          "publishedAt": "2026-07-08",
+          "scenario": "industrial",
+          "signalType": "竞品评论",
+          "excerpt": "[公开资料] 在相关电机笔记下询问交期与维护频率，账号主体和真实项目均待核验。",
+          "intentLevel": "低",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "仅保留为审计线索，不进入默认销售触达名单。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784275752275-td66q0",
+      "createdAt": "2026-07-17T08:09:12.275Z"
+    },
+    {
+      "focus": "industrial",
+      "title": "实验室自动化与精密工业设备分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-industrial-01",
+          "accountName": "设备工程师小周",
+          "accountType": "个人开发者",
+          "title": "自动化设备调试日常",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-industrial-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-industrial",
+          "publishedAt": "2026-07-08",
+          "scenario": "industrial",
+          "signalType": "竞品评论",
+          "excerpt": "[公开资料] 在相关电机笔记下询问交期与维护频率，账号主体和真实项目均待核验。",
+          "intentLevel": "低",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "仅保留为审计线索，不进入默认销售触达名单。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784255870010-fai2po",
+      "createdAt": "2026-07-17T02:37:50.010Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        },
+        {
+          "id": "xhs-demo-automotive-01",
+          "accountName": "座舱执行器实验室",
+          "accountType": "待核验",
+          "title": "电动出风口执行器的异响排查记录",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-auto-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-auto",
+          "publishedAt": "2026-07-11",
+          "scenario": "automotive",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 内容提及低噪声、重复动作一致性与验证周期；与空心杯适配性属于 [推断]。",
+          "intentLevel": "中",
+          "evidenceLabel": "推断",
+          "recommendedAction": "先确认具体执行器、车规要求和既有供应链，不能直接承诺产品适配。"
+        },
+        {
+          "id": "xhs-demo-medical-01",
+          "accountName": "医疗器械产品笔记",
+          "accountType": "企业",
+          "title": "精密微泵原型机的长期运行测试",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-medical-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-medical",
+          "publishedAt": "2026-07-09",
+          "scenario": "medical",
+          "signalType": "场景观察",
+          "excerpt": "[公开资料] 展示精密运动与可靠性验证场景，未出现采购或替换表达。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "补充认证阶段、关键部件规格和供应商准入信息后再评估。"
+        },
+        {
+          "id": "xhs-demo-industrial-01",
+          "accountName": "设备工程师小周",
+          "accountType": "个人开发者",
+          "title": "自动化设备调试日常",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-industrial-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-industrial",
+          "publishedAt": "2026-07-08",
+          "scenario": "industrial",
+          "signalType": "竞品评论",
+          "excerpt": "[公开资料] 在相关电机笔记下询问交期与维护频率，账号主体和真实项目均待核验。",
+          "intentLevel": "低",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "仅保留为审计线索，不进入默认销售触达名单。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254904366-2gpb6l",
+      "createdAt": "2026-07-17T02:21:44.366Z"
+    },
+    {
+      "focus": "medical",
+      "title": "医疗机器人与精密医疗设备分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-medical-01",
+          "accountName": "医疗器械产品笔记",
+          "accountType": "企业",
+          "title": "精密微泵原型机的长期运行测试",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-medical-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-medical",
+          "publishedAt": "2026-07-09",
+          "scenario": "medical",
+          "signalType": "场景观察",
+          "excerpt": "[公开资料] 展示精密运动与可靠性验证场景，未出现采购或替换表达。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "补充认证阶段、关键部件规格和供应商准入信息后再评估。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254899271-o04qiz",
+      "createdAt": "2026-07-17T02:21:39.272Z"
+    },
+    {
+      "focus": "robotics",
+      "title": "人形机器人与灵巧手分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254896760-5fdas0",
+      "createdAt": "2026-07-17T02:21:36.760Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        },
+        {
+          "id": "xhs-demo-automotive-01",
+          "accountName": "座舱执行器实验室",
+          "accountType": "待核验",
+          "title": "电动出风口执行器的异响排查记录",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-auto-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-auto",
+          "publishedAt": "2026-07-11",
+          "scenario": "automotive",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 内容提及低噪声、重复动作一致性与验证周期；与空心杯适配性属于 [推断]。",
+          "intentLevel": "中",
+          "evidenceLabel": "推断",
+          "recommendedAction": "先确认具体执行器、车规要求和既有供应链，不能直接承诺产品适配。"
+        },
+        {
+          "id": "xhs-demo-medical-01",
+          "accountName": "医疗器械产品笔记",
+          "accountType": "企业",
+          "title": "精密微泵原型机的长期运行测试",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-medical-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-medical",
+          "publishedAt": "2026-07-09",
+          "scenario": "medical",
+          "signalType": "场景观察",
+          "excerpt": "[公开资料] 展示精密运动与可靠性验证场景，未出现采购或替换表达。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "补充认证阶段、关键部件规格和供应商准入信息后再评估。"
+        },
+        {
+          "id": "xhs-demo-industrial-01",
+          "accountName": "设备工程师小周",
+          "accountType": "个人开发者",
+          "title": "自动化设备调试日常",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-industrial-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-industrial",
+          "publishedAt": "2026-07-08",
+          "scenario": "industrial",
+          "signalType": "竞品评论",
+          "excerpt": "[公开资料] 在相关电机笔记下询问交期与维护频率，账号主体和真实项目均待核验。",
+          "intentLevel": "低",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "仅保留为审计线索，不进入默认销售触达名单。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254890396-k2limb",
+      "createdAt": "2026-07-17T02:21:30.396Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        },
+        {
+          "id": "xhs-demo-automotive-01",
+          "accountName": "座舱执行器实验室",
+          "accountType": "待核验",
+          "title": "电动出风口执行器的异响排查记录",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-auto-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-auto",
+          "publishedAt": "2026-07-11",
+          "scenario": "automotive",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 内容提及低噪声、重复动作一致性与验证周期；与空心杯适配性属于 [推断]。",
+          "intentLevel": "中",
+          "evidenceLabel": "推断",
+          "recommendedAction": "先确认具体执行器、车规要求和既有供应链，不能直接承诺产品适配。"
+        },
+        {
+          "id": "xhs-demo-medical-01",
+          "accountName": "医疗器械产品笔记",
+          "accountType": "企业",
+          "title": "精密微泵原型机的长期运行测试",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-medical-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-medical",
+          "publishedAt": "2026-07-09",
+          "scenario": "medical",
+          "signalType": "场景观察",
+          "excerpt": "[公开资料] 展示精密运动与可靠性验证场景，未出现采购或替换表达。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "补充认证阶段、关键部件规格和供应商准入信息后再评估。"
+        },
+        {
+          "id": "xhs-demo-industrial-01",
+          "accountName": "设备工程师小周",
+          "accountType": "个人开发者",
+          "title": "自动化设备调试日常",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-industrial-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-industrial",
+          "publishedAt": "2026-07-08",
+          "scenario": "industrial",
+          "signalType": "竞品评论",
+          "excerpt": "[公开资料] 在相关电机笔记下询问交期与维护频率，账号主体和真实项目均待核验。",
+          "intentLevel": "低",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "仅保留为审计线索，不进入默认销售触达名单。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254889752-nvihvx",
+      "createdAt": "2026-07-17T02:21:29.752Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        },
+        {
+          "id": "xhs-demo-automotive-01",
+          "accountName": "座舱执行器实验室",
+          "accountType": "待核验",
+          "title": "电动出风口执行器的异响排查记录",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-auto-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-auto",
+          "publishedAt": "2026-07-11",
+          "scenario": "automotive",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 内容提及低噪声、重复动作一致性与验证周期；与空心杯适配性属于 [推断]。",
+          "intentLevel": "中",
+          "evidenceLabel": "推断",
+          "recommendedAction": "先确认具体执行器、车规要求和既有供应链，不能直接承诺产品适配。"
+        },
+        {
+          "id": "xhs-demo-medical-01",
+          "accountName": "医疗器械产品笔记",
+          "accountType": "企业",
+          "title": "精密微泵原型机的长期运行测试",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-medical-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-medical",
+          "publishedAt": "2026-07-09",
+          "scenario": "medical",
+          "signalType": "场景观察",
+          "excerpt": "[公开资料] 展示精密运动与可靠性验证场景，未出现采购或替换表达。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "补充认证阶段、关键部件规格和供应商准入信息后再评估。"
+        },
+        {
+          "id": "xhs-demo-industrial-01",
+          "accountName": "设备工程师小周",
+          "accountType": "个人开发者",
+          "title": "自动化设备调试日常",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-industrial-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-industrial",
+          "publishedAt": "2026-07-08",
+          "scenario": "industrial",
+          "signalType": "竞品评论",
+          "excerpt": "[公开资料] 在相关电机笔记下询问交期与维护频率，账号主体和真实项目均待核验。",
+          "intentLevel": "低",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "仅保留为审计线索，不进入默认销售触达名单。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254882620-h1ysfq",
+      "createdAt": "2026-07-17T02:21:22.620Z"
+    },
+    {
+      "focus": "robotics",
+      "title": "人形机器人与灵巧手分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254880359-hki7fl",
+      "createdAt": "2026-07-17T02:21:20.359Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        },
+        {
+          "id": "xhs-demo-automotive-01",
+          "accountName": "座舱执行器实验室",
+          "accountType": "待核验",
+          "title": "电动出风口执行器的异响排查记录",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-auto-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-auto",
+          "publishedAt": "2026-07-11",
+          "scenario": "automotive",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 内容提及低噪声、重复动作一致性与验证周期；与空心杯适配性属于 [推断]。",
+          "intentLevel": "中",
+          "evidenceLabel": "推断",
+          "recommendedAction": "先确认具体执行器、车规要求和既有供应链，不能直接承诺产品适配。"
+        },
+        {
+          "id": "xhs-demo-medical-01",
+          "accountName": "医疗器械产品笔记",
+          "accountType": "企业",
+          "title": "精密微泵原型机的长期运行测试",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-medical-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-medical",
+          "publishedAt": "2026-07-09",
+          "scenario": "medical",
+          "signalType": "场景观察",
+          "excerpt": "[公开资料] 展示精密运动与可靠性验证场景，未出现采购或替换表达。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "补充认证阶段、关键部件规格和供应商准入信息后再评估。"
+        },
+        {
+          "id": "xhs-demo-industrial-01",
+          "accountName": "设备工程师小周",
+          "accountType": "个人开发者",
+          "title": "自动化设备调试日常",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-industrial-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-industrial",
+          "publishedAt": "2026-07-08",
+          "scenario": "industrial",
+          "signalType": "竞品评论",
+          "excerpt": "[公开资料] 在相关电机笔记下询问交期与维护频率，账号主体和真实项目均待核验。",
+          "intentLevel": "低",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "仅保留为审计线索，不进入默认销售触达名单。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254876241-p3ahha",
+      "createdAt": "2026-07-17T02:21:16.241Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        },
+        {
+          "id": "xhs-demo-automotive-01",
+          "accountName": "座舱执行器实验室",
+          "accountType": "待核验",
+          "title": "电动出风口执行器的异响排查记录",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-auto-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-auto",
+          "publishedAt": "2026-07-11",
+          "scenario": "automotive",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 内容提及低噪声、重复动作一致性与验证周期；与空心杯适配性属于 [推断]。",
+          "intentLevel": "中",
+          "evidenceLabel": "推断",
+          "recommendedAction": "先确认具体执行器、车规要求和既有供应链，不能直接承诺产品适配。"
+        },
+        {
+          "id": "xhs-demo-medical-01",
+          "accountName": "医疗器械产品笔记",
+          "accountType": "企业",
+          "title": "精密微泵原型机的长期运行测试",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-medical-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-medical",
+          "publishedAt": "2026-07-09",
+          "scenario": "medical",
+          "signalType": "场景观察",
+          "excerpt": "[公开资料] 展示精密运动与可靠性验证场景，未出现采购或替换表达。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "补充认证阶段、关键部件规格和供应商准入信息后再评估。"
+        },
+        {
+          "id": "xhs-demo-industrial-01",
+          "accountName": "设备工程师小周",
+          "accountType": "个人开发者",
+          "title": "自动化设备调试日常",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-industrial-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-industrial",
+          "publishedAt": "2026-07-08",
+          "scenario": "industrial",
+          "signalType": "竞品评论",
+          "excerpt": "[公开资料] 在相关电机笔记下询问交期与维护频率，账号主体和真实项目均待核验。",
+          "intentLevel": "低",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "仅保留为审计线索，不进入默认销售触达名单。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254875663-ddvgzi",
+      "createdAt": "2026-07-17T02:21:15.663Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        },
+        {
+          "id": "xhs-demo-automotive-01",
+          "accountName": "座舱执行器实验室",
+          "accountType": "待核验",
+          "title": "电动出风口执行器的异响排查记录",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-auto-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-auto",
+          "publishedAt": "2026-07-11",
+          "scenario": "automotive",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 内容提及低噪声、重复动作一致性与验证周期；与空心杯适配性属于 [推断]。",
+          "intentLevel": "中",
+          "evidenceLabel": "推断",
+          "recommendedAction": "先确认具体执行器、车规要求和既有供应链，不能直接承诺产品适配。"
+        },
+        {
+          "id": "xhs-demo-medical-01",
+          "accountName": "医疗器械产品笔记",
+          "accountType": "企业",
+          "title": "精密微泵原型机的长期运行测试",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-medical-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-medical",
+          "publishedAt": "2026-07-09",
+          "scenario": "medical",
+          "signalType": "场景观察",
+          "excerpt": "[公开资料] 展示精密运动与可靠性验证场景，未出现采购或替换表达。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "补充认证阶段、关键部件规格和供应商准入信息后再评估。"
+        },
+        {
+          "id": "xhs-demo-industrial-01",
+          "accountName": "设备工程师小周",
+          "accountType": "个人开发者",
+          "title": "自动化设备调试日常",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-industrial-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-industrial",
+          "publishedAt": "2026-07-08",
+          "scenario": "industrial",
+          "signalType": "竞品评论",
+          "excerpt": "[公开资料] 在相关电机笔记下询问交期与维护频率，账号主体和真实项目均待核验。",
+          "intentLevel": "低",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "仅保留为审计线索，不进入默认销售触达名单。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254874384-hkal50",
+      "createdAt": "2026-07-17T02:21:14.385Z"
+    },
+    {
+      "focus": "robotics",
+      "title": "人形机器人与灵巧手分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "xiaohongshuSignals": [
+        {
+          "id": "xhs-demo-robotics-01",
+          "accountName": "灵巧手研发日志",
+          "accountType": "团队",
+          "title": "灵巧手样机第 3 次改版：关节模组温升怎么压",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-01",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-robotics",
+          "publishedAt": "2026-07-12",
+          "scenario": "robotics",
+          "signalType": "痛点表达",
+          "excerpt": "[公开资料] 正在比较关节驱动方案，现有样机在连续动作后需要处理温升与尺寸约束。",
+          "intentLevel": "高",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "人工核验团队主体和项目阶段后，以样机工况与测试方法切入技术交流。"
+        },
+        {
+          "id": "xhs-demo-robotics-02",
+          "accountName": "机器人零部件观察",
+          "accountType": "个人开发者",
+          "title": "做一只桌面机械手，电机选型避坑",
+          "noteUrl": "https://www.xiaohongshu.com/explore/demo-robotics-02",
+          "profileUrl": "https://www.xiaohongshu.com/user/profile/demo-maker",
+          "publishedAt": "2026-07-10",
+          "scenario": "robotics",
+          "signalType": "需求表达",
+          "excerpt": "[公开资料] 询问小体积驱动的响应、噪声和寿命如何取舍；是否为采购需求仍待核验。",
+          "intentLevel": "中",
+          "evidenceLabel": "公开资料",
+          "recommendedAction": "先确认其为产品开发、教学项目还是个人制作，再决定是否进入销售线索池。"
+        }
+      ],
+      "sourceStatus": {
+        "xiaohongshu": "本地演示数据",
+        "note": "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。"
+      },
+      "modelVersion": "market-analysis-rules-v2",
+      "id": "market-report-1784254869133-3zr3nd",
+      "createdAt": "2026-07-17T02:21:09.133Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784212171544-js73bp",
+      "createdAt": "2026-07-16T14:29:31.544Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784209721401-mca0ey",
+      "createdAt": "2026-07-16T13:48:41.401Z"
+    },
+    {
+      "focus": "medical",
+      "title": "医疗机器人与精密医疗设备分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784209700124-cy38oa",
+      "createdAt": "2026-07-16T13:48:20.124Z"
+    },
+    {
+      "focus": "robotics",
+      "title": "人形机器人与灵巧手分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784209696804-5m7jkh",
+      "createdAt": "2026-07-16T13:48:16.804Z"
+    },
+    {
+      "focus": "medical",
+      "title": "医疗机器人与精密医疗设备分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784209689747-lh8vtb",
+      "createdAt": "2026-07-16T13:48:09.747Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784209677233-a8e1of",
+      "createdAt": "2026-07-16T13:47:57.233Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784209674029-dkhw3w",
+      "createdAt": "2026-07-16T13:47:54.029Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784209673821-vbhgxc",
+      "createdAt": "2026-07-16T13:47:53.821Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784209673064-ydqhx9",
+      "createdAt": "2026-07-16T13:47:53.064Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784209672241-2ucgsz",
+      "createdAt": "2026-07-16T13:47:52.241Z"
+    },
+    {
+      "focus": "all",
+      "title": "全市场机会与营销优先级分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        },
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        },
+        {
+          "id": "industrial",
+          "name": "实验室自动化与精密工业设备",
+          "typicalCustomers": [
+            "实验室自动化设备厂",
+            "半导体设备厂",
+            "精密运动控制集成商"
+          ],
+          "demandDrivers": [
+            "自动化升级",
+            "高重复精度",
+            "设备稳定交付"
+          ],
+          "painPoints": [
+            "动作一致性",
+            "维护停机成本",
+            "空间与装配兼容性"
+          ],
+          "productFit": "中",
+          "marketPriority": "P1",
+          "evidenceLabel": "企业知识",
+          "evidence": [
+            "企业知识命中关键词：自动化"
+          ],
+          "recommendedEntry": "围绕设备关键动作部件建立应用清单，再确认现有方案的可靠性和交期痛点。",
+          "openQuestions": [
+            "具体设备部件",
+            "年用量与交付节奏",
+            "现有供应商与替换门槛"
+          ]
+        },
+        {
+          "id": "automotive",
+          "name": "汽车电子执行器",
+          "typicalCustomers": [
+            "汽车零部件一级供应商",
+            "执行器模组厂",
+            "车载舒适系统研发团队"
+          ],
+          "demandDrivers": [
+            "静音与快速响应",
+            "可靠性要求",
+            "平台化量产"
+          ],
+          "painPoints": [
+            "噪声控制",
+            "寿命与一致性",
+            "成本和验证周期"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "优先确认电动尾门、出风口或中控调节等具体执行器是否适配，再评估车规与量产门槛。",
+          "openQuestions": [
+            "是否具备车规测试条件",
+            "目标执行器的尺寸/扭矩约束",
+            "量产成本边界"
+          ]
+        },
+        {
+          "id": "aerospace",
+          "name": "无人机与航空航天微驱动",
+          "typicalCustomers": [
+            "无人机整机与云台厂",
+            "航天可动机构团队",
+            "特种装备研发单位"
+          ],
+          "demandDrivers": [
+            "轻量化",
+            "极端环境可靠性",
+            "低维护需求"
+          ],
+          "painPoints": [
+            "重量约束",
+            "环境适应性",
+            "长周期可靠性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P2",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "从具体可动部件和测试环境入手，避免先行承诺未经验证的极端环境性能。",
+          "openQuestions": [
+            "具体载荷与环境条件",
+            "测试标准",
+            "项目保密与供应商准入要求"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784209665515-iq9n9h",
+      "createdAt": "2026-07-16T13:47:45.515Z"
+    },
+    {
+      "focus": "robotics",
+      "title": "人形机器人与灵巧手分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784205945069-uwukpc",
+      "createdAt": "2026-07-16T12:45:45.069Z"
+    },
+    {
+      "focus": "robotics",
+      "title": "人形机器人与灵巧手分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784205934000-5h3659",
+      "createdAt": "2026-07-16T12:45:34.000Z"
+    },
+    {
+      "focus": "medical",
+      "title": "医疗机器人与精密医疗设备分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "medical",
+          "name": "医疗机器人与精密医疗设备",
+          "typicalCustomers": [
+            "手术机器人厂",
+            "医疗微泵与精密检测设备厂",
+            "医疗器械研发团队"
+          ],
+          "demandDrivers": [
+            "长期精度保持",
+            "小型化与低维护",
+            "可靠性验证"
+          ],
+          "painPoints": [
+            "长期运行稳定性",
+            "维护窗口有限",
+            "精密动作一致性"
+          ],
+          "productFit": "待验证",
+          "marketPriority": "P1",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "以联合技术验证切入，先确认认证、可靠性测试和现有供应链要求。",
+          "openQuestions": [
+            "产品是否进入注册/验证阶段",
+            "关键部件的合规要求",
+            "是否允许替代方案送样"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784205930208-1085z1",
+      "createdAt": "2026-07-16T12:45:30.208Z"
+    },
+    {
+      "focus": "robotics",
+      "title": "人形机器人与灵巧手分析",
+      "executiveSummary": "当前可用企业产品资产包括：Friction X 自超滑有刷空心杯电机平台、Friction X 自超滑无刷空心杯电机平台、Friction X 自超滑空心杯电机整体解决方案。本报告依据企业知识库生成市场进入假设；未由企业资料或公开来源证实的结论均标记为“待市场验证”，不得直接用于对外性能承诺。",
+      "segments": [
+        {
+          "id": "robotics",
+          "name": "人形机器人与灵巧手",
+          "typicalCustomers": [
+            "人形机器人本体厂",
+            "灵巧手与关节模组厂",
+            "伺服执行器研发团队"
+          ],
+          "demandDrivers": [
+            "高自由度关节小型化",
+            "高频动作可靠性",
+            "样机验证与量产导入"
+          ],
+          "painPoints": [
+            "空间受限",
+            "寿命与维护频率",
+            "温升、响应与控制稳定性"
+          ],
+          "productFit": "高",
+          "marketPriority": "P0",
+          "evidenceLabel": "待市场验证",
+          "evidence": [],
+          "recommendedEntry": "先锁定研发负责人和关节模组团队，以具体部件、工况和样机测试为技术交流入口。",
+          "openQuestions": [
+            "目标客户当前采用的电机方案",
+            "寿命/温升测试要求",
+            "样机验证周期与采购角色"
+          ]
+        }
+      ],
+      "competitorWatch": [
+        {
+          "category": "直接产品竞品",
+          "marketSignal": "需持续收集竞品产品、案例、价格与渠道动作。",
+          "implication": "建立竞品作战卡，区分事实、公开资料与推断。",
+          "evidenceLabel": "待市场验证"
+        },
+        {
+          "category": "替代方案",
+          "marketSignal": "客户可能继续使用现有电机、集成模组或自研方案。",
+          "implication": "销售前先确认替换成本、验证门槛与现有供应关系。",
+          "evidenceLabel": "推断"
+        }
+      ],
+      "recommendedActions": [
+        "选择一个 P0/P1 细分市场，补齐目标企业、关键角色与公开项目证据。",
+        "为每个优先市场建立“客户痛点—产品价值—可验证证据”矩阵。",
+        "对进入技术交流的客户记录工况、测试标准、样品需求和下一步负责人。"
+      ],
+      "openQuestions": [
+        "企业希望优先进入的行业和区域是否已确认？",
+        "哪些产品参数、测试报告和客户案例可以作为对外证据？",
+        "竞品、价格和目标客户名单由谁审核后进入知识库？"
+      ],
+      "knowledgeCitations": [
+        "企业知识：泵用电机选型要点",
+        "企业知识：价格异议处理 SOP",
+        "企业知识：自动化设备客户沟通案例"
+      ],
+      "modelVersion": "market-analysis-rules-v1",
+      "id": "market-report-1784205925632-etg786",
+      "createdAt": "2026-07-16T12:45:25.632Z"
+    }
+  ]
 }

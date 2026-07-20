@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException, Request, status
 
 from src.api.schemas import ConfirmRunResponse, CreateRunResponse, GraphSnapshotResponse, RunConfirmRequest, RunCreateRequest, RunDetailResponse
 from src.core.run_service import RunService
-from src.services.feishu_client import RunNotFoundError, RunStateConflictError, RunVersionConflictError
+from src.services.dingtalk_client import RunNotFoundError, RunStateConflictError, RunVersionConflictError
 
 router = APIRouter(prefix="/api/runs", tags=["runs"])
 graph_router = APIRouter(prefix="/api/graph", tags=["graph"])

@@ -178,12 +178,12 @@ Flowise 是低代码 LLM 应用和 Agent Flow 构建工具，技术栈偏 Node.j
    - `FollowUpPlanner`
 
 2. **凭证管理**
-   拓客 Agent 可能接入企查查、海关数据、CRM、邮箱、飞书、企微、搜索 API。必须学习 Flowise 的 credential 隔离思路：前端不直接暴露密钥，后端按租户读取。
+   拓客 Agent 可能接入企查查、海关数据、CRM、邮箱、钉钉、企微、搜索 API。必须学习 Flowise 的 credential 隔离思路：前端不直接暴露密钥，后端按租户读取。
 
 3. **可嵌入 API**
    Flowise 能作为流程执行 API 被外部调用。我们也应该从一开始设计：
    - 前端工作台调用同一套后端 API。
-   - 后续飞书/企微机器人也调用同一套 Agent API。
+   - 后续钉钉/企微机器人也调用同一套 Agent API。
    - 不要把智能逻辑写死在前端页面里。
 
 ### 不适合照搬点

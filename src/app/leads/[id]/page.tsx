@@ -4,6 +4,8 @@ import { LeadTimeline } from "@/components/leads/LeadTimeline";
 import { ScoreBreakdown } from "@/components/scoring/ScoreBreakdown";
 import { ProductRecommendationCard } from "@/components/agent/ProductRecommendationCard";
 import { CustomerServiceSimulator } from "@/components/agent/CustomerServiceSimulator";
+import { FollowUpForm } from "@/components/leads/FollowUpForm";
+import { LeadStatusControl } from "@/components/leads/LeadStatusControl";
 import { getLead } from "@/server/repositories/leads";
 import { listFollowUpsByLead, listPitchesByLead, listScoresByLead } from "@/server/repositories/salesArtifacts";
 
@@ -38,6 +40,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
           <p><strong>联系人：</strong>{lead.contactName} / {lead.contactTitle}</p>
           <p><strong>联系方式：</strong>{lead.contactMethod}</p>
           <p><strong>来源：</strong>{lead.source}</p>
+          <LeadStatusControl lead={lead} />
           <div className="badge-row">
             {lead.tags.map((tag) => (
               <span className="badge" key={tag}>{tag}</span>
@@ -51,6 +54,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
       <div className="grid cols-2" style={{ marginTop: 16 }}>
         <ProductRecommendationCard leadId={lead.id} />
         <PitchGenerator leadId={lead.id} initialPitch={pitches[0]} />
+        <FollowUpForm leadId={lead.id} followUps={followUps} />
         <LeadTimeline scores={scores} pitches={pitches} followUps={followUps} />
       </div>
       <div style={{ marginTop: 16 }}><CustomerServiceSimulator leadId={lead.id} tier={lead.accountTier} /></div>

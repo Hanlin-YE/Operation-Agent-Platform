@@ -42,6 +42,15 @@ export async function savePitch(pitch: Omit<GeneratedPitch, "id" | "createdAt">)
   return item;
 }
 
+export async function updatePitchContent(id: string, content: string) {
+  const data = await readData();
+  const pitch = data.pitches.find((item) => item.id === id);
+  if (!pitch) return null;
+  pitch.content = content.trim();
+  await writeData(data);
+  return pitch;
+}
+
 export async function listFollowUpsByLead(leadId: string) {
   const data = await readData();
   return data.followUps
@@ -59,4 +68,13 @@ export async function saveFollowUp(followUp: Omit<FollowUp, "id" | "createdAt">)
   data.followUps.unshift(item);
   await writeData(data);
   return item;
+}
+
+export async function updateFollowUpStatus(id: string, status: FollowUp["status"]) {
+  const data = await readData();
+  const followUp = data.followUps.find((item) => item.id === id);
+  if (!followUp) return null;
+  followUp.status = status;
+  await writeData(data);
+  return followUp;
 }

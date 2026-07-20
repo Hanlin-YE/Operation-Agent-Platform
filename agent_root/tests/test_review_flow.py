@@ -4,7 +4,7 @@ import unittest
 from src.api.schemas import TaskType
 from src.core.run_state import RunStatus
 from src.services.llm_provider import GraphContext
-from src.services.feishu_client import InMemoryFeishuClient
+from src.services.dingtalk_client import InMemoryDingTalkClient
 
 
 class RecordingProvider:
@@ -27,7 +27,7 @@ class RecordingProvider:
 
 class ReviewFlowTests(unittest.TestCase):
     def test_worker_can_promote_pending_run_to_review_and_confirm_it(self) -> None:
-        control_plane = InMemoryFeishuClient()
+        control_plane = InMemoryDingTalkClient()
         run = control_plane.create_task_record(
             TaskType.PROFILER,
             {"industry": "航空"},
@@ -53,7 +53,7 @@ class ReviewFlowTests(unittest.TestCase):
     def test_approved_material_is_sent_to_provider_and_completed(self) -> None:
         from src.tasks.run_pipeline import process_next_run
 
-        control_plane = InMemoryFeishuClient()
+        control_plane = InMemoryDingTalkClient()
         provider = RecordingProvider()
         run = control_plane.create_task_record(
             TaskType.PROFILER,

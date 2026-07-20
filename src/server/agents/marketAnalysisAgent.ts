@@ -94,7 +94,7 @@ export async function analyzeMarket(focus: MarketFocus = "all", xiaohongshuSourc
     painPoints: item.painPoints,
     productFit: item.productFit,
     marketPriority: item.marketPriority,
-    evidenceLabel: item.evidenceLabel,
+    evidenceLabel: item.evidenceKeywords.some((keyword) => knowledgeText.includes(keyword)) ? "企业知识" : "待市场验证",
     evidence: item.evidenceKeywords.filter((keyword) => knowledgeText.includes(keyword)).map((keyword) => `企业知识命中关键词：${keyword}`),
     recommendedEntry: item.recommendedEntry,
     openQuestions: item.openQuestions

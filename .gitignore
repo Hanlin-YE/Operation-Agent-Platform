@@ -30,3 +30,9 @@ potential_customers.csv
 .DS_Store
 内容运营agent思考/codex-inbox/
 内容运营agent思考/.wrangler/
+
+# Tencent Cloud EdgeOne
+.env
+.edgeone/*
+.tef_dist/*
+  

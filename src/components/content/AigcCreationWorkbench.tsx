@@ -283,7 +283,36 @@ export function AigcCreationWorkbench() {
             </div>
           </section>
         </>
-      ) : null}
+      ) : (
+        <section className="aigc-ready-state" aria-label="AIGC 创作流程预览">
+          <div className="aigc-ready-head">
+            <div>
+              <p className="eyebrow">Creation Pipeline</p>
+              <h2>从需求到可提交视频任务</h2>
+              <p className="subtle">填写左侧需求后，系统会生成项目 Brief、风格锁定资产、镜头提示词与 RunningHub 提交载荷。</p>
+            </div>
+            <span className="aigc-ready-badge"><span className="status-dot" />准备就绪</span>
+          </div>
+          <div className="aigc-ready-grid">
+            <article className="aigc-ready-card">
+              <span className="aigc-step-index">01</span>
+              <div><Workflow size={18} /><strong>创作 Brief</strong><p>解析受众、卖点、时长、画幅与风格基调。</p></div>
+            </article>
+            <article className="aigc-ready-card">
+              <span className="aigc-step-index">02</span>
+              <div><Package2 size={18} /><strong>资产锁定</strong><p>先审批人物、场景、产品与视觉风格资产。</p></div>
+            </article>
+            <article className="aigc-ready-card">
+              <span className="aigc-step-index">03</span>
+              <div><Clapperboard size={18} /><strong>生成与追踪</strong><p>首帧生成后转图生视频，持续同步任务状态。</p></div>
+            </article>
+          </div>
+          <div className="aigc-ready-footer">
+            <div><span>默认执行链路</span><strong>即梦图片 4.6 → Seedance 图生视频</strong></div>
+            <div><span>当前提交模式</span><strong>模拟模式 · 可安全验证工作流</strong></div>
+          </div>
+        </section>
+      )}
 
       <section className="aigc-job-workspace">
         <section className="panel aigc-job-list-panel">

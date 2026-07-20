@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel
 
-from src.services.feishu_client import InMemoryFeishuClient
+from src.services.dingtalk_client import InMemoryDingTalkClient
 from src.services.llm_provider import GraphContext, LlmProvider
 from src.tasks.step3_ai_annotate import annotate_from_approved_graph_context
 
@@ -23,7 +23,7 @@ def _collected_item(run_id: str, industry: str) -> dict[str, object]:
     }
 
 
-async def process_next_run(control_plane: InMemoryFeishuClient, provider: LlmProvider) -> None:
+async def process_next_run(control_plane: InMemoryDingTalkClient, provider: LlmProvider) -> None:
     pending = control_plane.claim_pending_run()
     if pending:
         industry = str(pending.params.get("industry") or "目标")

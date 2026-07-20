@@ -3,10 +3,29 @@ import { makeId, readData, writeData } from "@/server/data/store";
 import { deriveAccountRouting } from "@/server/segmentation/accountTier";
 
 export type LeadInput = Omit<Lead, "id" | "createdAt" | "updatedAt">;
+export type LeadFilters = {
+  query?: string;
+  status?: LeadStatus;
+  accountTier?: Lead["accountTier"];
+};
 
-export async function listLeads() {
+export function filterLeads(leads: Lead[], filters: LeadFilters = {}) {
+  const queryTerms = (filters.query || "").trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+  return leads.filter((lead) => {
+    if (filters.status && lead.status !== filters.status) return false;
+    if (filters.accountTier && lead.accountTier !== filters.accountTier) return false;
+    if (!queryTerms.length) return true;
+    const searchable = [lead.companyName, lead.industry, lead.region, lead.contactName, lead.contactTitle, lead.source, lead.notes, ...lead.tags]
+      .join(" ")
+      .toLocaleLowerCase();
+    return queryTerms.every((term) => searchable.includes(term));
+  });
+}
+
+export async function listLeads(filters: LeadFilters = {}) {
   const data = await readData();
-  return data.leads.map((lead) => ({ ...lead, ...deriveAccountRouting(lead) })).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  const leads = data.leads.map((lead) => ({ ...lead, ...deriveAccountRouting(lead) }));
+  return filterLeads(leads, filters).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 }
 
 export async function getLead(id: string) {

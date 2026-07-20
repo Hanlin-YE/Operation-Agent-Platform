@@ -9,7 +9,7 @@ from fastapi import FastAPI
 from src.api.rag_routes import router as rag_router
 from src.api.v1_routes import graph_router, router as runs_router
 from src.core.run_service import RunService
-from src.services.feishu_client import InMemoryFeishuClient
+from src.services.dingtalk_client import InMemoryDingTalkClient
 from src.services.knowledge_graph import KnowledgeGraphService
 from src.services.llm_provider import LlmProviderConfig, create_llm_provider
 from src.services.neo4j_client import Neo4jClient
@@ -107,7 +107,7 @@ def create_app(*, start_runner: bool = True, initialize_graph: bool | None = Non
                 await close_rag_database()
 
     app = FastAPI(title="AIGC Operations Acquisition and Retention Agent", version="4.0.0", lifespan=lifespan)
-    app.state.control_plane = InMemoryFeishuClient()
+    app.state.control_plane = InMemoryDingTalkClient()
     app.state.run_service = RunService(app.state.control_plane)
     app.state.llm_provider = _provider_from_environment()
     app.state.embedding_provider = _embedding_provider_from_environment()

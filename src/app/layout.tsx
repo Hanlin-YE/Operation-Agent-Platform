@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { OperationsShell } from "@/components/layout/OperationsShell";
+import { HideNextDevOverlay } from "@/components/system/HideNextDevOverlay";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -11,6 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="zh-CN">
       <body>
+        <HideNextDevOverlay />
         <OperationsShell>{children}</OperationsShell>
       </body>
     </html>

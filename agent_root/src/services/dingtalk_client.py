@@ -72,10 +72,10 @@ class RunRecord:
         }
 
 
-class InMemoryFeishuClient:
+class InMemoryDingTalkClient:
     """Development/test control plane with the same record semantics as Base.
 
-    Production wiring replaces this adapter with a Feishu Base implementation;
+    Production wiring replaces this adapter with a DingTalk Control Plane implementation;
     it intentionally contains no credentials or file-backed persistence.
     """
 

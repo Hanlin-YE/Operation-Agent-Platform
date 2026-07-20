@@ -167,7 +167,7 @@ export function RunsWorkbench() {
 
           {run.status === "WAITING_REVIEW" && (
             <div className="review-callout">
-              <div><strong>等待你的确认</strong><p>系统已生成 {run.review.material_ids.length} 条结构化素材。当前演示只展示素材 ID；接入飞书 Base 后这里会展示摘要、实体和来源链接。</p></div>
+              <div><strong>等待你的确认</strong><p>系统已生成 {run.review.material_ids.length} 条结构化素材。当前演示只展示素材 ID；接入钉钉业务表后这里会展示摘要、实体和来源链接。</p></div>
               <button className="button" onClick={confirm} disabled={loading}><CheckCircle2 size={16} />确认并进入 AI 处理</button>
             </div>
           )}

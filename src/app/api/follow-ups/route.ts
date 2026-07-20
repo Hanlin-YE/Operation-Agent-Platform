@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { saveFollowUp } from "@/server/repositories/salesArtifacts";
+import { saveFollowUp, updateFollowUpStatus } from "@/server/repositories/salesArtifacts";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -17,4 +17,13 @@ export async function POST(request: Request) {
   });
 
   return NextResponse.json(followUp, { status: 201 });
+}
+
+export async function PATCH(request: Request) {
+  const body = await request.json().catch(() => ({}));
+  if (typeof body.id !== "string" || !["open", "done"].includes(body.status)) {
+    return NextResponse.json({ error: "id and a valid status are required" }, { status: 400 });
+  }
+  const followUp = await updateFollowUpStatus(body.id, body.status);
+  return followUp ? NextResponse.json(followUp) : NextResponse.json({ error: "follow-up not found" }, { status: 404 });
 }

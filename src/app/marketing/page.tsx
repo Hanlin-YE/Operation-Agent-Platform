@@ -5,5 +5,5 @@ export const dynamic = "force-dynamic";
 
 export default async function MarketingPage() {
   const reports = await listMarketReports();
-  return <MarketAnalysisWorkbench initialReports={reports} />;
+  return <MarketAnalysisWorkbench initialReports={reports} view="overview" />;
 }

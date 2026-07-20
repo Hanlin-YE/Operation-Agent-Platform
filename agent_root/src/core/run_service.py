@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 from src.api.schemas import RunConfirmRequest, RunCreateRequest
-from src.services.feishu_client import InMemoryFeishuClient, RunRecord
+from src.services.dingtalk_client import InMemoryDingTalkClient, RunRecord
 
 
 class RunService:
-    def __init__(self, control_plane: InMemoryFeishuClient) -> None:
+    def __init__(self, control_plane: InMemoryDingTalkClient) -> None:
         self._control_plane = control_plane
 
     def create(self, request: RunCreateRequest) -> RunRecord:

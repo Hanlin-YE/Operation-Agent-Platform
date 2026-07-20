@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Friction X · 内容智能增长系统</title>
+  <meta name="description" content="Friction X 内容分析、AIGC 生成与用户数据闭环平台路演页" />
+  <style>
+    :root {
+      --bg: #080b10; --panel: #0f151c; --panel-2: #121b24; --line: #26323d;
+      --ink: #edf4f4; --muted: #91a0ad; --soft: #cbd6dc; --mint: #73e5b1;
+      --blue: #83b7ff; --amber: #f1c875; --red: #ff8e8e;
+      --shadow: 0 22px 70px rgba(0,0,0,.28); --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--bg); font: 15px/1.65 ui-sans-serif, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar { position: sticky; top: 0; z-index: 10; border-bottom: 1px solid rgba(115,229,177,.11); background: rgba(8,11,16,.82); backdrop-filter: blur(18px); }
+    .topbar-inner { height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 760; letter-spacing: -.02em; }
+    .brand-mark { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 9px; color: #0a1110; background: var(--mint); font-weight: 900; }
+    .brand small { display: block; color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+    nav { display: flex; gap: 22px; color: var(--muted); font-size: 12px; }
+    nav a:hover, nav a.active { color: var(--ink); }
+    .top-action { border: 1px solid #385248; border-radius: 999px; color: var(--mint); padding: 7px 13px; font-size: 12px; background: transparent; cursor: pointer; }
+    .hero { min-height: 720px; display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: 68px; padding: 92px 0 76px; }
+    .kicker { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 20px; color: var(--mint); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; }
+    .kicker i { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 18px var(--mint); }
+    h1 { max-width: 700px; margin: 0; font-size: clamp(44px, 6vw, 82px); line-height: 1.05; letter-spacing: -.075em; }
+    .hero-copy { max-width: 600px; margin: 26px 0 0; color: var(--muted); font-size: 18px; line-height: 1.75; }
+    .hero-copy strong { color: var(--soft); font-weight: 600; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .btn { display: inline-flex; align-items: center; gap: 9px; border-radius: 9px; padding: 11px 15px; border: 1px solid var(--line); color: var(--soft); background: var(--panel); cursor: pointer; }
+    .btn.primary { color: #08120e; background: var(--mint); border-color: var(--mint); font-weight: 700; }
+    .btn:hover { transform: translateY(-1px); }
+    .hero-note { display: flex; gap: 18px; margin-top: 30px; color: #677783; font-size: 11px; }
+    .hero-note span { display: flex; align-items: center; gap: 7px; }
+    .hero-note b { color: var(--mint); font-size: 16px; }
+    .hero-visual { position: relative; min-height: 500px; display: grid; place-items: center; }
+    .orbital { position: absolute; width: 440px; height: 440px; border: 1px solid #1c3740; border-radius: 50%; transform: rotate(-18deg); }
+    .orbital::before, .orbital::after { content: ""; position: absolute; inset: 38px; border: 1px solid #203c48; border-radius: 50%; }
+    .orbital::after { inset: 105px; border-color: #3b635a; }
+    .orbit-dot { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 22px var(--mint); }
+    .orbit-dot.one { top: 21px; left: 240px; } .orbit-dot.two { right: 17px; bottom: 126px; background: var(--blue); box-shadow: 0 0 22px var(--blue); } .orbit-dot.three { left: 52px; bottom: 73px; background: var(--amber); box-shadow: 0 0 22px var(--amber); }
+    .signal-card { position: relative; width: min(430px, 90%); padding: 18px; border: 1px solid #30434a; border-radius: 13px; background: linear-gradient(145deg, rgba(20,31,36,.98), rgba(12,17,22,.98)); box-shadow: var(--shadow); }
+    .signal-head, .card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .signal-head strong { font-size: 13px; } .signal-head span { color: var(--mint); font-size: 11px; }
+    .signal-title { margin: 28px 0 20px; font-size: 28px; line-height: 1.2; letter-spacing: -.04em; }
+    .signal-row { display: grid; grid-template-columns: 94px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid #223039; color: var(--muted); font-size: 11px; }
+    .signal-row b { color: var(--soft); font-weight: 500; }
+    .mini-bars { display: flex; align-items: end; height: 80px; gap: 9px; margin-top: 17px; }
+    .mini-bars i { flex: 1; min-height: 14px; border-radius: 4px 4px 1px 1px; background: linear-gradient(#73e5b1, #2f7762); }
+    .mini-bars i:nth-child(2) { height: 38%; } .mini-bars i:nth-child(3) { height: 70%; } .mini-bars i:nth-child(4) { height: 53%; } .mini-bars i:nth-child(5) { height: 92%; } .mini-bars i:nth-child(6) { height: 64%; }
+    section { padding: 108px 0; border-top: 1px solid #172129; }
+    .section-head { display: grid; grid-template-columns: .72fr 1fr; gap: 60px; margin-bottom: 42px; }
+    .section-index { color: var(--mint); font-size: 12px; letter-spacing: .12em; }
+    h2 { margin: 7px 0 0; font-size: clamp(30px, 4vw, 52px); line-height: 1.1; letter-spacing: -.06em; }
+    .section-lede { margin: 16px 0 0; max-width: 540px; color: var(--muted); font-size: 16px; }
+    .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .problem { min-height: 216px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #0d1319; }
+    .problem .num { color: var(--red); font-size: 12px; } .problem h3 { margin: 33px 0 10px; font-size: 18px; letter-spacing: -.03em; } .problem p { margin: 0; color: var(--muted); font-size: 13px; }
+    .architecture { display: grid; grid-template-columns: 1.15fr .85fr; gap: 14px; }
+    .stack { padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+    .stack + .stack { margin-top: 10px; }
+    .stack .tag { color: var(--mint); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; } .stack h3 { margin: 8px 0 5px; font-size: 17px; } .stack p { margin: 0; color: var(--muted); font-size: 12px; }
+    .flow-visual { padding: 26px; border: 1px solid #315249; border-radius: var(--radius); background: linear-gradient(150deg, #11211e, #0e151b 67%); }
+    .flow-visual h3 { margin: 0 0 26px; font-size: 20px; } .flow-line { display: grid; gap: 10px; }
+    .flow-node { display: grid; grid-template-columns: 30px 1fr; align-items: center; gap: 12px; } .flow-node > b { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid #4b826e; border-radius: 50%; color: var(--mint); font-size: 11px; } .flow-node span { color: var(--soft); font-size: 13px; } .flow-node small { display: block; color: #71827e; font-size: 11px; }
+    .matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .matrix-panel { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+    .matrix-panel h3 { margin: 0; font-size: 18px; } .matrix-panel > p { color: var(--muted); font-size: 12px; }
+    .channels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 22px; }
+    .channel { padding: 13px 12px; border: 1px solid #2a3942; border-radius: 9px; background: #0b1116; } .channel b { display: block; font-size: 13px; } .channel span { color: var(--muted); font-size: 10px; }
+    .content-map { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 22px; }
+    .content-map div { min-height: 76px; padding: 11px; border-radius: 8px; background: #15252a; border: 1px solid #2a4e4a; } .content-map div:nth-child(2) { background: #182235; border-color: #30456b; } .content-map div:nth-child(3) { background: #2b2419; border-color: #5a4727; } .content-map div:nth-child(4) { background: #241d2b; border-color: #4e3c61; } .content-map b { display: block; font-size: 12px; } .content-map span { color: #91a6a5; font-size: 10px; }
+    .aigc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .aigc-card { min-height: 230px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); } .aigc-card .icon { color: var(--blue); font-size: 24px; } .aigc-card h3 { margin: 28px 0 8px; font-size: 18px; } .aigc-card p { margin: 0; color: var(--muted); font-size: 12px; }
+    .guardrail { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; } .guardrail span { padding: 5px 8px; border: 1px solid #2f485b; border-radius: 999px; color: #9fc7ef; font-size: 10px; }
+    .data-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 14px; } .data-card { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+    .metric-row { display: grid; grid-template-columns: 118px 1fr 54px; align-items: center; gap: 10px; margin-top: 18px; color: var(--muted); font-size: 11px; } .metric-row strong { color: var(--soft); font-size: 12px; } .metric-row em { color: var(--mint); text-align: right; font-style: normal; } .track { height: 7px; border-radius: 99px; background: #202b33; overflow: hidden; } .track i { display: block; height: 100%; border-radius: inherit; background: var(--mint); } .track.blue i { background: var(--blue); } .track.amber i { background: var(--amber); }
+    .loop { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 24px; } .loop-step { position: relative; padding: 16px 13px; border-top: 1px solid #36504c; } .loop-step::before { content: ""; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--mint); } .loop-step b { display: block; font-size: 12px; } .loop-step span { display: block; margin-top: 7px; color: var(--muted); font-size: 11px; }
+    .closing { min-height: 500px; display: grid; place-items: center; text-align: center; } .closing h2 { max-width: 780px; } .closing p { max-width: 560px; margin: 20px auto 0; color: var(--muted); font-size: 17px; } .closing .hero-actions { justify-content: center; }
+    footer { padding: 26px 0 42px; color: #65747e; font-size: 11px; border-top: 1px solid #172129; }
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity .65s ease, transform .65s ease; } .reveal.show { opacity: 1; transform: none; }
+    @media (max-width: 900px) { nav { display: none; } .hero, .architecture, .data-grid { grid-template-columns: 1fr; } .hero { padding-top: 64px; } .hero-visual { min-height: 390px; } .section-head { grid-template-columns: 1fr; gap: 12px; } .problem-grid, .aigc-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 620px) { .wrap { width: min(100% - 28px, 1180px); } .top-action { display: none; } .hero { min-height: auto; padding: 58px 0 64px; } h1 { font-size: 48px; } .orbital { width: 320px; height: 320px; } .signal-card { width: 94%; } section { padding: 76px 0; } .matrix { grid-template-columns: 1fr; } .channels { grid-template-columns: 1fr 1fr; } .content-map { grid-template-columns: 1fr 1fr; } .loop { grid-template-columns: 1fr 1fr; row-gap: 12px; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } .reveal { opacity: 1; transform: none; } }
+    @media print { .topbar { position: static; } .hero { min-height: auto; } .reveal { opacity: 1; transform: none; } .btn, nav { display: none; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top"><span class="brand-mark">FX</span><span>FRICTION X<small>content intelligence system</small></span></a>
+      <nav aria-label="页面导航"><a class="active" href="#solution">解决方案</a><a href="#matrix">新媒体矩阵</a><a href="#aigc">AIGC 引擎</a><a href="#data">用户数据</a></nav>
+      <button class="top-action" data-scroll="#closing">进入路演结论 ↗</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="wrap hero">
+      <div>
+        <p class="kicker"><i></i> OPERATIONS / CONTENT / GROWTH</p>
+        <h1>把内容，变成一套可持续增长的系统。</h1>
+        <p class="hero-copy">我们构建的不是又一个内容后台，而是一套从<strong>内容分析</strong>出发，连接<strong>新媒体矩阵、AIGC 生产与用户数据</strong>的运营智能平台。</p>
+        <div class="hero-actions"><a class="btn primary" href="#solution">看懂这套系统 ↓</a><button class="btn" data-scroll="#matrix">查看矩阵能力 →</button></div>
+        <div class="hero-note"><span><b>01</b> 内容被理解</span><span><b>02</b> 内容可复用</span><span><b>03</b> 用户可追踪</span></div>
+      </div>
+      <div class="hero-visual" aria-label="内容智能系统示意">
+        <div class="orbital"><span class="orbit-dot one"></span><span class="orbit-dot two"></span><span class="orbit-dot three"></span></div>
+        <div class="signal-card">
+          <div class="signal-head"><strong>CONTENT SIGNAL / 001</strong><span>● LIVE ANALYSIS</span></div>
+          <h2 class="signal-title">从一条内容，找到下一条增长路径。</h2>
+          <div class="signal-row"><span>识别主题</span><b>工业自动化 · 稳定性 · 低维护</b></div>
+          <div class="signal-row"><span>推荐矩阵</span><b>公众号 / 视频号 / 小红书 / 销售话术</b></div>
+          <div class="signal-row"><span>待验证信号</span><b>用户更关心“场景证明”，而非参数堆叠</b></div>
+          <div class="mini-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+
+    <section id="problem"><div class="wrap reveal"><div class="section-head"><div><span class="section-index">01 / THE GAP</span><h2>增长卡在了“内容之后”。</h2></div><p class="section-lede">很多团队已经在生产内容，却还无法回答：什么值得继续做？如何适配不同平台？用户看完之后发生了什么？</p></div><div class="problem-grid"><article class="problem"><span class="num">01</span><h3>素材很多，洞察很少</h3><p>会议、论文、产品资料和用户反馈分散在不同地方，内容团队只能凭感觉选题。</p></article><article class="problem"><span class="num">02</span><h3>只有一个渠道，增长受限</h3><p>目前主要依赖公众号单一渠道，内容触达范围、用户反馈和后续转化路径都受到限制。</p></article><article class="problem"><span class="num">03</span><h3>生成很快，复盘很慢</h3><p>AIGC 可以写出内容，却没有和证据、品牌边界、用户行为连接起来。</p></article></div></div></section>
+
+    <section id="solution"><div class="wrap reveal"><div class="section-head"><div><span class="section-index">02 / THE SYSTEM</span><h2>内容分析，是系统的第一层。</h2></div><p class="section-lede">先把企业已有内容变成可检索、可引用、可判断的知识层，再让每一次创作都能回到业务问题，而不是从空白开始。</p></div><div class="architecture"><div><div class="stack"><span class="tag">01 · ingest</span><h3>内容输入层</h3><p>会议、活动、PDF、论文、专利、产品手册、客户沟通记录，统一进入内容工作台。</p></div><div class="stack"><span class="tag">02 · understand</span><h3>内容分析与证据层</h3><p>识别主题、实体、场景、痛点与证据等级，形成可追溯的内容资产。</p></div><div class="stack"><span class="tag">03 · orchestrate</span><h3>创作与分发层</h3><p>把同一洞察编译成不同平台的内容任务、提示词、审核门和发布节奏。</p></div></div><div class="flow-visual"><h3>一条内容的生命周期</h3><div class="flow-line"><div class="flow-node"><b>01</b><span>采集 <small>把原始素材变成可理解数据</small></span></div><div class="flow-node"><b>02</b><span>分析 <small>找到主题、证据与用户意图</small></span></div><div class="flow-node"><b>03</b><span>生成 <small>编排矩阵内容与 AIGC 任务</small></span></div><div class="flow-node"><b>04</b><span>复盘 <small>用用户反馈反哺下一轮内容</small></span></div></div></div></div></div></section>
+
+    <section id="matrix"><div class="wrap reveal"><div class="section-head"><div><span class="section-index">03 / MEDIA MATRIX</span><h2>一份洞察，长成一张新媒体矩阵。</h2></div><p class="section-lede">平台不是“多发几个账号”，而是把同一个核心观点，按人群、媒介和转化阶段重新编译。</p></div><div class="matrix"><div class="matrix-panel"><h3>矩阵不是复制，是角色分工</h3><p>每个触点有自己的任务：建立认知、解释价值、承接咨询、推动转化。</p><div class="channels"><div class="channel"><b>公众号</b><span>深度解释 · 搜索沉淀</span></div><div class="channel"><b>视频号</b><span>现场感 · 关系触达</span></div><div class="channel"><b>小红书</b><span>场景种草 · 痛点表达</span></div><div class="channel"><b>抖音 / 快手</b><span>快速认知 · 规模分发</span></div><div class="channel"><b>企业微信</b><span>一对一跟进 · 线索承接</span></div><div class="channel"><b>销售话术</b><span>个性化沟通 · 成交推进</span></div></div></div><div class="matrix-panel"><h3>内容分析平台输出什么？</h3><p>从一份产品资料中，自动识别可以被持续表达的内容单元。</p><div class="content-map"><div><b>场景</b><span>客户正在解决什么</span></div><div><b>证据</b><span>哪些结论可被引用</span></div><div><b>表达</b><span>如何说给不同人听</span></div><div><b>动作</b><span>下一步如何承接</span></div></div><div class="guardrail"><span>来源可追溯</span><span>证据分级</span><span>人工审核</span><span>可回收复用</span></div></div></div></div></section>
+
+    <section id="aigc"><div class="wrap reveal"><div class="section-head"><div><span class="section-index">04 / AIGC ENGINE</span><h2>让 AIGC 进入生产系统，而不是孤立的聊天框。</h2></div><p class="section-lede">我们把需求理解、资产锁定、提示词编译、平台适配和任务追踪连成一条链，让生成内容可控、可审、可复用。</p></div><div class="aigc-grid"><article class="aigc-card"><span class="icon">✦</span><h3>从自然语言到创作任务</h3><p>输入一句业务需求，系统拆成目标、受众、画幅、时长、风格和镜头级执行规格。</p><div class="guardrail"><span>Creative Brief</span><span>Storyboard</span></div></article><article class="aigc-card"><span class="icon">◈</span><h3>先锁资产，再批量生成</h3><p>风格、产品、场景、人物先经过审批，避免每个镜头都发生形态漂移和品牌失真。</p><div class="guardrail"><span>STYLE00</span><span>Asset Gate</span></div></article><article class="aigc-card"><span class="icon">↗</span><h3>平台适配与任务可追踪</h3><p>对接 RunningHub 等执行平台，记录提交模式、任务状态、失败节点和输出结果。</p><div class="guardrail"><span>Mock / Live</span><span>Audit Log</span></div></article></div></div></section>
+
+    <section id="data"><div class="wrap reveal"><div class="section-head"><div><span class="section-index">05 / USER INTELLIGENCE</span><h2>内容发布之后，用户数据开始说话。</h2></div><p class="section-lede">把阅读、互动、搜索、咨询和销售跟进放在同一条观察链上，回答内容是否真的改变了用户下一步。</p></div><div class="data-grid"><div class="data-card"><div class="card-head"><h3>用户意图雷达</h3><span class="badge">DEMO SIGNALS</span></div><div class="metric-row"><strong>问题型访问</strong><div class="track"><i style="width: 82%"></i></div><em>高</em></div><div class="metric-row"><strong>场景型阅读</strong><div class="track blue"><i style="width: 66%"></i></div><em>中高</em></div><div class="metric-row"><strong>价格型咨询</strong><div class="track amber"><i style="width: 44%"></i></div><em>待验证</em></div><p class="section-lede" style="font-size:12px;margin-top:28px">示意指标用于表达平台的分析方式，不代表已对外发布的实际经营数据。</p></div><div class="data-card"><div class="card-head"><h3>从内容到动作的闭环</h3><span class="badge">OPERATING LOOP</span></div><div class="loop"><div class="loop-step"><b>内容信号</b><span>用户在问什么、反复看什么</span></div><div class="loop-step"><b>人群判断</b><span>他处于认知、评估还是采购</span></div><div class="loop-step"><b>内容动作</b><span>下一条内容要解释什么</span></div><div class="loop-step"><b>业务承接</b><span>转入咨询、线索与销售跟进</span></div></div><div class="guardrail"><span>用户分层</span><span>内容归因</span><span>意图评分</span><span>持续复盘</span></div></div></div></div></section>
+
+    <section id="closing" class="closing"><div class="wrap reveal"><p class="kicker"><i></i> THE TAKEAWAY</p><h2>我们正在把“做内容”升级为“经营内容资产”。</h2><p>内容分析让平台理解业务，AIGC 让生产规模化，用户数据让每一轮决策有反馈。三者合在一起，才是一套真正能持续运行的新媒体增长系统。</p><div class="hero-actions"><a class="btn primary" href="#top">回到开场 ↑</a><a class="btn" href="http://localhost:3000/marketing" target="_blank" rel="noreferrer">打开产品工作台 ↗</a></div></div></section>
+  </main>
+  <footer><div class="wrap">FRICTION X / CONTENT INTELLIGENCE SYSTEM · 路演演示页 · 所有示意指标均为结构表达，不构成经营承诺。</div></footer>
+  <script>
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add('show')), { threshold: .14 });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    document.querySelectorAll('[data-scroll]').forEach((el) => el.addEventListener('click', () => document.querySelector(el.dataset.scroll)?.scrollIntoView({ behavior: 'smooth' })));
+  </script>
+</body>
+</html>

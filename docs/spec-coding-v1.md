@@ -21,7 +21,7 @@
 | 结构化主存储 | PostgreSQL + SQLAlchemy + Alembic | 支持账户、会话、事件、审计、事务与分析查询 |
 | RAG | PostgreSQL `pgvector` | 避免同时维护 PostgreSQL 与 Chroma 两套向量存储 |
 | 图关系 | Neo4j | 存放已审核实体、证据、生命周期和账户关系 |
-| 运营控制面 | 飞书 Base + 云文档 | 账户/任务/审核/视频/事件的可见控制面与反馈总线 |
+| 运营控制面 | 钉钉业务表 + 钉钉文档 | 账户/任务/审核/视频/事件的可见控制面与反馈总线 |
 | 异步 | 初期 asyncio runner；扩容后 Celery + Redis | 当前不引入未使用的队列依赖，达到多 worker 需求后再切换 |
 | 模型 | `LlmProvider` 协议 + Provider 适配器 | 业务代码不绑定某一个模型或供应商 |
 
@@ -69,15 +69,15 @@
 
 ### Phase 0：配置、依赖与基础设施
 
-**目标**：在不破坏现有 Next.js 演示的情况下，使 FastAPI 可连接 PostgreSQL、Neo4j、飞书和 Provider。
+**目标**：在不破坏现有 Next.js 演示的情况下，使 FastAPI 可连接 PostgreSQL、Neo4j、钉钉和 Provider。
 
 - 新增 PostgreSQL、`pgvector`、Alembic、SQLAlchemy 依赖及 Docker 服务。
 - 使用 Pydantic Settings 读取 `.env`；真实凭据不提交版本库。
 - 建立健康检查：`/healthz`、`/readyz` 分别检查进程与依赖。
-- 飞书 Base 创建账户、任务、审核、视频、事件表；记录 ID 映射。
+- 钉钉业务表 创建账户、任务、审核、视频、事件表；记录 ID 映射。
 
-**验收**：本地容器可启动；数据库迁移完成；飞书测试表读写成功。  
-**阻塞条件**：飞书 App 凭据、Base App Token、表 ID、Neo4j/PostgreSQL 可用地址。
+**验收**：本地容器可启动；数据库迁移完成；钉钉测试表读写成功。
+**阻塞条件**：钉钉 App 凭据、Base App Token、表 ID、Neo4j/PostgreSQL 可用地址。
 
 ### Phase 1：领域模型与持久层
 
@@ -90,16 +90,16 @@
 
 **验收**：迁移创建表；账户/线索/事件可读写；产品目录无法被未审核 API 改写；已审核账户同步出图关系。
 
-### Phase 2：飞书控制面与账户分层
+### Phase 2：钉钉控制面与账户分层
 
-**目标**：飞书成为贯穿式控制面与反馈总线，而非最终报表。
+**目标**：钉钉成为贯穿式控制面与反馈总线，而非最终报表。
 
-- `FeishuBaseClient` 实现 token、分页、幂等写入、重试、字段映射和 webhook 验签。
+- `DingTalkControlPlaneClient` 实现 token、分页、幂等写入、重试、字段映射和 webhook 验签。
 - 创建/同步账户、任务、审核、视频资产、行为事件；从 Base 人工校正回写 PostgreSQL。
 - 分层引擎在导入/更新时计算 `KA/LA/SMB`，产生 `routing_policy` 和审计原因。
 - KA 自动建立客户经理待办；LA 建立审核任务；SMB 进入授权与频控检查。
 
-**验收**：创建 KA 账户后 5 分钟内有飞书待办；人工改层后 PostgreSQL、Neo4j、Base 一致。
+**验收**：创建 KA 账户后 5 分钟内有钉钉待办；人工改层后 PostgreSQL、Neo4j、Base 一致。
 
 ### Phase 3：导入、画像、评分与产品推荐
 
@@ -127,10 +127,10 @@
 
 **目标**：让对客会话、视频互动和增长反馈成为一个可控闭环。
 
-- 实现 REST + SSE 流式会话 API；前端先提供嵌入式客服模拟器，后续接 H5 与飞书 IM。
+- 实现 REST + SSE 流式会话 API；前端先提供嵌入式客服模拟器，后续接 H5 与钉钉 IM。
 - 策略引擎先执行分层/权限/频控/转人工，再调用检索和 LLM。
 - 视频匹配器由 `video_key` 返回审核资产；播放器上报事件。
-- 行为事件写入 PostgreSQL 和飞书，异步更新 Neo4j 兴趣、场景和生命周期关系。
+- 行为事件写入 PostgreSQL 和钉钉，异步更新 Neo4j 兴趣、场景和生命周期关系。
 
 **验收**：SMB 可完成 FAQ/视频/CTA；LA 关键内容待审核；KA 立即转人工；播放、完播和预约可追溯。
 
@@ -138,12 +138,12 @@
 
 **目标**：增长负责人可查看、审计和复盘所有运营动作。
 
-- `POST /api/graph/snapshot` 按账户、深度和时间范围查询 Neo4j，生成 Mermaid/SVG/PNG，回写飞书文档或附件。
+- `POST /api/graph/snapshot` 按账户、深度和时间范围查询 Neo4j，生成 Mermaid/SVG/PNG，回写钉钉文档或附件。
 - 完成 Dashboard、导入、账户/线索详情、客服收件箱、审核队列、视频资产、Follow-ups、设置页。
-- E2E：导入 → 分层 → 评分 → 推荐 → 话术/客服 → 视频 → 事件 → 图谱/飞书反馈。
+- E2E：导入 → 分层 → 评分 → 推荐 → 话术/客服 → 视频 → 事件 → 图谱/钉钉反馈。
 - 以 Docker Compose 部署 PostgreSQL、Neo4j、API；前端部署独立运行时。
 
-**验收**：完整闭环可在前端演示；所有状态可从飞书和 PostgreSQL 审计；依赖异常不会造成自动越权触达。
+**验收**：完整闭环可在前端演示；所有状态可从钉钉和 PostgreSQL 审计；依赖异常不会造成自动越权触达。
 
 ## 5. 当前完成度（2026-07-14）
 
@@ -154,12 +154,12 @@
 | FastAPI Runs API | 骨架完成 | 当前使用内存控制面和演示素材 |
 | LLM Provider 抽象 | 骨架完成 | 未接入业务任务与客服策略 |
 | PostgreSQL / pgvector | 未开始 | 当前仍使用 JSON 数据文件 |
-| 飞书 Base / 云文档 | 未开始 | 仅有环境变量与内存适配器 |
+| 钉钉业务表 / 文档 | 未开始 | 仅有环境变量与内存适配器 |
 | Neo4j 图谱 | 未开始 | 驱动存在，未接入 Schema/写入/查询 |
 | KA/LA/SMB | 未开始 | PRD 已定义，尚未落入模型/API/UI |
 | 智能客服 | 未开始 | PRD 已定义，尚无会话服务 |
 | AIGC 视频闭环 | 未开始 | 只有 `video_key` DTO，无资产/播放器/事件 |
-| 图谱快照 | 未开始 | 无 API、渲染或飞书回写 |
+| 图谱快照 | 未开始 | 无 API、渲染或钉钉回写 |
 
 ## 6. 验收状态
 

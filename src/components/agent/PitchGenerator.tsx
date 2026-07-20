@@ -16,6 +16,7 @@ const channelOptions: { value: PitchChannel; label: string }[] = [
 export function PitchGenerator({ leadId, initialPitch }: { leadId: string; initialPitch?: GeneratedPitch }) {
   const [channel, setChannel] = useState<PitchChannel>("phone");
   const [pitch, setPitch] = useState<GeneratedPitch | undefined>(initialPitch);
+  const [content, setContent] = useState(initialPitch?.content || "");
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -27,8 +28,16 @@ export function PitchGenerator({ leadId, initialPitch }: { leadId: string; initi
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ leadId, channel })
     });
-    setPitch(await response.json());
+    const nextPitch = await response.json();
+    setPitch(nextPitch);
+    setContent(nextPitch.content);
     setLoading(false);
+  }
+
+  async function savePitch() {
+    if (!pitch || !content.trim()) return;
+    const response = await fetch(`/api/pitches/${pitch.id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content }) });
+    if (response.ok) setPitch(await response.json());
   }
 
   async function saveFollowUp() {
@@ -65,11 +74,12 @@ export function PitchGenerator({ leadId, initialPitch }: { leadId: string; initi
           <Save size={17} />
           保存跟进
         </button>
+        <button className="button secondary" onClick={savePitch} disabled={!pitch || !content.trim()}>保存话术</button>
       </div>
 
       {pitch ? (
         <div style={{ marginTop: 14 }}>
-          <div className="pitch-box">{pitch.content}</div>
+          <textarea className="pitch-box" value={content} onChange={(event) => setContent(event.target.value)} aria-label="编辑销售话术" />
           <p className="subtle" style={{ marginTop: 10 }}>
             {pitch.rationale}
           </p>
