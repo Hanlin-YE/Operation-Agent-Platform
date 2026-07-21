@@ -24,6 +24,7 @@ const navigationGroups: NavigationGroup[] = [
       { href: "/knowledge", title: "产品知识", meta: "产品资料、案例与选型经验", icon: BookOpen },
       { href: "/content/library", title: "论文与专利知识库", meta: "独立 RAG 技术证据层", icon: BookOpen },
       { href: "/marketing", title: "市场知识", meta: "市场机会、竞品与策略", icon: BarChart3 },
+      { href: "/marketing/xiaohongshu", title: "小红书公开线索", meta: "公开笔记与评论线索表", icon: Newspaper },
       { href: "/graph", title: "知识关系图谱", meta: "实体与关系检索", icon: Network }
     ]
   },
