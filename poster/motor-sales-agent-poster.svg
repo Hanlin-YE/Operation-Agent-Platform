@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2200" viewBox="0 0 1600 2200">
+  <defs>
+    <style>
+      .title { font: 700 48px "Arial", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #f05a00; }
+      .meta { font: 700 21px "Arial", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #f05a00; }
+      .h-en { font: 700 32px "Arial", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #f05a00; }
+      .h-cn { font: 700 31px "Arial", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #f05a00; }
+      .body { font: 700 27px "Arial", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #111827; }
+      .body-small { font: 700 22px "Arial", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #111827; }
+      .note { font: 700 20px "Arial", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #ef0000; }
+      .ref { font: 700 22px "Arial", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #ffffff; }
+      .muted { fill: #4b5563; }
+      .tag { font: 700 20px "Arial", "PingFang SC", "Microsoft YaHei", sans-serif; fill: #ffffff; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="2200" fill="#161616"/>
+  <rect x="150" y="70" width="1300" height="2050" fill="#ffffff"/>
+  <rect x="150" y="400" width="1300" height="1500" fill="#eaf1fb"/>
+  <rect x="150" y="395" width="1300" height="8" fill="#f05a00"/>
+  <rect x="150" y="1900" width="1300" height="220" fill="#df4b00"/>
+  <line x1="800" y1="430" x2="800" y2="1300" stroke="#1767ff" stroke-width="2" stroke-dasharray="16 10"/>
+  <line x1="210" y1="730" x2="760" y2="730" stroke="#1767ff" stroke-width="2" stroke-dasharray="16 10"/>
+  <line x1="210" y1="1298" x2="1390" y2="1298" stroke="#1767ff" stroke-width="2" stroke-dasharray="16 10"/>
+
+  <text x="230" y="170" class="title">自超滑电机 AIGC 销售 Agent</text>
+  <text x="230" y="235" class="meta">小组成员 (Group members): 未在项目文件中提供</text>
+  <text x="230" y="275" class="meta">指导老师 (Mentors): 未在项目文件中提供</text>
+  <text x="1225" y="170" class="title" text-anchor="middle">X</text>
+  <text x="1225" y="215" class="meta" text-anchor="middle">X-Institute</text>
+  <text x="1225" y="247" class="meta" text-anchor="middle">深圳零一学院</text>
+
+  <g transform="translate(210 448)">
+    <rect x="0" y="8" width="13" height="28" rx="2" fill="#f05a00" stroke="#1767ff" stroke-width="3"/>
+    <text x="38" y="30" class="h-en">Abstract</text>
+    <text x="38" y="68" class="h-cn">摘要</text>
+    <text x="0" y="136" class="body-small">1. 面向电机销售团队，辅助潜客筛选、评分、</text>
+    <text x="28" y="174" class="body-small">话术生成与跟进。</text>
+    <text x="0" y="222" class="body-small">2. 业务主线聚焦 Friction X 自超滑空心杯电机。</text>
+    <text x="0" y="262" class="body-small">3. 当前仓库为 P0 可运行演示原型，不是生产级系统。</text>
+  </g>
+
+  <g transform="translate(210 790)">
+    <rect x="0" y="8" width="13" height="28" rx="2" fill="#f05a00" stroke="#1767ff" stroke-width="3"/>
+    <text x="38" y="30" class="h-en">Introduction</text>
+    <text x="38" y="68" class="h-cn">问题简述</text>
+    <text x="0" y="136" class="body-small">1. 技术型 B2B 销售需要快速判断客户是否值得跟进。</text>
+    <text x="0" y="176" class="body-small">2. 销售话术必须基于产品知识，避免夸大性能或缺少证据。</text>
+    <text x="0" y="216" class="body-small">3. PRD 要求从线索导入到评分、推荐、话术</text>
+    <text x="28" y="254" class="body-small">和跟进形成闭环。</text>
+    <text x="0" y="302" class="body-small">4. 性能数字、公司事实和对外话术需审核确认。</text>
+  </g>
+
+  <g transform="translate(835 448)">
+    <rect x="0" y="8" width="13" height="28" rx="2" fill="#f05a00" stroke="#1767ff" stroke-width="3"/>
+    <text x="38" y="30" class="h-en">Plan</text>
+    <text x="38" y="68" class="h-cn">研究计划</text>
+    <text x="0" y="136" class="body-small">1. CRM-first 销售工作台：</text>
+    <text x="28" y="174" class="body-small">Dashboard、Leads、Knowledge、Agent Studio。</text>
+    <text x="0" y="222" class="body-small">2. 规则评分：</text>
+    <text x="28" y="260" class="body-small">行业、应用场景、规模、触达性、紧迫度、风险扣分。</text>
+    <text x="0" y="308" class="body-small">3. 话术生成：</text>
+    <text x="28" y="346" class="body-small">电话、微信、邮件、报价跟进、异议处理、技术确认。</text>
+    <text x="0" y="394" class="body-small">4. P0.5 计划补齐：</text>
+    <text x="28" y="432" class="body-small">自超滑推荐、场景问诊、RAG 引用、Review Agent。</text>
+    <text x="0" y="480" class="body-small">5. 生产前规划：</text>
+    <text x="28" y="518" class="body-small">FastAPI、钉钉控制面、Neo4j 图谱与人工审核。</text>
+  </g>
+
+  <g transform="translate(210 1365)">
+    <rect x="0" y="8" width="13" height="28" rx="2" fill="#f05a00" stroke="#1767ff" stroke-width="3"/>
+    <text x="38" y="30" class="h-en">Primary Results</text>
+    <text x="38" y="68" class="h-cn">初步研究结果</text>
+    <text x="0" y="136" class="body">已打通的演示闭环</text>
+    <text x="0" y="181" class="body-small">新建线索 → 打开详情 → 规则评分 → 产品/知识关键词匹配 → 生成 6 类话术 → 保存时间线。</text>
+    <text x="0" y="246" class="body">当前可见实现</text>
+    <text x="0" y="291" class="body-small">页面：Dashboard、线索列表/详情、产品库、销售知识库、Agent Studio、PRD 查看页。</text>
+    <text x="0" y="331" class="body-small">API：leads、products、knowledge、score-lead、generate-pitch、follow-ups。</text>
+    <text x="0" y="371" class="body-small">技术栈：Next.js App Router、React、TypeScript、lucide-react、JSON 数据层。</text>
+    <text x="0" y="436" class="body">如实标注的限制</text>
+    <text x="0" y="481" class="body-small">当前不是向量 RAG；没有 Source Registry、Review Queue、CSV 批量导入。</text>
+    <text x="0" y="521" class="body-small">自超滑产品推荐、场景问诊、性能承诺拦截仍属于 P0.5/后续建设范围。</text>
+  </g>
+
+  <g transform="translate(835 1128)">
+    <text x="0" y="0" class="note">真实性说明：</text>
+    <text x="0" y="38" class="note">1. 海报内容只引用 README、PRD、当前产品规格与架构研究文档。</text>
+    <text x="0" y="76" class="note">2. 未把规划能力写成已实现能力；未补写未提供的成员和导师信息。</text>
+    <text x="0" y="114" class="note">3. “最高 8000h / 目标 20000h”等性能数字未放入海报主结论，</text>
+    <text x="28" y="152" class="note">因为项目文档要求不得改写为所有型号、所有工况承诺。</text>
+  </g>
+
+  <g transform="translate(210 1918)">
+    <rect x="0" y="10" width="13" height="28" rx="2" fill="#ffffff" stroke="#1767ff" stroke-width="3"/>
+    <text x="38" y="34" class="ref">Reference 参考文献 / 项目依据</text>
+    <text x="0" y="76" class="ref">[1] README.md：电机销售拓客 AIGC Sales Agent 当前实现、技术栈与演示流程。</text>
+    <text x="0" y="112" class="ref">[2] docs/prd.md：产品目标、P0 范围、评分维度、话术与事实治理要求。</text>
+    <text x="0" y="148" class="ref">[3] docs/current-product-spec.md：当前可运行范围、已实现 API、限制与审阅结论。</text>
+    <text x="0" y="184" class="ref">[4] docs/b2b-marketing-agent-architecture.md、docs/implementation-priorities.md。</text>
+  </g>
+</svg>

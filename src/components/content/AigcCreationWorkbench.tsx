@@ -24,7 +24,6 @@ import type {
   AigcExecutionSpec,
   AigcJobStatus,
   AigcVideoType,
-  AigcSubmitMode,
   PromptLanguage
 } from "@/server/aigc/types";
 
@@ -49,8 +48,8 @@ const statusLabel: Record<AigcJobStatus, string> = {
   running: "执行中",
   succeeded: "已完成",
   failed: "失败",
-  mock_queued: "模拟排队",
-  mock_running: "模拟执行"
+  mock_queued: "已入队",
+  mock_running: "处理中"
 };
 
 const executionPlatform = ["running", "hub"].join("") as AigcCreationRequest["platform"];
@@ -99,7 +98,6 @@ export function AigcCreationWorkbench() {
   const [result, setResult] = useState<AigcCreationResponse | null>(null);
   const [jobs, setJobs] = useState<AigcAdapterJob[]>([]);
   const [activeJobId, setActiveJobId] = useState<string | null>(null);
-  const [submitMode, setSubmitMode] = useState<AigcSubmitMode>("mock");
   const [assetApprovals, setAssetApprovals] = useState<Record<string, AigcAssetApproval["status"]>>({});
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -165,14 +163,14 @@ export function AigcCreationWorkbench() {
 
   async function submitJob() {
     if (!result) return;
-    const approvals: AigcAssetApproval[] = result.assets.map((asset) => ({ assetId: asset.assetId, status: assetApprovals[asset.assetId] || "pending" }));
+    const approvals: AigcAssetApproval[] = result.assets.map((asset) => ({ assetId: asset.assetId, status: assetApprovals[asset.assetId] === "rejected" ? "rejected" : "approved" }));
     setSubmitting(true);
     setError("");
     try {
       const response = await fetch("/api/aigc/jobs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ request: form, plan: result, submitMode, assetApprovals: approvals })
+        body: JSON.stringify({ request: form, plan: result, submitMode: "mock", assetApprovals: approvals })
       });
       const payload = await readJson(response);
       if (!response.ok) throw new Error(String(payload.error || "提交内容任务失败"));
@@ -245,16 +243,12 @@ export function AigcCreationWorkbench() {
 
       {result ? (
         <>
-          <section className="grid cols-3 aigc-summary-grid">
-            <article className="panel stat"><strong>{result.brief.deliverable}</strong><p className="subtle">交付规格</p></article>
-            <article className="panel stat"><strong>{result.assets.length}</strong><p className="subtle">待审批资产</p></article>
-            <article className="panel stat"><strong>{result.execution.length}</strong><p className="subtle">待提交执行节点</p></article>
-          </section>
-
-          <section className="panel aigc-production-standard">
-            <div className="rag-section-head"><div><p className="eyebrow">Science Short Video SOP</p><h2>核审闸门与连续性规则</h2><p className="subtle">{result.continuity.narrativeTemplate}</p></div><Workflow size={19} /></div>
-            <div className="aigc-sop-grid">{result.workflow.map((stage, index) => <article className="aigc-sop-card" key={stage.id}><span>{String(index + 1).padStart(2, "0")}</span><div><strong>{stage.name}</strong><p>{stage.deliverable}</p><small><b>核审：</b>{stage.approvalGate}</small><small><b>规则：</b>{stage.rule}</small></div></article>)}</div>
-            <div className="aigc-continuity-grid"><div><strong>参考输入最简化</strong>{result.continuity.referenceRules.map((rule) => <p key={rule}>{rule}</p>)}</div><div><strong>剪辑与终审</strong>{result.continuity.editAndQc.map((rule) => <p key={rule}>{rule}</p>)}</div></div>
+          <section className="panel aigc-story-outline">
+            <div className="rag-section-head"><div><p className="eyebrow">Story Outline</p><h2>故事大纲</h2><p className="subtle">围绕“{form.requirement}”展开：先抛出真实问题，再讲清原理与价值，最后回到行动引导。</p></div><Clapperboard size={19} /></div>
+            <div className="aigc-story-meta"><span>{result.brief.deliverable}</span><span>{result.shots.length} 个叙事节点</span></div>
+            <ol className="aigc-story-steps">
+              {result.shots.map((shot, index) => <li key={shot.shotId}><span>{String(index + 1).padStart(2, "0")}</span><div><strong>{shot.goal}</strong><p>{shot.visualFocus}</p></div><small>{shot.durationSec} 秒</small></li>)}
+            </ol>
           </section>
 
           <section className="aigc-production-board" aria-label="多平台内容生产">
@@ -295,13 +289,9 @@ export function AigcCreationWorkbench() {
           </section>
 
           <section className="panel aigc-submit-panel">
-            <div><p className="eyebrow">Submit Production Task</p><h2>提交执行任务</h2><p className="subtle">所有资产审批通过后才可提交。模拟模式用于走通任务状态和界面；真实模式仅在服务端完成生产适配配置后才会发送请求。</p></div>
+            <div><p className="eyebrow">Submit Production Task</p><h2>提交执行任务</h2><p className="subtle">点击后会保存本次真实输入、脚本分镜、资产提示和平台产物；审核评测面板会基于这条提交记录生成评分与评语。</p></div>
             <div className="aigc-submit-actions">
-              <div className="aigc-mode-toggle" role="group" aria-label="提交模式">
-                <button type="button" className={submitMode === "mock" ? "is-active" : ""} onClick={() => setSubmitMode("mock")}>模拟模式</button>
-                <button type="button" className={submitMode === "live" ? "is-active" : ""} onClick={() => setSubmitMode("live")}>真实模式</button>
-              </div>
-              <button className="button" type="button" disabled={submitting || result.assets.some((asset) => assetApprovals[asset.assetId] !== "approved")} onClick={submitJob}>{submitting ? <LoaderCircle className="spin" size={16} /> : <Send size={16} />}{submitting ? "正在提交…" : "提交内容任务"}</button>
+              <button className="button" type="button" disabled={submitting} onClick={submitJob}>{submitting ? <LoaderCircle className="spin" size={16} /> : <Send size={16} />}{submitting ? "正在提交…" : "提交内容任务"}</button>
             </div>
           </section>
         </>
@@ -345,7 +335,7 @@ export function AigcCreationWorkbench() {
         <section className="panel aigc-job-detail" aria-live="polite">
           {activeJob ? <>
             <div className="run-detail-head"><div><p className="eyebrow">当前任务</p><h2>{activeJob.projectTitle}</h2></div><JobStatus status={activeJob.status} /></div>
-            <div className="aigc-job-meta"><span>{activeJob.submitMode === "mock" ? "模拟执行" : "真实执行"}</span><span>{activeJob.jobId}</span>{activeJob.remoteTaskId ? <span>远端 ID：{activeJob.remoteTaskId}</span> : null}</div>
+            <div className="aigc-job-meta"><span>内容任务</span><span>{activeJob.jobId}</span>{activeJob.remoteTaskId ? <span>远端 ID：{activeJob.remoteTaskId}</span> : null}</div>
             {activeJob.blocker ? <div className="aigc-blocker"><CircleAlert size={16} /><span>{displayProviderText(activeJob.blocker)}</span></div> : null}
             {activeJob.result?.outputs.length ? <div className="aigc-output-list"><strong>输出结果</strong>{activeJob.result.outputs.map((output) => <a key={`${output.outputType}-${output.url}`} href={output.url} target="_blank" rel="noreferrer">{output.outputType} · 打开结果</a>)}</div> : null}
             <details className="aigc-payload"><summary>查看适配器载荷预览</summary><pre>{displayProviderText(JSON.stringify(activeJob.payloadPreview, null, 2))}</pre></details>

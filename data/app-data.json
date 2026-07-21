@@ -6049,11 +6049,24 @@
     },
     {
       "id": "learning-1784598217484-oftluw",
-      "title": "新的学习对话",
+      "title": "111",
       "category": "market",
-      "messages": [],
+      "messages": [
+        {
+          "id": "message-1784626912271-twtd2z",
+          "role": "learner",
+          "content": "111",
+          "createdAt": "2026-07-21T09:41:52.268Z"
+        },
+        {
+          "id": "message-1784626912271-r0jnlg",
+          "role": "coach",
+          "content": "复习要点来自「1」：1\n\n建议你下一步用自己的话复述该要点，并补充一句面向客户的澄清提问。",
+          "createdAt": "2026-07-21T09:41:52.268Z"
+        }
+      ],
       "createdAt": "2026-07-21T01:43:37.484Z",
-      "updatedAt": "2026-07-21T01:43:37.484Z"
+      "updatedAt": "2026-07-21T09:41:52.274Z"
     },
     {
       "id": "learning-1784537794336-5r0br2",
@@ -6082,10 +6095,22 @@
           "role": "coach",
           "content": "复习要点来自「1」：1\n\n建议你下一步用自己的话复述该要点，并补充一句面向客户的澄清提问。",
           "createdAt": "2026-07-21T02:02:45.871Z"
+        },
+        {
+          "id": "message-1784626678182-5nai4h",
+          "role": "learner",
+          "content": "我们公司有什么产品",
+          "createdAt": "2026-07-21T09:37:58.180Z"
+        },
+        {
+          "id": "message-1784626678182-ii0bc3",
+          "role": "coach",
+          "content": "复习要点来自「1」：1\n\n建议你下一步用自己的话复述该要点，并补充一句面向客户的澄清提问。",
+          "createdAt": "2026-07-21T09:37:58.180Z"
         }
       ],
       "createdAt": "2026-07-20T08:56:34.336Z",
-      "updatedAt": "2026-07-21T02:02:45.873Z"
+      "updatedAt": "2026-07-21T09:37:58.183Z"
     }
   ],
   "contentStrategies": [

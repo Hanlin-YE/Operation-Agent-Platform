@@ -3,7 +3,9 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import patch
+from unittest.mock import AsyncMock, patch
+
+from fastapi.testclient import TestClient
 
 
 class VideoAnalysisJobStoreTests(unittest.TestCase):
@@ -40,6 +42,31 @@ class VideoAnalysisJobStoreTests(unittest.TestCase):
             self.assertEqual(persisted["jobs"][job["jobId"]]["step"], "准备本地模型")
             self.assertEqual(persisted["jobs"][job["jobId"]]["status"], "processing")
 
+    def test_successful_retry_clears_the_previous_error(self) -> None:
+        from src.services.video_analysis_jobs import VideoAnalysisJobStore
+
+        with tempfile.TemporaryDirectory() as directory:
+            store = VideoAnalysisJobStore(Path(directory) / "jobs.json")
+            job = store.create({"filename": "sample.mp4"})
+            store.update(job["jobId"], status="failed", error={"code": "timeout", "message": "超时"})
+            saved = store.update(job["jobId"], status="needs_review", step="等待人工审核", percent=100)
+            self.assertNotIn("error", saved)
+
+    def test_completed_result_can_be_reused_for_the_same_source_url(self) -> None:
+        from src.services.video_analysis_jobs import VideoAnalysisJobStore
+
+        with tempfile.TemporaryDirectory() as directory:
+            store = VideoAnalysisJobStore(Path(directory) / "jobs.json")
+            completed = store.create({"filename": "platform-video.mp4", "sourceUrl": "https://b23.tv/W633wW0"})
+            store.update(completed["jobId"], status="needs_review", step="等待人工审核", percent=100, script={"title": "已完成拉片"})
+            failed = store.create({"filename": "platform-video.mp4", "sourceUrl": "https://b23.tv/W633wW0"})
+            store.update(failed["jobId"], status="failed", error={"code": "provider", "message": "余额不足"})
+
+            reused = store.find_completed_by_source_url("https://b23.tv/W633wW0")
+
+            self.assertEqual(reused["jobId"], completed["jobId"])
+            self.assertEqual(reused["script"]["title"], "已完成拉片")
+
 
 class VideoAnalysisWorkerTests(unittest.IsolatedAsyncioTestCase):
     async def test_worker_persists_model_failure_and_deletes_temporary_video(self) -> None:
@@ -75,6 +102,27 @@ class VideoAnalysisWorkerTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(saved["status"], "model_not_configured")
             self.assertEqual(saved["transcript"][0]["text"], "证据")
             self.assertFalse(work.exists())
+
+
+class VideoAnalysisJobApiTests(unittest.TestCase):
+    def test_posting_an_already_completed_url_returns_the_existing_result(self) -> None:
+        from src.main import create_app
+
+        source_url = "https://b23.tv/W633wW0"
+        with tempfile.TemporaryDirectory() as directory, patch.dict("os.environ", {
+            "VIDEO_ANALYZER_ENABLED": "true",
+            "VIDEO_ANALYSIS_JOB_STORE_PATH": str(Path(directory) / "jobs.json"),
+        }, clear=False):
+            app = create_app(start_runner=False, initialize_graph=False)
+            completed = app.state.video_analysis_job_store.create({"filename": "platform-video.mp4", "sourceUrl": source_url})
+            app.state.video_analysis_job_store.update(completed["jobId"], status="needs_review", step="等待人工审核", percent=100, script={"title": "已完成拉片"})
+
+            with patch("src.api.video_analysis_routes._run_job", new=AsyncMock()) as worker, TestClient(app) as client:
+                response = client.post("/api/video-analysis/jobs", files={"source_url": (None, source_url)})
+
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.json()["jobId"], completed["jobId"])
+            worker.assert_not_awaited()
 
 
 if __name__ == "__main__":

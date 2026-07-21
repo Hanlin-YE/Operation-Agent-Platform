@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import os
 from typing import Any, TypeVar
 
@@ -45,12 +46,28 @@ class OpenAICompatibleProvider:
                 ],
                 "text": {"format": {"type": "json_schema", "name": output_model.__name__, "strict": True, "schema": output_model.model_json_schema()}},
             }
-            timeout = float(os.getenv("LLM_REQUEST_TIMEOUT_SECONDS", "180"))
-            # Some local developer environments export proxy/no_proxy values
-            # that make httpx hang while curl reaches the same endpoint.
-            async with httpx.AsyncClient(timeout=timeout, trust_env=False) as client:
-                response = await client.post(endpoint, headers={"Authorization": f"Bearer {self._config.api_key}"}, json=payload)
-                response.raise_for_status()
+            timeout = float(os.getenv("LLM_REQUEST_TIMEOUT_SECONDS", "600"))
+            for attempt in range(3):
+                try:
+                    # Some local developer environments export proxy/no_proxy values
+                    # that make httpx hang while curl reaches the same endpoint.
+                    async with httpx.AsyncClient(timeout=timeout, trust_env=False) as client:
+                        response = await client.post(endpoint, headers={"Authorization": f"Bearer {self._config.api_key}"}, json=payload)
+                        response.raise_for_status()
+                    break
+                except httpx.TimeoutException as exc:
+                    raise RuntimeError(f"远程模型请求超过 {int(timeout)} 秒，请重试或提高 LLM_REQUEST_TIMEOUT_SECONDS。") from exc
+                except httpx.HTTPStatusError as exc:
+                    code = exc.response.status_code
+                    try:
+                        error_body = exc.response.json()
+                    except ValueError:
+                        error_body = {}
+                    if error_body.get("code") == "INSUFFICIENT_BALANCE":
+                        raise RuntimeError("远程模型账户余额不足，请充值或更换可用的 API Key 后重试。") from exc
+                    if code not in {502, 503, 504} or attempt == 2:
+                        raise RuntimeError(f"远程模型服务暂时不可用（HTTP {code}），请稍后重试。") from exc
+                    await asyncio.sleep(2 ** attempt)
             body = response.json()
             usage = body.get("usage") or {}
             self._record_usage(TokenUsage(

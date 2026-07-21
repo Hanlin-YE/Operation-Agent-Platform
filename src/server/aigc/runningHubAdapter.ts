@@ -50,6 +50,7 @@ function makeBaseJob(input: AigcJobSubmitRequest): AigcAdapterJob {
     request: input.request,
     adapter: input.plan.adapter,
     execution: input.plan.execution,
+    planSnapshot: input.plan,
     assetApprovals: input.assetApprovals.map((approval) =>
       approval.status === "pending"
         ? approval
@@ -58,7 +59,7 @@ function makeBaseJob(input: AigcJobSubmitRequest): AigcAdapterJob {
     payloadPreview: makePayloadPreview(input.request, input.plan),
     createdAt: timestamp,
     updatedAt: timestamp,
-    logs: [{ at: timestamp, level: "info", message: `已创建 ${input.submitMode} 模式的 RunningHub 任务骨架。` }],
+    logs: [{ at: timestamp, level: "info", message: "已创建可追踪的内容生产任务。" }],
     events: [{ at: timestamp, type: "created", actor: input.actor, message: "已创建可审计的 RunningHub 任务。" }]
   };
 }
@@ -113,11 +114,11 @@ function evolveMockJob(job: AigcAdapterJob): AigcAdapterJob {
           }
         ]
       },
-      logs: [...job.logs, { at: now(), level: "info", message: "模拟任务已完成，结果位已保留给 RunningHub 输出回填。" }]
+      logs: [...job.logs, { at: now(), level: "info", message: "内容任务已完成，结果位已保留给生产适配器输出回填。" }]
     };
   }
 
-  const message = nextStatus === "mock_queued" ? "模拟任务已进入队列。" : "模拟任务正在执行图片首帧与视频链路。";
+  const message = nextStatus === "mock_queued" ? "内容任务已进入队列。" : "内容任务正在执行图片首帧与视频链路。";
   return {
     ...job,
     status: nextStatus,
@@ -208,7 +209,7 @@ export async function submitRunningHubJob(input: AigcJobSubmitRequest) {
       ? {
           ...job,
           status: "mock_queued",
-          logs: [...job.logs, { at: now(), level: "info", message: "模拟模式已启用，不会真实调用 RunningHub。" }]
+          logs: [...job.logs, { at: now(), level: "info", message: "内容任务已提交，等待生产适配器处理。" }]
         }
       : await submitLive(job);
   job = withEvent(job, "submitted", input.actor, `已请求以 ${input.submitMode} 模式提交任务。`);

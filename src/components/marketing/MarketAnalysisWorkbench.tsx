@@ -1,13 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { BarChart3, CircleAlert, FileSearch, LoaderCircle, ShieldCheck, Sparkles } from "lucide-react";
+import { Building2, CircleAlert, FileSearch, LoaderCircle, Search, ShieldCheck, Sparkles } from "lucide-react";
 import { MarketAnalysisReport, MarketFocus } from "@/server/data/types";
 
 export type MarketWorkbenchView = "overview" | "opportunities" | "competitors" | "strategy";
 
 type ResearchSubjectType = "competitor" | "customer";
 type MarketResearchResult = { subject_name: string; subject_type: ResearchSubjectType; source_url: string; page_title: string; public_excerpt: string; observed_companies: string[]; research_angles: string[]; review_status: "needs_review"; notice: string };
+type TianyanCandidate = { companyName: string; companyId?: string; creditCode?: string; status?: string; legalRepresentative?: string };
+type TianyanProfile = { companyName: string; registration: { status?: string; legalRepresentative?: string; establishedAt?: string; registeredCapital?: string; location?: string; businessScope?: string }; risk: { summary: string }; source: "天眼 AI" };
+
+const tianyanPriorityIndicators = [
+  { name: "主体有效性", source: "工商登记", signal: "经营状态、企业类型、成立日期、注册地址", use: "先排除注销、异常或主体不匹配客户" },
+  { name: "规模与采购能力", source: "工商登记/年报", signal: "注册资本、成立年限、联系方式、人员规模", use: "判断是否值得进入重点跟进池" },
+  { name: "技术积累", source: "专利/软著/商标", signal: "专利方向、软件著作权、品牌资产", use: "判断是否匹配超滑电机这类技术型产品" },
+  { name: "产品与业务方向", source: "企业简介/产品信息", signal: "主营产品、业务分类、公开介绍", use: "识别机器人、医疗、精密设备等应用场景" },
+  { name: "资质与证书", source: "经营资质", signal: "行业证书、许可、有效期、证书状态", use: "判断行业准入与技术交付可信度" },
+  { name: "招投标需求", source: "招投标", signal: "项目名称、中标情况、采购金额、招标单位", use: "捕捉近期采购动作和潜在需求窗口" },
+  { name: "关联网络", source: "股东/对外投资/关系图谱", signal: "股权结构、实控人、关联企业、上下游线索", use: "顺藤摸出集团客户、竞品客户和转介绍路径" },
+  { name: "风险健康度", source: "风险总览/司法/行政处罚", signal: "司法案件、被执行、行政处罚、经营异常", use: "避免把销售资源投入高风险主体" }
+];
 
 const focusOptions: Array<{ value: MarketFocus; label: string }> = [
   { value: "all", label: "全市场机会" },
@@ -24,6 +37,10 @@ function labelClass(label: string) {
   return "badge";
 }
 
+function tianyanCompanyUrl(companyId?: string) {
+  return companyId ? `https://www.tianyancha.com/company/${companyId}` : undefined;
+}
+
 export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: { initialReports: MarketAnalysisReport[]; view?: MarketWorkbenchView }) {
   const [reports, setReports] = useState(initialReports);
   const [focus, setFocus] = useState<MarketFocus>("all");
@@ -31,6 +48,11 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
   const [researching, setResearching] = useState(false);
   const [researchSubjectType, setResearchSubjectType] = useState<ResearchSubjectType>("competitor");
   const [researchResult, setResearchResult] = useState<MarketResearchResult | null>(null);
+  const [tianyanQuery, setTianyanQuery] = useState("");
+  const [tianyanCandidates, setTianyanCandidates] = useState<TianyanCandidate[]>([]);
+  const [tianyanProfile, setTianyanProfile] = useState<TianyanProfile | null>(null);
+  const [selectedTianyanCandidate, setSelectedTianyanCandidate] = useState<TianyanCandidate | null>(null);
+  const [tianyanLoading, setTianyanLoading] = useState(false);
   const [error, setError] = useState("");
   const active = reports[0];
   const sourceStatus = active?.sourceStatus || { xiaohongshu: "未配置" as const, note: "历史报告尚未接入公开信号来源，请重新运行市场分析。" };
@@ -76,6 +98,31 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
     } finally { setResearching(false); }
   }
 
+  async function searchTianyanCompany() {
+    setTianyanLoading(true); setError(""); setTianyanProfile(null); setSelectedTianyanCandidate(null); setTianyanCandidates([]);
+    try {
+      const response = await fetch("/api/market-intelligence/tianyan", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ action: "search", query: tianyanQuery }) });
+      const payload = await response.json().catch(() => ({})) as { candidates?: TianyanCandidate[]; message?: string };
+      if (!response.ok) throw new Error(payload.message || "天眼 AI 企业搜索暂时不可用");
+      setTianyanCandidates(payload.candidates || []);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "天眼 AI 企业搜索暂时不可用");
+    } finally { setTianyanLoading(false); }
+  }
+
+  async function loadTianyanProfile(candidate: TianyanCandidate) {
+    setTianyanLoading(true); setError("");
+    try {
+      const response = await fetch("/api/market-intelligence/tianyan", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ action: "profile", companyName: candidate.companyName }) });
+      const payload = await response.json().catch(() => ({})) as { profile?: TianyanProfile; message?: string };
+      if (!response.ok || !payload.profile) throw new Error(payload.message || "天眼 AI 企业情报暂时不可用");
+      setSelectedTianyanCandidate(candidate);
+      setTianyanProfile(payload.profile);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "天眼 AI 企业情报暂时不可用");
+    } finally { setTianyanLoading(false); }
+  }
+
   return (
     <>
       <div className="page-head">
@@ -93,6 +140,24 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
       </div>
 
       {error ? <p className="run-error market-error"><CircleAlert size={16} />{error}</p> : null}
+
+      {view === "overview" ? <section className="panel market-research-panel" style={{ marginTop: 16 }}>
+        <div className="report-heading"><div><p className="eyebrow">Tianyan AI</p><h2>企业市场情报</h2></div><Building2 size={19} /></div>
+        <p className="subtle">输入企业全称、简称或统一社会信用代码，先确认主体，再查看基础经营信息与风险总览。查询由本机天眼 AI CLI 发起，可能消耗天眼额度。</p>
+        <div className="market-research-form tianyan-search-form">
+          <label className="field"><span>企业主体</span><input value={tianyanQuery} onChange={(event) => setTianyanQuery(event.target.value)} placeholder="例如：北京字节跳动科技有限公司" onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); searchTianyanCompany(); } }} /></label>
+          <button className="button" onClick={searchTianyanCompany} disabled={tianyanLoading || tianyanQuery.trim().length < 2}>{tianyanLoading ? <LoaderCircle className="spin" size={16} /> : <Search size={16} />}{tianyanLoading ? "查询中" : "搜索企业"}</button>
+        </div>
+        {tianyanCandidates.length ? <div className="tianyan-candidate-list" aria-label="天眼 AI 企业候选">{tianyanCandidates.map((candidate) => {
+          const manualUrl = tianyanCompanyUrl(candidate.companyId);
+          return <div className="tianyan-candidate-row" key={candidate.companyId || candidate.creditCode || candidate.companyName}><button type="button" onClick={() => loadTianyanProfile(candidate)} disabled={tianyanLoading}><div><strong>{candidate.companyName}</strong><span>{[candidate.status, candidate.legalRepresentative ? `法定代表人：${candidate.legalRepresentative}` : undefined].filter(Boolean).join(" · ") || "待核验"}</span></div><small>查看情报</small></button>{manualUrl ? <a className="tianyan-manual-link" href={manualUrl} target="_blank" rel="noreferrer">人工打开</a> : null}</div>;
+        })}</div> : null}
+        {tianyanProfile ? <article className="tianyan-profile"><div className="report-heading"><div><strong>{tianyanProfile.companyName}</strong><p>{tianyanProfile.source} · 已确认主体</p></div><div className="badge-row"><span className="badge grade-B">需人工核验</span>{tianyanCompanyUrl(selectedTianyanCandidate?.companyId) ? <a className="badge tianyan-profile-link" href={tianyanCompanyUrl(selectedTianyanCandidate?.companyId)} target="_blank" rel="noreferrer">天眼查页面</a> : null}</div></div><div className="tianyan-profile-grid"><div><span>登记状态</span><strong>{tianyanProfile.registration.status || "未返回"}</strong></div><div><span>法定代表人</span><strong>{tianyanProfile.registration.legalRepresentative || "未返回"}</strong></div><div><span>成立时间</span><strong>{tianyanProfile.registration.establishedAt || "未返回"}</strong></div><div><span>注册资本</span><strong>{tianyanProfile.registration.registeredCapital || "未返回"}</strong></div><div><span>注册地</span><strong>{tianyanProfile.registration.location || "未返回"}</strong></div></div><p className="tianyan-risk"><ShieldCheck size={15} /><span>{tianyanProfile.risk.summary}</span></p>{tianyanProfile.registration.businessScope ? <p className="tianyan-scope"><strong>经营范围：</strong>{tianyanProfile.registration.businessScope}</p> : null}</article> : null}
+        <div className="tianyan-indicator-table" aria-label="企业情报优先指标">
+          <div className="tianyan-indicator-row tianyan-indicator-head"><span>优先指标</span><span>数据来源</span><span>关键信号</span><span>销售判断</span></div>
+          {tianyanPriorityIndicators.map((indicator) => <div className="tianyan-indicator-row" key={indicator.name}><strong>{indicator.name}</strong><span>{indicator.source}</span><span>{indicator.signal}</span><span>{indicator.use}</span></div>)}
+        </div>
+      </section> : null}
 
       {view === "overview" ? <section className="panel market-research-panel" style={{ marginTop: 16 }}>
         <div className="report-heading"><div><p className="eyebrow">Public Web Research</p><h2>竞品／潜在客户公开信息采集</h2></div><FileSearch size={19} /></div>

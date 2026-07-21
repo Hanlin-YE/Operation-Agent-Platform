@@ -2,11 +2,11 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { CheckCircle2, CircleAlert, Clapperboard, FileVideo, LoaderCircle, Upload } from "lucide-react";
-import type { VideoAnalysisResult } from "@/server/videoAnalysis/service";
+import { formatVideoAnalysisClientError, getVideoAnalysisJobPath, type VideoAnalysisResult } from "@/server/videoAnalysis/service";
 
 type StrategySample = { title: string; content: string; sourceUrl?: string };
 
-export function VideoAnalysisWorkbench({ onUseAsStrategy }: { onUseAsStrategy?: (sample: StrategySample) => void }) {
+export function VideoAnalysisWorkbench({ initialJobId, onUseAsStrategy }: { initialJobId?: string; onUseAsStrategy?: (sample: StrategySample) => void }) {
   const [file, setFile] = useState<File | null>(null);
   const [sourceUrl, setSourceUrl] = useState("");
   const [result, setResult] = useState<VideoAnalysisResult | null>(null);
@@ -14,15 +14,27 @@ export function VideoAnalysisWorkbench({ onUseAsStrategy }: { onUseAsStrategy?: 
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!initialJobId) return;
+    let active = true;
+    setLoading(true); setError("");
+    fetch(getVideoAnalysisJobPath(initialJobId), { cache: "no-store" })
+      .then(async (response) => { const payload = await response.json(); if (!response.ok) throw new Error(payload.error || "无法恢复视频分析结果。"); return payload; })
+      .then((payload) => { if (active) setResult(payload as VideoAnalysisResult); })
+      .catch((reason) => { if (active) setError(formatVideoAnalysisClientError(reason)); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [initialJobId]);
+
+  useEffect(() => {
     if (!result || !["queued", "processing"].includes(result.status)) return;
     const timer = window.setTimeout(async () => {
       try {
-        const response = await fetch(`/api/video-analysis/jobs/${result.jobId}`, { cache: "no-store" });
+        const response = await fetch(getVideoAnalysisJobPath(result.jobId), { cache: "no-store" });
         const payload = await response.json();
         if (!response.ok) throw new Error(payload.error || "无法读取视频分析任务。");
         setResult(payload as VideoAnalysisResult);
       } catch (reason) {
-        setError(reason instanceof Error ? reason.message : "无法读取视频分析任务。");
+        setError(formatVideoAnalysisClientError(reason));
       }
     }, 2500);
     return () => window.clearTimeout(timer);
@@ -39,7 +51,7 @@ export function VideoAnalysisWorkbench({ onUseAsStrategy }: { onUseAsStrategy?: 
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "视频分析失败。");
       setResult(payload as VideoAnalysisResult);
-    } catch (reason) { setError(reason instanceof Error ? reason.message : "视频分析失败。"); }
+    } catch (reason) { setError(formatVideoAnalysisClientError(reason)); }
     finally { setLoading(false); }
   }
 
@@ -56,7 +68,7 @@ export function VideoAnalysisWorkbench({ onUseAsStrategy }: { onUseAsStrategy?: 
       <button className="button" disabled={loading || result?.status === "queued" || result?.status === "processing"}>{loading ? <LoaderCircle className="spin" size={16}/> : <FileVideo size={16}/>} {loading ? "正在创建任务…" : result?.status === "queued" || result?.status === "processing" ? "任务处理中…" : "开始拆解"}</button>
       {error && <p className="run-error"><CircleAlert size={16}/>{error}</p>}
     </form>
-    {result && <section className="panel video-analysis-result">
+    {result && <section className="panel video-analysis-result" id="video-analysis-result">
       <div className="strategy-heading"><div><p className="eyebrow">Evidence-backed script</p><h2>{result.script?.title || result.message || "视频证据已登记"}</h2></div><span className={`strategy-chip ${result.status === "needs_review" ? "approved" : "neutral"}`}>{result.status === "needs_review" ? "等待人工审核" : result.status === "failed" ? "处理失败" : result.status === "model_not_configured" ? "等待模型配置" : "处理中"}</span></div>
       <ol className="video-job-timeline">{timeline.map((step, index) => <li key={step} className={result.status === "failed" && step === currentStep ? "failed" : index < currentIndex || result.status === "needs_review" ? "done" : step === currentStep ? "active" : ""}><span>{index < currentIndex || result.status === "needs_review" ? "✓" : index + 1}</span><div><b>{step}</b>{step === currentStep ? <small>{result.percent ?? 0}% · {result.message}</small> : null}</div></li>)}</ol>
       {result.status === "failed" ? <div className="strategy-notice danger"><CircleAlert size={17}/><div><strong>{typeof result.error === "object" ? result.error.message : result.error || "视频拉片失败"}</strong><p>原始视频已清理。请根据当前步骤日志修正链接、模型或平台权限后重新提交。</p></div></div> : null}

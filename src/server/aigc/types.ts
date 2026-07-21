@@ -183,6 +183,7 @@ export type AigcAdapterJob = {
   request: AigcCreationRequest;
   adapter: AigcAdapterPlan;
   execution: AigcExecutionSpec[];
+  planSnapshot?: AigcCreationResponse;
   assetApprovals: AigcAssetApproval[];
   payloadPreview: Record<string, unknown>;
   createdAt: string;
@@ -200,4 +201,38 @@ export type AigcJobSubmitRequest = {
   submitMode: AigcSubmitMode;
   assetApprovals: AigcAssetApproval[];
   actor: AigcActor;
+};
+
+export type AigcReviewDimensionId = "continuity" | "innovation" | "storyboard" | "adaptation";
+
+export type AigcReviewDimension = {
+  id: AigcReviewDimensionId;
+  label: string;
+  score: number;
+  verdict: string;
+  evidence: string;
+  feedback: string;
+  revisionAction: string;
+};
+
+export type AigcReviewStageSignal = {
+  stage: "text" | "image" | "video";
+  label: string;
+  score: number;
+  evidence: string;
+  feedback: string;
+};
+
+export type AigcReviewReport = {
+  jobId: string;
+  projectTitle: string;
+  updatedAt: string;
+  score: number;
+  verdict: string;
+  level: "high" | "medium" | "low";
+  planCaptured: boolean;
+  matchedInputs: string[];
+  dimensions: AigcReviewDimension[];
+  stageSignals: AigcReviewStageSignal[];
+  revisionActions: string[];
 };

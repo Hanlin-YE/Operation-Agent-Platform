@@ -1,7 +1,7 @@
 import unittest
-from types import SimpleNamespace
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, patch
 
+import httpx
 from pydantic import BaseModel
 
 
@@ -56,6 +56,68 @@ class LlmProviderContractTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(url, "https://models.example.test/v1/responses")
         self.assertEqual(request["model"], "gpt-5.4")
         self.assertEqual(request["text"]["format"]["type"], "json_schema")
+
+    async def test_responses_timeout_has_a_user_readable_error(self) -> None:
+        from src.services.llm_provider import GraphContext, LlmProviderConfig
+        from src.services.openai_compatible_provider import OpenAICompatibleProvider
+
+        class TimeoutClient:
+            def __init__(self, **_): pass
+            async def __aenter__(self): return self
+            async def __aexit__(self, *_): pass
+            post = AsyncMock(side_effect=httpx.ReadTimeout(""))
+
+        with patch("httpx.AsyncClient", return_value=TimeoutClient()), patch.dict("os.environ", {"LLM_REQUEST_TIMEOUT_SECONDS": "600"}):
+            provider = OpenAICompatibleProvider(LlmProviderConfig(provider="openai_compatible", api_key="test-key", base_url="https://models.example.test", model="gpt-5.4", api_mode="responses"))
+            with self.assertRaisesRegex(RuntimeError, "超过 600 秒"):
+                await provider.generate_json(GraphContext(evidence=[]), _Answer, "生成答案")
+
+    async def test_responses_mode_retries_temporary_upstream_failures(self) -> None:
+        from src.services.llm_provider import GraphContext, LlmProviderConfig
+        from src.services.openai_compatible_provider import OpenAICompatibleProvider
+
+        request = httpx.Request("POST", "https://models.example.test/responses")
+        unavailable = httpx.Response(502, request=request)
+
+        class FakeResponse:
+            def raise_for_status(self): pass
+            def json(self): return {"output_text": '{"answer":"重试成功"}', "usage": {}}
+
+        class RetryClient:
+            calls = 0
+            def __init__(self, **_): pass
+            async def __aenter__(self): return self
+            async def __aexit__(self, *_): pass
+            async def post(self, *_args, **_kwargs):
+                type(self).calls += 1
+                if type(self).calls < 3:
+                    raise httpx.HTTPStatusError("upstream unavailable", request=request, response=unavailable)
+                return FakeResponse()
+
+        with patch("httpx.AsyncClient", RetryClient), patch("asyncio.sleep", new=AsyncMock()):
+            provider = OpenAICompatibleProvider(LlmProviderConfig(provider="openai_compatible", api_key="test-key", base_url="https://models.example.test", model="gpt-5.4", api_mode="responses"))
+            answer = await provider.generate_json(GraphContext(evidence=[]), _Answer, "生成答案")
+
+        self.assertEqual(answer.answer, "重试成功")
+        self.assertEqual(RetryClient.calls, 3)
+
+    async def test_responses_mode_reports_insufficient_provider_balance(self) -> None:
+        from src.services.llm_provider import GraphContext, LlmProviderConfig
+        from src.services.openai_compatible_provider import OpenAICompatibleProvider
+
+        request = httpx.Request("POST", "https://models.example.test/responses")
+        response = httpx.Response(403, request=request, json={"code": "INSUFFICIENT_BALANCE", "message": "Insufficient account balance"})
+
+        class BalanceClient:
+            def __init__(self, **_): pass
+            async def __aenter__(self): return self
+            async def __aexit__(self, *_): pass
+            async def post(self, *_args, **_kwargs): return response
+
+        with patch("httpx.AsyncClient", BalanceClient):
+            provider = OpenAICompatibleProvider(LlmProviderConfig(provider="openai_compatible", api_key="test-key", base_url="https://models.example.test", model="gpt-5.4", api_mode="responses"))
+            with self.assertRaisesRegex(RuntimeError, "账户余额不足"):
+                await provider.generate_json(GraphContext(evidence=[]), _Answer, "生成答案")
 
 
 if __name__ == "__main__":

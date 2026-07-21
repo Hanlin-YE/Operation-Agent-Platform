@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { parseVideoAnalysisResult } from "../src/server/videoAnalysis/service";
+import { POST as createVideoAnalysisJob } from "../src/app/api/video-analysis/jobs/route";
+import { formatVideoAnalysisClientError, getVideoAnalysisJobPath, parseVideoAnalysisResult } from "../src/server/videoAnalysis/service";
 
 test("video analysis accepts a complete evidence-backed script package", () => {
   const result = parseVideoAnalysisResult({
@@ -40,4 +41,40 @@ test("video analysis accepts a persisted in-progress task snapshot", () => {
   });
   assert.equal(result.percent, 45);
   assert.equal(result.step, "转写");
+});
+
+test("persisted video jobs can be restored through the local job route", () => {
+  assert.equal(getVideoAnalysisJobPath("video-abc/123"), "/api/video-analysis/jobs/video-abc%2F123");
+});
+
+test("browser URL errors are translated into an actionable local-service message", () => {
+  assert.equal(formatVideoAnalysisClientError(new TypeError("The string did not match the expected pattern.")), "本地视频分析页面仍在使用旧地址，请刷新页面后重试。若仍失败，请确认本地 Agent 运行在 8001 端口。");
+});
+
+test("a pasted public video URL is forwarded to the local analysis job service", async (context) => {
+  const sourceUrl = "https://b23.tv/example";
+  let forwardedUrl = "";
+  context.mock.method(globalThis, "fetch", async (_input: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => {
+    const outbound = init?.body as FormData;
+    forwardedUrl = String(outbound.get("source_url") || "");
+    return Response.json({
+      jobId: "video-url",
+      status: "queued",
+      step: "等待队列",
+      percent: 0,
+      message: "任务已进入队列",
+      source: { filename: "remote-video", sourceUrl },
+      transcript: [],
+      scenes: [],
+      warnings: [],
+    }, { status: 202 });
+  });
+
+  const form = new FormData();
+  form.set("sourceUrl", sourceUrl);
+  const response = await createVideoAnalysisJob(new Request("http://localhost/api/video-analysis/jobs", { method: "POST", body: form }));
+
+  assert.equal(response.status, 202);
+  assert.equal(forwardedUrl, sourceUrl);
+  assert.equal((await response.json()).jobId, "video-url");
 });

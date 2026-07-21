@@ -1,0 +1,4 @@
+interface:
+  display_name: "AIGC 科普短剧制作工作流"
+  short_description: "Human-reviewed serial science-video production workflow"
+  default_prompt: "Use $aigc-science-short-video to create a reviewed science short-video production pack for this topic."

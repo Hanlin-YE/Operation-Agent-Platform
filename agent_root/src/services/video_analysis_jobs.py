@@ -69,6 +69,20 @@ class VideoAnalysisJobStore:
             job = self._jobs.get(job_id)
             return json.loads(json.dumps(job, ensure_ascii=False)) if job else None
 
+    def find_completed_by_source_url(self, source_url: str) -> dict[str, Any] | None:
+        normalized = source_url.strip()
+        with self._lock:
+            matches = [
+                job for job in self._jobs.values()
+                if job.get("status") == "needs_review"
+                and str(job.get("source", {}).get("sourceUrl", "")).strip() == normalized
+                and job.get("script")
+            ]
+            if not matches:
+                return None
+            latest = max(matches, key=lambda job: str(job.get("updatedAt", "")))
+            return json.loads(json.dumps(latest, ensure_ascii=False))
+
     def update(self, job_id: str, *, status: str | None = None, step: str | None = None,
                percent: int | None = None, message: str | None = None, log_level: str = "info",
                error: dict[str, str] | None = None, **fields: Any) -> dict[str, Any]:
@@ -88,6 +102,8 @@ class VideoAnalysisJobStore:
                 job.setdefault("logs", []).append({"at": _now(), "level": log_level, "message": message})
             if error is not None:
                 job["error"] = error
+            elif status in {"needs_review", "model_not_configured"}:
+                job.pop("error", None)
             if status in {"needs_review", "model_not_configured", "failed"}:
                 job["finishedAt"] = _now()
             job["updatedAt"] = _now()

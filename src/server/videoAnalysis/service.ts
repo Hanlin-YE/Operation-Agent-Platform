@@ -57,3 +57,14 @@ export function getVideoAnalyzerUrl() {
 export function getVideoAnalysisJobsUrl(jobId?: string) {
   return `${getVideoAnalyzerUrl().replace(/\/$/, "")}/jobs${jobId ? `/${encodeURIComponent(jobId)}` : ""}`;
 }
+
+export function getVideoAnalysisJobPath(jobId: string) {
+  return `/api/video-analysis/jobs/${encodeURIComponent(jobId)}`;
+}
+
+export function formatVideoAnalysisClientError(reason: unknown) {
+  if (reason instanceof TypeError && /expected pattern|failed to fetch|invalid url/i.test(reason.message)) {
+    return "本地视频分析页面仍在使用旧地址，请刷新页面后重试。若仍失败，请确认本地 Agent 运行在 8001 端口。";
+  }
+  return reason instanceof Error ? reason.message : "视频分析失败。";
+}

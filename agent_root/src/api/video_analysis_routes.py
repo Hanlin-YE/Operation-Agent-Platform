@@ -280,7 +280,12 @@ async def _create_video_job(request: Request) -> dict[str, object]:
         if Path(filename).suffix.lower() not in {".mp4", ".mov", ".webm"}:
             raise HTTPException(status_code=415, detail="仅支持 MP4、MOV 或 WebM 视频。")
         source = {"filename": filename}
-    job = _job_store(request).create(source)
+    store = _job_store(request)
+    if source_url:
+        completed = store.find_completed_by_source_url(source_url)
+        if completed:
+            return completed
+    job = store.create(source)
     directory = Path(tempfile.mkdtemp(prefix=f"video-analysis-{job['jobId']}-"))
     if uploaded_file:
         (directory / str(source["filename"])).write_bytes(bytes(uploaded_file["content"]))
