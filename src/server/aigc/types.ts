@@ -40,6 +40,23 @@ export type AigcShotSpec = {
   visualFocus: string;
   prompt: string;
   requiredAssets: string[];
+  transition: string;
+  audio: string;
+  referencePolicy: string;
+};
+
+export type AigcProductionStage = {
+  id: string;
+  name: string;
+  deliverable: string;
+  approvalGate: string;
+  rule: string;
+};
+
+export type AigcContinuityProtocol = {
+  narrativeTemplate: string;
+  referenceRules: string[];
+  editAndQc: string[];
 };
 
 export type AigcExecutionSpec = {
@@ -61,6 +78,37 @@ export type AigcAdapterPlan = {
   fallbackPolicy: string;
 };
 
+export type AigcSkillStage = "content" | "image_cards" | "video_plan" | "video_qc" | "publish";
+
+export type AigcSkillOrchestration = {
+  image: {
+    provider: "native_imagegen" | "runninghub";
+    label: string;
+    free: boolean;
+    rationale: string;
+  };
+  skills: {
+    id: string;
+    name: string;
+    stage: AigcSkillStage;
+    mode: "project_adapter" | "template_only";
+    safetyNote: string;
+  }[];
+  production: {
+    id: "wechat_article" | "xhs_image_cards" | "xhs_video_script" | "video_asset_pack";
+    platform: "微信公众号" | "小红书图文" | "小红书短视频" | "视频资产包";
+    title: string;
+    format: string;
+    copy: string;
+    nextAction: string;
+  }[];
+  publish: {
+    mode: "draft_only";
+    requiresHumanApproval: true;
+    credentialNames: ["WECHAT_APP_ID", "WECHAT_APP_SECRET"];
+  };
+};
+
 export type AigcCreationResponse = {
   projectTitle: string;
   summary: string;
@@ -72,8 +120,11 @@ export type AigcCreationResponse = {
   };
   assets: AigcAssetItem[];
   shots: AigcShotSpec[];
+  workflow: AigcProductionStage[];
+  continuity: AigcContinuityProtocol;
   execution: AigcExecutionSpec[];
   adapter: AigcAdapterPlan;
+  skillOrchestration: AigcSkillOrchestration;
 };
 
 export type AigcSubmitMode = "mock" | "live";

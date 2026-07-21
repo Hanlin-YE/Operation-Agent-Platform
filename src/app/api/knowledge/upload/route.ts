@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { parseKnowledgePdfUpload } from "@/server/knowledge/pdfUpload";
 import { createKnowledge } from "@/server/repositories/knowledge";
+import { indexKnowledgeDocument } from "@/server/rag/salesVectorIndex";
 
 export const runtime = "nodejs";
 
@@ -19,7 +20,8 @@ export async function POST(request: Request) {
       sourceFile: parsed.sourceFile,
       type: "product",
     });
-    return NextResponse.json({ item, pageCount: parsed.pageCount }, { status: 201 });
+    const chunks = await indexKnowledgeDocument(item);
+    return NextResponse.json({ item, pageCount: parsed.pageCount, rag: { chunks: chunks.length, embeddingModel: "hashing-cjk-v1" } }, { status: 201 });
   } catch (error) {
     const message = error instanceof Error ? error.message : "PDF 解析失败，请稍后重试。";
     return NextResponse.json({ error: message }, { status: 400 });

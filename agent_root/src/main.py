@@ -3,10 +3,14 @@ from __future__ import annotations
 import asyncio
 import os
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
+from dotenv import load_dotenv
 
 from src.api.rag_routes import router as rag_router
+from src.api.market_research_routes import router as market_research_router
+from src.api.video_analysis_routes import router as video_analysis_router, setup_video_analysis_jobs
 from src.api.v1_routes import graph_router, router as runs_router
 from src.core.run_service import RunService
 from src.services.dingtalk_client import InMemoryDingTalkClient
@@ -22,11 +26,23 @@ from src.tasks.task_runner import TaskRunner
 from src.tasks.run_pipeline import process_next_run
 
 
+# Docker injects this file through compose; load it here too for direct local
+# uvicorn runs, while preserving explicit shell environment overrides.
+load_dotenv(Path(__file__).resolve().parents[1] / ".env", override=False)
+
+
 def _provider_from_environment():
     provider_name = os.getenv("LLM_PROVIDER", "").strip()
-    api_key = os.getenv("LLM_API_KEY", "").strip()
-    model = os.getenv("LLM_MODEL", "").strip()
-    base_url = os.getenv("LLM_BASE_URL", "https://api.openai.com/v1").strip()
+    api_key = os.getenv("LLM_API_KEY", "").strip() or os.getenv("OPENAI_API_KEY", "").strip()
+    model = os.getenv("LLM_MODEL", "").strip() or os.getenv("OPENAI_MODEL", "").strip()
+    if api_key and model and not provider_name:
+        provider_name = "openai_compatible"
+    base_url = os.getenv("LLM_BASE_URL", "").strip() or os.getenv("OPENAI_BASE_URL", "").strip() or "https://api.openai.com/v1"
+    api_mode = os.getenv("LLM_API_MODE", "chat_completions").strip().lower()
+    # The Next app accepts a full Chat Completions URL; the Python SDK expects
+    # the API root instead, so normalize the shared environment value.
+    if base_url.rstrip("/").endswith("/chat/completions"):
+        base_url = base_url.rstrip("/")[: -len("/chat/completions")]
     if not provider_name and not api_key and not model:
         return create_llm_provider(
             LlmProviderConfig(provider="local_demo", api_key="", base_url="", model="local-demo-v1")
@@ -35,7 +51,7 @@ def _provider_from_environment():
     if missing:
         raise RuntimeError(f"Incomplete LLM Provider configuration: {', '.join(missing)}")
     return create_llm_provider(
-        LlmProviderConfig(provider=provider_name, api_key=api_key, base_url=base_url, model=model)
+        LlmProviderConfig(provider=provider_name, api_key=api_key, base_url=base_url, model=model, api_mode=api_mode)
     )
 
 
@@ -124,6 +140,9 @@ def create_app(*, start_runner: bool = True, initialize_graph: bool | None = Non
     app.include_router(runs_router)
     app.include_router(graph_router)
     app.include_router(rag_router)
+    app.include_router(market_research_router)
+    app.include_router(video_analysis_router)
+    setup_video_analysis_jobs(app)
 
     @app.get("/healthz", tags=["system"])
     def healthz() -> dict[str, str]:

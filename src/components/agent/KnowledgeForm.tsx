@@ -29,12 +29,12 @@ export function KnowledgeForm({ knowledge }: { knowledge: KnowledgeDocument[] })
         body: JSON.stringify({ title: inferTitle(content), content, type: "faq" })
       });
     setLoading(false);
+    const payload = await response.json().catch(() => ({})) as { error?: string; rag?: { chunks?: number; embeddingModel?: string } };
     if (!response.ok) {
-      const payload = await response.json().catch(() => ({}));
       return setMessage(payload.error || "保存失败，请稍后重试。");
     }
-    setContent(""); setSelectedFile(null); setMessage(selectedFile ? "PDF 已解析并收录到知识库。" : "已收录到知识库。");
-    window.location.reload();
+    setContent(""); setSelectedFile(null);
+    setMessage(selectedFile ? `PDF 已解析并收录：${payload.rag?.chunks || 0} 个向量块已由 ${payload.rag?.embeddingModel || "本地编码器"} 完成 Embedding。` : "已收录到知识库并完成向量索引。");
   }
 
   return <>

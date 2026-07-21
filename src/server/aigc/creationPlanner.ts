@@ -3,11 +3,14 @@ import {
   AigcAssetItem,
   AigcCreationRequest,
   AigcCreationResponse,
+  AigcContinuityProtocol,
   AigcExecutionSpec,
   AigcLayerSummary,
+  AigcProductionStage,
   AigcShotSpec,
   AigcVideoType
 } from "@/server/aigc/types";
+import { buildSkillOrchestration } from "@/server/aigc/skillOrchestration";
 
 const videoTypeLabels: Record<AigcVideoType, string> = {
   product_ad: "卖点广告短片",
@@ -69,7 +72,7 @@ function buildAssets(request: AigcCreationRequest): AigcAssetItem[] {
       type: "scene",
       name: "主场景资产",
       approvalGate: "确认拍摄环境、背景复杂度和信息密度",
-      promptHint: "输出前视、侧视、三分之四视角和布局视图，供分镜复用。"
+      promptHint: "输出无人物的 16:9 场景大全景；只在反打、新场景或新道具时另建必要分镜参考。"
     },
     {
       assetId: "C01",
@@ -81,33 +84,96 @@ function buildAssets(request: AigcCreationRequest): AigcAssetItem[] {
   ];
 }
 
+function buildWorkflow(): AigcProductionStage[] {
+  return [
+    { id: "script", name: "剧本核审", deliverable: "单集五段式科普剧本", approvalGate: "人工逐轮校调：科学表述、转场铺垫、节奏与收束", rule: "未批准不得进入资产与分镜。" },
+    { id: "assets", name: "资产与分镜核审", deliverable: "STYLE00、角色/场景资产表与分镜描述", approvalGate: "确认资产必要性、比例、资产引用和镜头合理性", rule: "角色图 3:4；场景图 16:9；低清参考先高清。" },
+    { id: "images", name: "资产生图", deliverable: "已审核资产图与必要关键分镜图", approvalGate: "检查人物、场景、道具和画质一致性", rule: "场景一般仅需一张无人物大全景。" },
+    { id: "serial-video", name: "串行视频生成", deliverable: "片段分镜提示词与视频提示词", approvalGate: "逐段确认尾帧、参考包和参数最小化", rule: "后一段只在上一段核审后生成，禁止并行。" },
+    { id: "edit", name: "剪辑与调音", deliverable: "高清母版、字幕前成片", approvalGate: "检查转场、调色、响度、J/L 剪辑与节奏", rule: "大转场叠化；先高清再加字幕。" },
+    { id: "delivery", name: "成片核审与归档", deliverable: "最终成片与 AI 影视项目记录", approvalGate: "成员确认无穿帮、无音频跳跃、科普准确", rule: "记录资产、版本、审批与交付链接。" }
+  ];
+}
+
+function buildContinuity(): AigcContinuityProtocol {
+  return {
+    narrativeTemplate: "现实情景提问 → Taotao 讲解 → 画面思想穿越 → 两人旁观讨论 → 回到现实感慨；重科普，轻剧情。",
+    referenceRules: [
+      "同场景同机位：给上段同机位截图与上段音频，避免重复上传人物、场景、音色参考。",
+      "反打、全新场景或新道具：给一张必要关键分镜图/参考图，且不得与场景图或尾帧冲突。",
+      "强调尾帧应达成的状态，不要求机械接续尾帧；低清图先高清后再作连续参考。",
+      "优先单张关键分镜或人物+场景构图；避免 25 宫格、360 全景和易模糊的参考视频。"
+    ],
+    editAndQc: [
+      "BGM 至少覆盖一半时长；同情绪连续段沿用同一环境音/BGM描述，边界用淡入淡出和 J/L 剪辑。",
+      "场景切换须有画面或声音铺垫；大转场使用叠化，思想穿越/回忆可加褪色与暗角。",
+      "用曲线变速调节节奏；统一响度；校正偏色和过饱和；减少手部、道具、空间穿帮。"
+    ]
+  };
+}
+
 function buildShots(request: AigcCreationRequest): AigcShotSpec[] {
   const requirement = normalizeRequirement(request.requirement);
-  const perShot = Math.max(3, Math.round(request.durationSec / 3));
+  const setup = Math.max(3, Math.round(request.durationSec * 0.15));
+  const explain = Math.max(4, Math.round(request.durationSec * 0.25));
+  const travel = Math.max(4, Math.round(request.durationSec * 0.3));
+  const observe = Math.max(3, Math.round(request.durationSec * 0.15));
+  const close = Math.max(2, request.durationSec - setup - explain - travel - observe);
   return [
     {
       shotId: "SHOT_01",
-      goal: "建立主视觉与信息主题",
-      durationSec: perShot,
-      visualFocus: "第一眼看懂主体和风格",
+      goal: "现实场景抛出问题",
+      durationSec: setup,
+      visualFocus: "真实困惑、可见问题与后续穿越的视觉伏笔",
       requiredAssets: ["STYLE00", "P01", "S01"],
-      prompt: `基于 STYLE00 与 P01，建立 ${request.aspectRatio} 开场画面，突出“${requirement}”的核心主题，镜头干净、信息集中。`
+      prompt: `基于 STYLE00、P01、S01，以真实情景提出“${requirement}”相关问题。快速推近关键细节，结尾用光线、声音或视线引出 Taotao 的解释；台词写入画面描述，画面干净。`,
+      transition: "问题细节停留半拍，利用视线/提示音引入解释，不突切。",
+      audio: "连续环境音；轻快、克制的科普 BGM 从开场进入；必要的提示音。",
+      referencePolicy: "首段使用已审批资产；不上传无关的重复参考。"
     },
     {
       shotId: "SHOT_02",
-      goal: "展开关键卖点或情绪推进",
-      durationSec: perShot,
-      visualFocus: request.videoType === "xiaohongshu" ? "人物表达与产品关系" : "产品细节与使用动作",
-      requiredAssets: request.videoType === "xiaohongshu" ? ["STYLE00", "P01", "C01"] : ["STYLE00", "P01"],
-      prompt: "保持 STYLE00 风格一致，展示主要卖点、动作或转场，禁止形态漂移和无关字幕。"
+      goal: "Taotao 拆解问题",
+      durationSec: explain,
+      visualFocus: "人物讲解、关键机制与注意力焦点切换",
+      requiredAssets: ["STYLE00", "P01", "S01", "C01"],
+      prompt: "Taotao 在现实场景用简洁动作讲解核心原理，镜头在中景、细节特写间切换；保留人物形象、服装、音色一致，结尾把手势或画面元素导向思想穿越。",
+      transition: "手势/物体细节匹配切入概念化画面，保留 BGM 和一句话尾音做 J 剪辑。",
+      audio: "沿用 SHOT_01 的环境音与同一 BGM；动作同步的轻微拟音。",
+      referencePolicy: "连续同机位时给 SHOT_01 同机位截图+上段音频；反打才给一张必要分镜图。"
     },
     {
       shotId: "SHOT_03",
-      goal: "收束利益点并保留后期空间",
-      durationSec: Math.max(2, request.durationSec - perShot * 2),
-      visualFocus: "收尾信息、品牌识别和可加字区域",
-      requiredAssets: ["STYLE00", "P01", "S01"],
-      prompt: "收尾镜头保留清洁画面和后期文案区域，不在生成阶段写死长文本。"
+      goal: "思想穿越可视化科普",
+      durationSec: travel,
+      visualFocus: "抽象机制被看见，信息密度最高但镜头动作单一明确",
+      requiredAssets: ["STYLE00", "P01"],
+      prompt: "由 SHOT_02 的视觉锚点进入思想穿越，用具象化但可理解的画面解释“${requirement}”的关键机制。快节奏分解一个核心动作，不添加长文本；尾帧保留回到现实的方向性。",
+      transition: "延续前一镜的手势/光线；思想画面褪色暗角后叠化回现实。",
+      audio: "同一 BGM 持续并略增强；抽象化音效与讲解节奏同步，转场前淡出。",
+      referencePolicy: "全新概念场景或道具仅上传一张关键分镜图；不得与尾帧和场景图冲突。"
+    },
+    {
+      shotId: "SHOT_04",
+      goal: "两人成为旁观者讨论",
+      durationSec: observe,
+      visualFocus: "人物对概念画面的观察与一句关键结论",
+      requiredAssets: ["STYLE00", "C01"],
+      prompt: "两人站在概念画面一侧作为旁观者，短促讨论刚才的机制；使用有动机的正反打或侧移，人物不抢占解释主体，结尾以回望现实的动作收束。",
+      transition: "以人物回望/走出画框为回归现实的铺垫。",
+      audio: "BGM 延续；语音自然接续；保留极轻的概念环境音后渐弱。",
+      referencePolicy: "正反打必须给必要关键分镜图；若上段音频已足够，不重复上传音色参考。"
+    },
+    {
+      shotId: "SHOT_05",
+      goal: "回到现实并给出可执行感慨",
+      durationSec: close,
+      visualFocus: "现实问题被重新理解，干净收尾与后期字幕空间",
+      requiredAssets: ["STYLE00", "P01", "S01", "C01"],
+      prompt: "回到 SHOT_01 的现实场景和可识别机位，用一句简洁感慨收束科普结论；镜头拉远或稳定停留，留出后期字幕区域，避免生成长文本。",
+      transition: "从 SHOT_04 的动作/音效自然落回同一现实环境，禁止突跳。",
+      audio: "回归 SHOT_01 同一环境音；BGM 在片尾自然淡出；结尾可有一个轻提示音。",
+      referencePolicy: "给 SHOT_01 同机位截图或同场景关键帧，确保回归现实的场景和人物不漂移。"
     }
   ];
 }
@@ -162,14 +228,17 @@ function buildExecution(request: AigcCreationRequest, shots: AigcShotSpec[]): Ai
   return shots.map((shot, index) => ({
     shotId: shot.shotId,
     mode: index === 0 ? "text_to_image" : "image_to_video",
-    adapterAction: index === 0 ? "generate first frame" : "animate approved frame",
+    adapterAction: index === 0 ? "generate approved opening frame" : `serially animate after ${shots[index - 1].shotId} approval`,
     payload: {
       prompt: shot.prompt,
       durationSec: shot.durationSec,
       aspectRatio: request.aspectRatio,
       promptLanguage: request.promptLanguage,
       styleTone: request.styleTone,
-      requiredAssets: shot.requiredAssets
+      requiredAssets: shot.requiredAssets,
+      dependsOnShotId: index === 0 ? "asset approval" : shots[index - 1].shotId,
+      referencePolicy: shot.referencePolicy,
+      tailFrameRequirement: shot.transition
     }
   }));
 }
@@ -179,6 +248,7 @@ export function buildAigcCreationPlan(request: AigcCreationRequest): AigcCreatio
   const assets = buildAssets(request);
   const shots = buildShots(request);
   const execution = buildExecution(request, shots);
+  const skillOrchestration = buildSkillOrchestration({ requirement: normalized });
 
   return {
     projectTitle: `${videoTypeLabels[request.videoType]} · ${request.platform.toUpperCase()} 执行封装`,
@@ -191,7 +261,10 @@ export function buildAigcCreationPlan(request: AigcCreationRequest): AigcCreatio
     },
     assets,
     shots,
+    workflow: buildWorkflow(),
+    continuity: buildContinuity(),
     execution,
-    adapter: buildAdapter(request.platform)
+    adapter: buildAdapter(request.platform),
+    skillOrchestration
   };
 }

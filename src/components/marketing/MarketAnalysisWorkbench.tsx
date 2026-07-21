@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { BarChart3, CircleAlert, Compass, Crosshair, Radar, Sparkles } from "lucide-react";
+import { BarChart3, CircleAlert, FileSearch, LoaderCircle, ShieldCheck, Sparkles } from "lucide-react";
 import { MarketAnalysisReport, MarketFocus } from "@/server/data/types";
 
 export type MarketWorkbenchView = "overview" | "opportunities" | "competitors" | "strategy";
+
+type ResearchSubjectType = "competitor" | "customer";
+type MarketResearchResult = { subject_name: string; subject_type: ResearchSubjectType; source_url: string; page_title: string; public_excerpt: string; observed_companies: string[]; research_angles: string[]; review_status: "needs_review"; notice: string };
 
 const focusOptions: Array<{ value: MarketFocus; label: string }> = [
   { value: "all", label: "全市场机会" },
@@ -25,10 +28,13 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
   const [reports, setReports] = useState(initialReports);
   const [focus, setFocus] = useState<MarketFocus>("all");
   const [loading, setLoading] = useState(false);
+  const [researching, setResearching] = useState(false);
+  const [researchSubjectType, setResearchSubjectType] = useState<ResearchSubjectType>("competitor");
+  const [researchResult, setResearchResult] = useState<MarketResearchResult | null>(null);
   const [error, setError] = useState("");
   const active = reports[0];
-  const xiaohongshuSignals = active?.xiaohongshuSignals || [];
   const sourceStatus = active?.sourceStatus || { xiaohongshu: "未配置" as const, note: "历史报告尚未接入公开信号来源，请重新运行市场分析。" };
+  const xiaohongshuSignals = sourceStatus.xiaohongshu === "本地演示数据" ? [] : active?.xiaohongshuSignals || [];
   const viewCopy: Record<MarketWorkbenchView, { eyebrow: string; title: string; description: string }> = {
     overview: { eyebrow: "Market Command Center", title: "市场策略总览", description: "汇总市场机会、竞争信号和近期行动，让获客、内容与 AIGC 有共同的策略依据。" },
     opportunities: { eyebrow: "Market Opportunities", title: "市场机会分析", description: "聚焦细分市场、目标客户、关键痛点和进入路径。" },
@@ -58,6 +64,18 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
     }
   }
 
+  async function researchPublicPage() {
+    setResearching(true); setError(""); setResearchResult(null);
+    try {
+      const response = await fetch("/api/market-research/crawl", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ subject_type: researchSubjectType }) });
+      const payload = await response.json().catch(() => ({})) as MarketResearchResult & { detail?: string; error?: string };
+      if (!response.ok) throw new Error(payload.detail || payload.error || "公开页面采集失败");
+      setResearchResult(payload);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "公开页面采集失败");
+    } finally { setResearching(false); }
+  }
+
   return (
     <>
       <div className="page-head">
@@ -74,14 +92,17 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
         </div>
       </div>
 
-      {view === "overview" ? <section className="grid cols-3">
-        <div className="panel stat"><Compass size={20} /><strong>{active?.segments.length || 0}</strong><p className="subtle">已分析细分市场</p></div>
-        <div className="panel stat"><Crosshair size={20} /><strong>{active?.segments.filter((item) => item.marketPriority === "P0").length || 0}</strong><p className="subtle">P0 优先市场</p></div>
-        <div className="panel stat"><Radar size={20} /><strong>{active?.competitorWatch.length || 0}</strong><p className="subtle">竞品/替代方案关注项</p></div>
-        <div className="panel stat"><strong>{xiaohongshuSignals.filter((item) => item.intentLevel !== "低").length}</strong><p className="subtle">公开需求/痛点信号</p></div>
-      </section> : null}
-
       {error ? <p className="run-error market-error"><CircleAlert size={16} />{error}</p> : null}
+
+      {view === "overview" ? <section className="panel market-research-panel" style={{ marginTop: 16 }}>
+        <div className="report-heading"><div><p className="eyebrow">Public Web Research</p><h2>竞品／潜在客户公开信息采集</h2></div><FileSearch size={19} /></div>
+        <p className="subtle">选择调查类型后即可启动采集。系统仅从管理员配置的公开来源读取信息，不登录、不保存 Cookie 或下载内容；结果必须人工核验。</p>
+        <div className="market-research-form">
+          <label className="field"><span>调查类型</span><select value={researchSubjectType} onChange={(event) => setResearchSubjectType(event.target.value as ResearchSubjectType)}><option value="competitor">竞品动态</option><option value="customer">潜在客户</option></select></label>
+          <button className="button" onClick={researchPublicPage} disabled={researching}>{researching ? <LoaderCircle className="spin" size={16} /> : <FileSearch size={16} />}{researching ? "采集中" : "启动采集"}</button>
+        </div>
+        {researchResult ? <article className="market-research-result"><div className="report-heading"><div><strong>{researchResult.subject_name}</strong><p>{researchResult.subject_type === "competitor" ? "潜在竞品" : "潜在客户"} · {researchResult.page_title}</p></div><span className="badge grade-C">待人工核验</span></div><p>{researchResult.public_excerpt || "页面未提取到可用正文，请人工打开原始链接核对。"}</p><div className="badge-row">{researchResult.research_angles.map((angle) => <span className="badge" key={angle}>{angle}</span>)}{researchResult.observed_companies.map((company) => <span className="badge" key={company}>页面提及：{company}</span>)}</div><a className="market-research-source" href={researchResult.source_url} target="_blank" rel="noreferrer">查看原始公开页面</a><small><ShieldCheck size={14} />{researchResult.notice}</small></article> : null}
+      </section> : null}
 
       {!active ? (
         <section className="panel" style={{ marginTop: 16 }}>
@@ -99,7 +120,7 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
           {view === "overview" ? <section className="panel" style={{ marginTop: 16 }}>
             <div className="report-heading"><div><p className="eyebrow">Xiaohongshu Public Signals</p><h2>公开需求与痛点信号</h2></div><span className="badge">{sourceStatus.xiaohongshu}</span></div>
             <p className="subtle">{sourceStatus.note}</p>
-            <div className="signal-list">{xiaohongshuSignals.length ? xiaohongshuSignals.slice(0, 4).map((signal) => <article className="signal-card" key={signal.id}><div className="report-heading"><div><h3>{signal.accountName} <span className="subtle">· {signal.accountType}</span></h3><a href={signal.noteUrl} target="_blank" rel="noreferrer">{signal.title}</a></div><div className="badge-row"><span className="badge">{signal.intentLevel}意向</span><span className="badge">{signal.evidenceLabel}</span></div></div><p><strong>{signal.signalType}：</strong>{signal.excerpt}</p>{signal.reason ? <p><strong>判断理由：</strong>{signal.reason}</p> : null}<p><strong>推荐动作：</strong>{signal.recommendedAction}</p><div className="signal-meta"><a href={signal.profileUrl} target="_blank" rel="noreferrer">主页链接</a><span>{signal.publishedAt}</span>{signal.followupStatus ? <span>跟进：{signal.followupStatus}</span> : null}</div></article>) : <p className="empty">当前没有符合筛选的公开信号。</p>}</div>
+            <div className="signal-list">{xiaohongshuSignals.length ? xiaohongshuSignals.slice(0, 4).map((signal) => <article className="signal-card" key={signal.id}><div className="report-heading"><div><h3>{signal.accountName} <span className="subtle">· {signal.accountType}</span></h3><a href={signal.noteUrl} target="_blank" rel="noreferrer">{signal.title}</a></div><span className="badge">{signal.intentLevel}意向</span></div><p><strong>{signal.signalType}：</strong>{signal.excerpt}</p><p><strong>推荐动作：</strong>{signal.recommendedAction}</p><div className="signal-meta"><a href={signal.noteUrl} target="_blank" rel="noreferrer">原始笔记</a>{signal.profileUrl ? <a href={signal.profileUrl} target="_blank" rel="noreferrer">账号主页</a> : null}<span>来源：{signal.sourceName || "未提供"}</span><span>抓取时间：{signal.collectedAt ? new Date(signal.collectedAt).toLocaleString("zh-CN") : "未提供"}</span><span>来源状态：{signal.sourceStatus || "待来源核验"}</span></div></article>) : <p className="empty">当前没有可追溯的公开信号。配置授权数据源后重新运行市场分析即可获取带原始链接和抓取时间的记录。</p>}</div>
             <p className="subtle" style={{ marginTop: 14 }}>仅处理公开内容；触达前必须人工核验账号主体、真实需求和平台合规要求。</p>
           </section> : null}
 

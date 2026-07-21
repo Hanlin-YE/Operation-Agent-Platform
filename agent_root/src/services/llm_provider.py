@@ -29,6 +29,7 @@ class LlmProviderConfig:
     api_key: str
     base_url: str
     model: str
+    api_mode: str = "chat_completions"
     token_warn_threshold: int = 2000
 
 

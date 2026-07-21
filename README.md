@@ -50,11 +50,33 @@ http://localhost:3000
 npm run dev
 ```
 
+开发服务器使用独立的 `.next-dev` 缓存目录，因此不会被生产构建覆盖。开发过程中如需验证生产构建，请运行：
+
+```bash
+npm run build:verify
+```
+
+该命令使用 `.next-verify`，不会影响正在运行的开发预览。`npm run build` 保留给生产构建、CI 和部署流程。
+
+## 本地视频拆解服务
+
+`/aigc?type=video` 使用本地视频证据链：`faster-whisper` 转写、`PySceneDetect` 切分镜头，再由与网页相同的模型配置整理成待人工审核的中文剧本。它不依赖第三方网页服务，也不会在未配置模型时伪造结果。
+
+首次启用（会下载 Python 依赖和所选 Whisper 模型）前，复制并填写 `agent_root/.env`：
+
+```bash
+cd agent_root
+python3 -m pip install -r requirements.txt
+VIDEO_ANALYZER_ENABLED=true OPENAI_API_KEY=... OPENAI_MODEL=... python3 -m uvicorn src.main:app --port 8001
+```
+
+网页项目的 `.env` 中保持 `VIDEO_ANALYZER_BASE_URL=http://127.0.0.1:8001/api/video-analysis`，然后启动 `npm run dev` 并打开 `/aigc?type=video`。本机还需要可用的 `ffmpeg` / `ffprobe`。视频最大 300MB；提取结果先进入人工核验，不会自动进入内容生产。
+
 ## 验证
 
 ```bash
 npm run typecheck
-npm run build
+npm run build:verify
 ```
 
 ## Cloudflare 上线
