@@ -5,6 +5,7 @@
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { Check, CheckCircle2, CircleAlert, FileSearch, ImagePlus, LoaderCircle, LockKeyhole, Send, ShieldAlert, Trash2 } from "lucide-react";
 import type { ContentStrategyPack } from "@/server/data/types";
+import { VideoAnalysisWorkbench } from "@/components/content/VideoAnalysisWorkbench";
 
 const initial = { platform: "xiaohongshu", title: "", content: "", sourceUrl: "", views: "", likes: "", comments: "", saves: "", shares: "" };
 const actions = { wechat: "公众号长文", xhsImage: "小红书图文", xhsVideo: "小红书短视频" } as const;
@@ -33,6 +34,10 @@ export function ContentStrategyWorkbench() {
   const analysis = item?.analysis;
 
   function setField(key: keyof typeof form, value: string) { setForm((current) => ({ ...current, [key]: value })); }
+  function useVideoReference(sample: { title: string; content: string; sourceUrl?: string }) {
+    setForm((current) => ({ ...current, title: sample.title, content: sample.content, sourceUrl: sample.sourceUrl || current.sourceUrl }));
+    setMessage("拉片结论已载入样本档案。请补充平台与人工指标后生成策略包。");
+  }
   function selectFiles(event: ChangeEvent<HTMLInputElement>) {
     const selected = Array.from(event.target.files || []);
     const tooLarge = selected.find((file) => file.size > 5 * 1024 * 1024);
@@ -66,6 +71,7 @@ export function ContentStrategyWorkbench() {
   }
 
   return <section className="strategy-workbench">
+    <VideoAnalysisWorkbench onUseAsStrategy={useVideoReference} />
     <form className="panel strategy-intake" onSubmit={analyze}>
       <div className="strategy-heading"><div><p className="eyebrow">01 / Sample archive</p><h2>样本档案</h2></div><span className="strategy-meter">{completeness}% 完整</span></div>
       <div className="strategy-progress"><i style={{ width: `${completeness}%` }} /></div>

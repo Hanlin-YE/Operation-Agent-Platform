@@ -40,6 +40,23 @@ export type AigcShotSpec = {
   visualFocus: string;
   prompt: string;
   requiredAssets: string[];
+  transition: string;
+  audio: string;
+  referencePolicy: string;
+};
+
+export type AigcProductionStage = {
+  id: string;
+  name: string;
+  deliverable: string;
+  approvalGate: string;
+  rule: string;
+};
+
+export type AigcContinuityProtocol = {
+  narrativeTemplate: string;
+  referenceRules: string[];
+  editAndQc: string[];
 };
 
 export type AigcExecutionSpec = {
@@ -103,6 +120,8 @@ export type AigcCreationResponse = {
   };
   assets: AigcAssetItem[];
   shots: AigcShotSpec[];
+  workflow: AigcProductionStage[];
+  continuity: AigcContinuityProtocol;
   execution: AigcExecutionSpec[];
   adapter: AigcAdapterPlan;
   skillOrchestration: AigcSkillOrchestration;

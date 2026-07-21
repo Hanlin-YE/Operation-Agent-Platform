@@ -38,3 +38,6 @@ potential_customers.csv
 .env
 .edgeone/*
 .tef_dist/*
+agent_root/models/
+agent_root/.cache/
+agent_root/data/video-analysis-jobs.json

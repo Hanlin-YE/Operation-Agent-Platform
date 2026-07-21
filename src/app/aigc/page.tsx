@@ -1,6 +1,5 @@
 import { AigcCreationWorkbench } from "@/components/content/AigcCreationWorkbench";
 import { ContentStrategyWorkbench } from "@/components/content/ContentStrategyWorkbench";
-import { VideoAnalysisWorkbench } from "@/components/content/VideoAnalysisWorkbench";
 import { FileText, FolderOpen, ImageIcon, Video, ScanSearch } from "lucide-react";
 
 const contentTypes = [
@@ -33,7 +32,7 @@ export default function AigcCreationPage({ searchParams }: { searchParams?: { ty
       {selectedType === "text" ? <AigcCreationWorkbench /> : null}
       {selectedType === "strategy" ? <ContentStrategyWorkbench /> : null}
       {selectedType === "image" ? <section className="content-type-notice panel"><SelectedIcon size={19} /><div><p className="eyebrow">图片生产工作台</p><h2>使用已确认的视觉资产继续生产</h2><p className="subtle">图片生成只承接已审核的内容策略与视觉资产，不在这里重复录入自然语言需求。请先在“文本生成”或“内容策略”完成需求确认。</p></div><a className="button secondary" href="/aigc?type=strategy">查看内容策略</a></section> : null}
-      {selectedType === "video" ? <VideoAnalysisWorkbench /> : null}
+      {selectedType === "video" ? <section className="content-type-notice panel"><SelectedIcon size={19} /><div><p className="eyebrow">视频生产依赖已确认策略</p><h2>先完成视频对标拆解与内容策略</h2><p className="subtle">视频 URL 拉片、故事大纲、爆点规律和 B 端改写建议都归入“内容策略”，审核通过后再进入视频生产。</p></div><a className="button secondary" href="/aigc?type=strategy">进入内容策略</a></section> : null}
       {selectedType === "all" ? <section className="content-type-notice panel"><SelectedIcon size={19} /><div><p className="eyebrow">内容任务总览</p><h2>先定策略，再进入生产</h2><p className="subtle">内容策略负责选题和灵感；文本生成接收自然语言需求；图片与视频只消费已确认的内容资产与策略结果。</p></div><a className="button secondary" href="/aigc?type=strategy">开始内容策略</a></section> : null}
     </>
   );

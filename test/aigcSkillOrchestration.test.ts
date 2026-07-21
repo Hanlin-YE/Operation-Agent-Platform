@@ -39,4 +39,8 @@ test("AIGC 创作计划将 Skill 编排和图片路由返回给工作台", () =>
 
   assert.equal(plan.skillOrchestration.skills.length, 5);
   assert.equal(plan.skillOrchestration.image.provider, "runninghub");
+  assert.equal(plan.workflow.length, 6);
+  assert.ok(plan.continuity.narrativeTemplate.includes("Taotao"));
+  assert.deepEqual(plan.shots.map((shot) => shot.shotId), ["SHOT_01", "SHOT_02", "SHOT_03", "SHOT_04", "SHOT_05"]);
+  assert.ok(plan.execution.every((task, index) => String(task.payload.dependsOnShotId) === (index === 0 ? "asset approval" : `SHOT_0${index}`)));
 });

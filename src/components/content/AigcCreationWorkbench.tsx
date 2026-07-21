@@ -84,7 +84,7 @@ function displayProviderText(value: unknown) {
 function readableExecution(task: AigcExecutionSpec) {
   const payload = task.payload;
   const mode = task.mode === "text_to_image" ? "生成首帧图片" : task.mode === "image_to_video" ? "将已确认首帧生成动态视频" : "生成视频";
-  const action = task.adapterAction === "generate first frame" ? "先生成并等待首帧审核" : task.adapterAction === "animate approved frame" ? "使用已审核首帧继续生成" : displayProviderText(task.adapterAction);
+  const action = task.adapterAction === "generate approved opening frame" ? "先生成并等待首帧审核" : displayProviderText(task.adapterAction);
   const prompt = String(payload.prompt || "").replace(/STYLE00/g, "风格资产").replace(/P01/g, "产品资产").replace(/S01/g, "场景资产").replace(/C01/g, "人物资产").replace(/promptLanguage/g, "提示词语言");
   return { mode, action, duration: `${payload.durationSec || 0} 秒`, aspect: `画幅 ${payload.aspectRatio || "未指定"}`, assets: Array.isArray(payload.requiredAssets) ? payload.requiredAssets.join("、").replace(/STYLE00/g, "风格资产").replace(/P01/g, "产品资产").replace(/S01/g, "场景资产").replace(/C01/g, "人物资产") : "无", prompt };
 }
@@ -251,6 +251,12 @@ export function AigcCreationWorkbench() {
             <article className="panel stat"><strong>{result.execution.length}</strong><p className="subtle">待提交执行节点</p></article>
           </section>
 
+          <section className="panel aigc-production-standard">
+            <div className="rag-section-head"><div><p className="eyebrow">Science Short Video SOP</p><h2>核审闸门与连续性规则</h2><p className="subtle">{result.continuity.narrativeTemplate}</p></div><Workflow size={19} /></div>
+            <div className="aigc-sop-grid">{result.workflow.map((stage, index) => <article className="aigc-sop-card" key={stage.id}><span>{String(index + 1).padStart(2, "0")}</span><div><strong>{stage.name}</strong><p>{stage.deliverable}</p><small><b>核审：</b>{stage.approvalGate}</small><small><b>规则：</b>{stage.rule}</small></div></article>)}</div>
+            <div className="aigc-continuity-grid"><div><strong>参考输入最简化</strong>{result.continuity.referenceRules.map((rule) => <p key={rule}>{rule}</p>)}</div><div><strong>剪辑与终审</strong>{result.continuity.editAndQc.map((rule) => <p key={rule}>{rule}</p>)}</div></div>
+          </section>
+
           <section className="aigc-production-board" aria-label="多平台内容生产">
             <div className="aigc-production-head"><div><p className="eyebrow">Production Outputs</p><h2>按平台交付内容</h2></div><span>{result.skillOrchestration.production.length} 个待审核产物</span></div>
             <div className="aigc-production-grid">{result.skillOrchestration.production.map((item) => <article className={`aigc-production-card ${item.id}`} key={item.id}><div className="aigc-production-card-head"><span>{displayProviderText(item.platform)}</span><small>{item.format}</small></div><h3>{item.title}</h3><div className="aigc-production-copy">{displayProviderText(item.copy)}</div><footer>{displayProviderText(item.nextAction)}</footer></article>)}</div>
@@ -280,7 +286,7 @@ export function AigcCreationWorkbench() {
           <section className="grid cols-2">
             <section className="panel">
               <div className="rag-section-head"><div><p className="eyebrow">Storyboard Pack</p><h2>镜头提示词</h2></div><Clapperboard size={19} /></div>
-              <div className="aigc-block-list">{result.shots.map((shot) => <article key={shot.shotId} className="aigc-block-card"><strong>{shot.shotId} · {shot.goal}</strong><p>{shot.prompt}</p><small>{shot.durationSec} 秒 · 资产引用：{shot.requiredAssets.join("，")}</small></article>)}</div>
+              <div className="aigc-block-list">{result.shots.map((shot) => <article key={shot.shotId} className="aigc-block-card"><strong>{shot.shotId} · {shot.goal}</strong><p>{shot.prompt}</p><small>{shot.durationSec} 秒 · 资产引用：{shot.requiredAssets.join("，")}</small><small><b>转场：</b>{shot.transition}</small><small><b>音频：</b>{shot.audio}</small><small><b>参考：</b>{shot.referencePolicy}</small></article>)}</div>
             </section>
             <section className="panel">
               <div className="rag-section-head"><div><p className="eyebrow">Production Instructions</p><h2>执行说明</h2></div><Layers3 size={19} /></div>

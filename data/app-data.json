@@ -5488,6 +5488,22 @@
   ],
   "learningConversations": [
     {
+      "id": "learning-1784598282649-hzs4z2",
+      "title": "新的学习对话",
+      "category": "script",
+      "messages": [],
+      "createdAt": "2026-07-21T01:44:42.649Z",
+      "updatedAt": "2026-07-21T01:44:42.649Z"
+    },
+    {
+      "id": "learning-1784598217484-oftluw",
+      "title": "新的学习对话",
+      "category": "market",
+      "messages": [],
+      "createdAt": "2026-07-21T01:43:37.484Z",
+      "updatedAt": "2026-07-21T01:43:37.484Z"
+    },
+    {
       "id": "learning-1784537794336-5r0br2",
       "title": "你好",
       "messages": [
@@ -5506,6 +5522,28 @@
       ],
       "createdAt": "2026-07-20T08:56:34.336Z",
       "updatedAt": "2026-07-20T08:56:40.316Z"
+    }
+  ],
+  "contentStrategies": [
+    {
+      "version": 1,
+      "sample": {
+        "platform": "xiaohongshu",
+        "title": "狗拿耗子",
+        "content": "111",
+        "metrics": {
+          "views": 0,
+          "likes": 0,
+          "comments": 0,
+          "saves": 0,
+          "shares": 0
+        },
+        "images": []
+      },
+      "status": "model_not_configured",
+      "id": "strategy-1784556020753-6xq4kb",
+      "createdAt": "2026-07-20T14:00:20.753Z",
+      "updatedAt": "2026-07-20T14:00:20.753Z"
     }
   ]
 }

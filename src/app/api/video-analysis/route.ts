@@ -7,11 +7,13 @@ const maxBytes = 300 * 1024 * 1024;
 export async function POST(request: Request) {
   const form = await request.formData();
   const file = form.get("video");
-  if (!(file instanceof File)) return NextResponse.json({ error: "请选择一个视频文件。" }, { status: 422 });
-  if (!file.type.startsWith("video/")) return NextResponse.json({ error: "仅支持视频文件。" }, { status: 415 });
-  if (!file.size || file.size > maxBytes) return NextResponse.json({ error: "视频文件需在 300MB 以内。" }, { status: 422 });
+  const sourceUrl = String(form.get("sourceUrl") || "").trim();
+  if ((file instanceof File) === Boolean(sourceUrl)) return NextResponse.json({ error: "请选择一个视频文件，或提供一个公开视频链接。" }, { status: 422 });
+  if (file instanceof File && !file.type.startsWith("video/")) return NextResponse.json({ error: "仅支持视频文件。" }, { status: 415 });
+  if (file instanceof File && (!file.size || file.size > maxBytes)) return NextResponse.json({ error: "视频文件需在 300MB 以内。" }, { status: 422 });
   const outbound = new FormData();
-  outbound.set("video", file, file.name);
+  if (file instanceof File) outbound.set("video", file, file.name);
+  else outbound.set("source_url", sourceUrl);
   outbound.set("operator", String(form.get("operator") || "当前运营人员"));
   try {
     const response = await fetch(getVideoAnalyzerUrl(), { method: "POST", body: outbound, cache: "no-store" });
