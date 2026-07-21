@@ -23,6 +23,7 @@ venv/
 agent_root/.env
 agent_root/rag-data/
 data/aigc-jobs.json
+data/content-operations.json
 data/rag-demo-data.json
 data/rag-demo-files/
 potential_customers.csv

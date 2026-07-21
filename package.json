@@ -8,17 +8,21 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test:content": "tsx --test test/contentOperations*.test.ts",
+    "mcp:content": "tsx src/mcp/runContentOperationsMcp.ts",
     "test:rag": "tsx --test test/ragPdfText.test.ts",
     "test:market": "tsx --test test/marketAnalysis.test.ts",
     "preview:cloudflare": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy:cloudflare": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "lucide-react": "^0.468.0",
     "next": "^14.2.5",
     "pdf-parse": "^1.1.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@opennextjs/cloudflare": "1.15.0",

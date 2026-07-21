@@ -22,6 +22,7 @@ const navigationGroups: NavigationGroup[] = [
   {
     title: "知识资产中心", icon: BookOpen, items: [
       { href: "/knowledge", title: "产品知识", meta: "产品资料、案例与选型经验", icon: BookOpen },
+      { href: "/content/library", title: "论文与专利知识库", meta: "独立 RAG 技术证据层", icon: BookOpen },
       { href: "/marketing", title: "市场知识", meta: "市场机会、竞品与策略", icon: BarChart3 },
       { href: "/graph", title: "知识关系图谱", meta: "实体与关系检索", icon: Network }
     ]
@@ -31,7 +32,7 @@ const navigationGroups: NavigationGroup[] = [
     title: "内容运营中心", icon: Newspaper, items: [
       { href: "/content", title: "发布记录", meta: "素材与内容工作流", icon: Newspaper },
       { href: "/content/review", title: "用户数据分析", meta: "内容表现与审核反馈", icon: LineChart },
-      { href: "/content/inbox", title: "热门内容", meta: "市场素材与热点输入", icon: Target }
+      { href: "/content/inbox", title: "内部内容排行", meta: "渠道内表现与选题复盘", icon: Target }
     ]
   },
   { title: "销售培训中心", icon: Bot, href: "/agent", meta: "产品学习、市场培训、营销话术" }
@@ -46,10 +47,16 @@ function currentGroup(pathname: string) {
   return navigationGroups.find((group) => group.href ? isActive(pathname, group.href) : group.items?.some((item) => isActive(pathname, item.href))) ?? navigationGroups[0];
 }
 
+function currentItem(pathname: string, group: NavigationGroup) {
+  return group.items
+    ?.filter((item) => isActive(pathname, item.href))
+    .sort((left, right) => right.href.split("?")[0].length - left.href.split("?")[0].length)[0];
+}
+
 export function OperationsShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const activeGroup = currentGroup(pathname);
-  const active = activeGroup.items?.find((item) => isActive(pathname, item.href)) ?? activeGroup.items?.[0];
+  const active = currentItem(pathname, activeGroup) ?? activeGroup.items?.[0];
   const topbarTitle = active ? `${activeGroup.title} / ${active.title}` : activeGroup.title;
 
   return (
@@ -70,7 +77,7 @@ export function OperationsShell({ children }: { children: React.ReactNode }) {
               <div className="workspace-list">
                 {group.items?.map((item) => {
                   const Icon = item.icon;
-                  return <a key={`${item.href}-${item.title}`} className={isActive(pathname, item.href) ? "selected" : ""} href={item.href}><Icon size={14} /><span><strong>{item.title}</strong><small>{item.meta}</small></span></a>;
+                  return <a key={`${item.href}-${item.title}`} className={item.href === active?.href ? "selected" : ""} href={item.href} aria-current={item.href === active?.href ? "page" : undefined}><Icon size={14} /><span><strong>{item.title}</strong><small>{item.meta}</small></span></a>;
                 })}
               </div>
             </details>

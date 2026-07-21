@@ -1,8 +1,9 @@
 import { MarketFocus, XiaohongshuSignal } from "@/server/data/types";
+import xiaohongshuSnapshot from "../../../data/xiaohongshu-signals.json";
 
 export interface XiaohongshuSource {
   searchSignals(input: { focus: MarketFocus; limit: number }): Promise<XiaohongshuSignal[]>;
-  status(): { mode: "本地演示数据" | "未配置"; note: string };
+  status(): { mode: "本地真实数据" | "本地演示数据" | "未配置"; note: string };
 }
 
 const signals: XiaohongshuSignal[] = [
@@ -13,6 +14,8 @@ const signals: XiaohongshuSignal[] = [
   { id: "xhs-demo-industrial-01", accountName: "设备工程师小周", accountType: "个人开发者", title: "自动化设备调试日常", noteUrl: "https://www.xiaohongshu.com/explore/demo-industrial-01", profileUrl: "https://www.xiaohongshu.com/user/profile/demo-industrial", publishedAt: "2026-07-08", scenario: "industrial", signalType: "竞品评论", excerpt: "[公开资料] 在相关电机笔记下询问交期与维护频率，账号主体和真实项目均待核验。", intentLevel: "低", evidenceLabel: "公开资料", recommendedAction: "仅保留为审计线索，不进入默认销售触达名单。" }
 ];
 
+const collectedSignals = xiaohongshuSnapshot as unknown as XiaohongshuSignal[];
+
 export class LocalXiaohongshuSource implements XiaohongshuSource {
   async searchSignals({ focus, limit }: { focus: MarketFocus; limit: number }) {
     const scoped = focus === "all" ? signals : signals.filter((item) => item.scenario === focus);
@@ -22,4 +25,27 @@ export class LocalXiaohongshuSource implements XiaohongshuSource {
   status() {
     return { mode: "本地演示数据" as const, note: "已接入 XiaohongshuSource 抽象；当前为本地固定样本，不配置、不调用任何真实小红书 API。" };
   }
+}
+
+/**
+ * Read-only snapshot exported by the local lead agent. It keeps the website
+ * independent from TikHub credentials while preserving the public evidence
+ * links and the lead-agent's review status.
+ */
+export class SnapshotXiaohongshuSource implements XiaohongshuSource {
+  async searchSignals({ focus, limit }: { focus: MarketFocus; limit: number }) {
+    const scoped = focus === "all" ? collectedSignals : collectedSignals.filter((item) => item.scenario === focus);
+    return scoped.slice(0, Math.max(1, Math.min(limit, 50)));
+  }
+
+  status() {
+    return {
+      mode: "本地真实数据" as const,
+      note: `已读取本地线索 Agent 的 ${collectedSignals.length} 条公开小红书采集快照；链接已去除临时鉴权参数，触达前仍需人工核验。`
+    };
+  }
+}
+
+export function createXiaohongshuSource(): XiaohongshuSource {
+  return collectedSignals.length ? new SnapshotXiaohongshuSource() : new LocalXiaohongshuSource();
 }

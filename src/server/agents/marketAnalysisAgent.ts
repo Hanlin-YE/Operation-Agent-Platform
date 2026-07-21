@@ -2,7 +2,7 @@ import { MarketAnalysisReport, MarketFocus, MarketSegment } from "@/server/data/
 import { listKnowledge } from "@/server/repositories/knowledge";
 import { listProducts } from "@/server/repositories/products";
 import { saveMarketReport } from "@/server/repositories/marketReports";
-import { LocalXiaohongshuSource, XiaohongshuSource } from "@/server/sources/xiaohongshu";
+import { createXiaohongshuSource, XiaohongshuSource } from "@/server/sources/xiaohongshu";
 
 type SegmentBlueprint = Omit<MarketSegment, "id" | "evidence"> & { focus: MarketFocus; evidenceKeywords: string[] };
 
@@ -78,7 +78,7 @@ function selectBlueprints(focus: MarketFocus) {
   return focus === "all" ? blueprints : blueprints.filter((item) => item.focus === focus);
 }
 
-export async function analyzeMarket(focus: MarketFocus = "all", xiaohongshuSource: XiaohongshuSource = new LocalXiaohongshuSource()) {
+export async function analyzeMarket(focus: MarketFocus = "all", xiaohongshuSource: XiaohongshuSource = createXiaohongshuSource()) {
   const [products, knowledge, xiaohongshuSignals] = await Promise.all([
     listProducts(), listKnowledge(), xiaohongshuSource.searchSignals({ focus, limit: 8 })
   ]);
