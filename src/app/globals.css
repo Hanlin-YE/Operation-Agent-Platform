@@ -716,6 +716,24 @@ h3 { font-size: 13px; }
 .table tbody tr { transition: background 140ms ease; }
 .table tbody tr:hover { background: #151e27; }
 .table a:hover { color: var(--brand); }
+.compact-button { min-height: 28px; padding: 5px 8px; font-size: 11px; }
+.signal-table-summary { display: grid; grid-template-columns: auto auto; align-items: center; column-gap: 8px; row-gap: 2px; min-width: 184px; padding: 12px 14px; }
+.signal-table-summary strong { grid-row: span 2; color: var(--brand); font-size: 25px; }
+.signal-table-summary span { font-size: 11px; }
+.signal-table-toolbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.signal-table-toolbar select, .signal-search { min-height: 35px; border: 1px solid #303c49; border-radius: 6px; background: #0c1218; color: #e9eff4; font-size: 12px; }
+.signal-table-toolbar select { padding: 0 8px; }
+.signal-search { display: flex; align-items: center; gap: 7px; flex: 1 1 235px; padding: 0 9px; color: #718091; }
+.signal-search input { width: 100%; min-width: 0; border: 0; outline: 0; background: transparent; color: #e9eff4; font: inherit; }
+.signal-table-count { margin: 12px 0; }
+.xiaohongshu-signals-table { min-width: 1240px; }
+.xiaohongshu-signals-table th:nth-child(1) { min-width: 125px; }
+.xiaohongshu-signals-table th:nth-child(3) { min-width: 170px; }
+.xiaohongshu-signals-table th:nth-child(5) { min-width: 280px; }
+.xiaohongshu-signals-table th:nth-child(8) { min-width: 220px; }
+.signal-evidence { max-width: 390px; margin: 0; line-height: 1.55; }
+.signal-links { display: grid; gap: 7px; }
+.signal-links a { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
 .field > span { color: #aab6c3; font-size: 11px; font-weight: 650; }
 .field input, .field textarea, .field select { border-color: #303c49; background: #0c1218; color: #e9eff4; border-radius: 6px; min-height: 36px; padding: 8px 9px; font-size: 12px; }
 .field input:focus, .field textarea:focus, .field select:focus, .command-search:focus-within { border-color: #70e3b0; box-shadow: 0 0 0 3px rgba(112, 227, 176, .09); outline: 0; }
