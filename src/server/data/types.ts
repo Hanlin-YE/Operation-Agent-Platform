@@ -146,6 +146,10 @@ export type XiaohongshuSignal = {
   intentLevel: "高" | "中" | "低";
   evidenceLabel: "公开资料" | "推断";
   recommendedAction: string;
+  evidence?: string;
+  reason?: string;
+  followupStatus?: "待联系" | "已联系" | "跟进中" | "无效";
+  collectedAt?: string;
 };
 
 export type MarketAnalysisReport = {
@@ -159,7 +163,7 @@ export type MarketAnalysisReport = {
   openQuestions: string[];
   knowledgeCitations: string[];
   xiaohongshuSignals?: XiaohongshuSignal[];
-  sourceStatus?: { xiaohongshu: "本地演示数据" | "未配置"; note: string };
+  sourceStatus?: { xiaohongshu: "本地真实数据" | "本地演示数据" | "未配置"; note: string };
   modelVersion: string;
   createdAt: string;
 };
