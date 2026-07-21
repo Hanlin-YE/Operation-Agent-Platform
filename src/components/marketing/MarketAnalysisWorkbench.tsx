@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BarChart3, CircleAlert, FileSearch, LoaderCircle, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, BarChart3, CircleAlert, FileSearch, LoaderCircle, ShieldCheck, Sparkles } from "lucide-react";
 import { MarketAnalysisReport, MarketFocus } from "@/server/data/types";
 
 export type MarketWorkbenchView = "overview" | "opportunities" | "competitors" | "strategy";
@@ -118,7 +118,7 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
           </section> : null}
 
           {view === "overview" ? <section className="panel" style={{ marginTop: 16 }}>
-            <div className="report-heading"><div><p className="eyebrow">Xiaohongshu Public Signals</p><h2>公开需求与痛点信号</h2></div><span className="badge">{sourceStatus.xiaohongshu}</span></div>
+            <div className="report-heading"><div><p className="eyebrow">Xiaohongshu Public Signals</p><h2>公开需求与痛点信号</h2></div><div className="badge-row"><span className="badge">{sourceStatus.xiaohongshu}</span><a className="button secondary compact-button" href="/marketing/xiaohongshu">查看全部 {xiaohongshuSignals.length} 条 <ArrowRight size={14} /></a></div></div>
             <p className="subtle">{sourceStatus.note}</p>
             <div className="signal-list">{xiaohongshuSignals.length ? xiaohongshuSignals.slice(0, 4).map((signal) => <article className="signal-card" key={signal.id}><div className="report-heading"><div><h3>{signal.accountName} <span className="subtle">· {signal.accountType}</span></h3><a href={signal.noteUrl} target="_blank" rel="noreferrer">{signal.title}</a></div><span className="badge">{signal.intentLevel}意向</span></div><p><strong>{signal.signalType}：</strong>{signal.excerpt}</p><p><strong>推荐动作：</strong>{signal.recommendedAction}</p><div className="signal-meta"><a href={signal.noteUrl} target="_blank" rel="noreferrer">原始笔记</a>{signal.profileUrl ? <a href={signal.profileUrl} target="_blank" rel="noreferrer">账号主页</a> : null}<span>来源：{signal.sourceName || "未提供"}</span><span>抓取时间：{signal.collectedAt ? new Date(signal.collectedAt).toLocaleString("zh-CN") : "未提供"}</span><span>来源状态：{signal.sourceStatus || "待来源核验"}</span></div></article>) : <p className="empty">当前没有可追溯的公开信号。配置授权数据源后重新运行市场分析即可获取带原始链接和抓取时间的记录。</p>}</div>
             <p className="subtle" style={{ marginTop: 14 }}>仅处理公开内容；触达前必须人工核验账号主体、真实需求和平台合规要求。</p>
