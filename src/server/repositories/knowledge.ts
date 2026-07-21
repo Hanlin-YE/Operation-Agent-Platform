@@ -38,6 +38,9 @@ export async function updateKnowledge(id: string, input: Partial<KnowledgeInput>
   if (typeof input.content === "string") item.content = input.content.trim();
   if (isKnowledgeType(input.type)) item.type = input.type;
   if (typeof input.sourceFile === "string") item.sourceFile = input.sourceFile.trim() || undefined;
+  if (typeof input.ragDocumentId === "string") item.ragDocumentId = input.ragDocumentId.trim() || undefined;
+  if (input.ragReviewStatus === "pending" || input.ragReviewStatus === "approved" || input.ragReviewStatus === "rejected") item.ragReviewStatus = input.ragReviewStatus;
+  if (typeof input.ragIngestedAt === "string") item.ragIngestedAt = input.ragIngestedAt.trim() || undefined;
   item.updatedAt = new Date().toISOString();
   await writeData(data);
   return item;
