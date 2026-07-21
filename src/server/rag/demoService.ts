@@ -122,6 +122,37 @@ function tokenize(text: string) {
     .filter((token) => token.length >= 2);
 }
 
+/** 是否为 CJK 字符（中日韩统一表意文字、假名、谚文） */
+function isCJK(c: string): boolean {
+  const code = c.charCodeAt(0);
+  return (
+    (code >= 0x4e00 && code <= 0x9fff) || // CJK unified
+    (code >= 0x3400 && code <= 0x4dbf) || // CJK extension A
+    (code >= 0x3040 && code <= 0x309f) || // Hiragana
+    (code >= 0x30a0 && code <= 0x30ff) || // Katakana
+    (code >= 0xac00 && code <= 0xd7af)    // Hangul
+  );
+}
+
+/** 对含 CJK 字符的长 token 做 2-gram / 3-gram 切分，提升中文检索召回 */
+function enrichCJKTokens(baseTokens: string[]): string[] {
+  const result: string[] = [];
+  for (const token of baseTokens) {
+    result.push(token);
+    if (token.length >= 4 && [...token].some(isCJK)) {
+      for (let i = 0; i <= token.length - 2; i++) {
+        result.push(token.slice(i, i + 2));
+      }
+      if (token.length >= 5) {
+        for (let i = 0; i <= token.length - 3; i++) {
+          result.push(token.slice(i, i + 3));
+        }
+      }
+    }
+  }
+  return [...new Set(result)];
+}
+
 function pageChunks(document: DemoRagDocument) {
   const pages = (document.text_content || "").split("\f").map((page) => page.trim()).filter(Boolean);
   return pages.map((page, index) => ({ page, pageNumber: index + 1 }));
@@ -263,7 +294,7 @@ export async function approveDemoDocument(documentId: string, reviewerId: string
 
 export async function searchDemoRag(query: string, limit = 8, documentType?: DemoDocumentType) {
   const store = await readStore();
-  const queryTokens = tokenize(query);
+  const queryTokens = enrichCJKTokens(tokenize(query));
   if (!queryTokens.length) {
     return [] as SearchHit[];
   }

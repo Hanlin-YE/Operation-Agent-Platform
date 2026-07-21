@@ -1,6 +1,6 @@
-import { ArrowUpRight, CalendarDays, Lightbulb, LineChart, Sparkles, Video } from "lucide-react";
+import { ArrowUpRight, CalendarDays, Lightbulb, LineChart } from "lucide-react";
 import { HomeInspirationNotebook } from "@/components/home/HomeInspirationNotebook";
-import { listAigcJobs } from "@/server/aigc/jobStore";
+import { AigcShowcaseBoard } from "@/components/home/AigcShowcaseBoard";
 import { listMarketReports } from "@/server/repositories/marketReports";
 
 export const dynamic = "force-dynamic";
@@ -8,9 +8,8 @@ export const dynamic = "force-dynamic";
 const today = new Intl.DateTimeFormat("zh-CN", { month: "long", day: "numeric", weekday: "long" }).format(new Date());
 
 export default async function DashboardPage() {
-  const [reports, jobs] = await Promise.all([listMarketReports(), listAigcJobs()]);
+  const reports = await listMarketReports();
   const latestReport = reports[0];
-  const recentJobs = jobs.slice(0, 3);
   const p0Markets = latestReport?.segments.filter((item) => item.marketPriority === "P0") ?? [];
 
   return (
@@ -32,12 +31,9 @@ export default async function DashboardPage() {
           {latestReport ? <><div className="market-stat"><strong>{p0Markets.length}</strong><span>个 P0 优先市场</span></div><div className="market-signal-list">{latestReport.segments.slice(0, 2).map((segment) => <div key={segment.id}><span className={`priority-dot ${segment.marketPriority.toLowerCase()}`} /><strong>{segment.name}</strong><small>{segment.demandDrivers[0]}</small></div>)}</div></> : <div className="home-empty"><LineChart size={19} /><p>还没有市场分析报告。运行一次分析，让今日选题基于明确的市场信号。</p><a href="/marketing">开始分析</a></div>}
         </article>
 
-        <article className="panel home-record-panel">
-          <div className="home-block-head"><div><p className="eyebrow">AI 生成记录</p><h2>最近的创作任务</h2></div><a href="/aigc" aria-label="查看全部生成记录"><ArrowUpRight size={17} /></a></div>
-          <div className="record-filter"><button className="active">日</button><button>周</button><button>月</button></div>
-          {recentJobs.length ? <div className="record-list">{recentJobs.map((job) => <a href="/aigc" key={job.jobId}><Video size={15} /><span><strong>{job.projectTitle}</strong><small>{new Date(job.createdAt).toLocaleDateString("zh-CN")}</small></span><em>{job.status === "succeeded" ? "已完成" : "进行中"}</em></a>)}</div> : <div className="home-empty compact"><Sparkles size={19} /><p>尚无生成任务</p><a href="/aigc?type=video">创建视频</a></div>}
-        </article>
       </section>
+
+      <AigcShowcaseBoard />
     </>
   );
 }

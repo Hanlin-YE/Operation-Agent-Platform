@@ -51,12 +51,35 @@ export type Product = {
   updatedAt: string;
 };
 
+export type CompanyPersona = {
+  id: string;
+  companyName: string;
+  aliases: string[];
+  source: "tianyancha" | "manual" | "public";
+  sourceUrl?: string;
+  industry: string;
+  region: string;
+  businessSummary: string;
+  likelyNeeds: string[];
+  painPoints: string[];
+  buyingCommittee: string[];
+  conversationStyle: string;
+  qualificationQuestions: string[];
+  salesAngles: string[];
+  cautions: string[];
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type KnowledgeDocument = {
   id: string;
   title: string;
   type: "product" | "case" | "objection" | "selection" | "faq";
   content: string;
   sourceFile?: string;
+  ragDocumentId?: string;
+  ragReviewStatus?: "pending" | "approved" | "rejected";
+  ragIngestedAt?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -183,7 +206,16 @@ export type MarketAnalysisReport = {
 
 export type LearningCategory = "product" | "market" | "script";
 export type LearningMessage = { id: string; role: "learner" | "coach"; content: string; createdAt: string };
-export type LearningConversation = { id: string; title: string; category?: LearningCategory; messages: LearningMessage[]; createdAt: string; updatedAt: string };
+export type LearningConversation = {
+  id: string;
+  title: string;
+  category?: LearningCategory;
+  targetCompanyPersonaId?: string;
+  targetCompanyName?: string;
+  messages: LearningMessage[];
+  createdAt: string;
+  updatedAt: string;
+};
 
 export type ContentStrategyPlatform = "xiaohongshu" | "wechat" | "douyin" | "other";
 export type ContentStrategyStatus = "model_not_configured" | "needs_review" | "approved" | "error" | "superseded" | "rework_pending" | "rework_processing" | "rework_failed";
@@ -230,6 +262,7 @@ export type WechatOperatorJob = {
 export type AppData = {
   leads: Lead[];
   products: Product[];
+  companyPersonas?: CompanyPersona[];
   knowledge: KnowledgeDocument[];
   knowledgeChunks?: KnowledgeVectorChunk[];
   scores: LeadScore[];
