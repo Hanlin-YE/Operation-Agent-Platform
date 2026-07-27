@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { buildAigcCreationPlan } from "@/server/aigc/creationPlanner";
-import { AigcCreationRequest, AigcPlatform, AigcVideoType, PromptLanguage } from "@/server/aigc/types";
+import { AigcCreationRequest, AigcPlatform, AigcTargetPlatform, AigcVideoType, PromptLanguage } from "@/server/aigc/types";
 
 const platforms: AigcPlatform[] = ["runninghub"];
 const videoTypes: AigcVideoType[] = ["product_ad", "product_showcase", "brand_intro", "xiaohongshu"];
 const promptLanguages: PromptLanguage[] = ["zh", "en", "bilingual"];
+const targetPlatforms: AigcTargetPlatform[] = ["wechat_article", "xhs_image_cards", "xhs_video_script", "video_asset_pack"];
 
 function isValidPayload(body: Partial<AigcCreationRequest>): body is AigcCreationRequest {
   return Boolean(
@@ -17,6 +18,7 @@ function isValidPayload(body: Partial<AigcCreationRequest>): body is AigcCreatio
       body.durationSec <= 180 &&
       (body.aspectRatio === "16:9" || body.aspectRatio === "9:16" || body.aspectRatio === "1:1") &&
       body.styleTone?.trim()
+      && (!body.targetPlatforms || (Array.isArray(body.targetPlatforms) && body.targetPlatforms.every((item) => targetPlatforms.includes(item))))
   );
 }
 

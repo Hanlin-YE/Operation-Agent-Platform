@@ -11,6 +11,8 @@ test("content strategy page focuses on URL video analysis without the legacy str
 
   assert.match(html, /公开视频 URL/);
   assert.match(html, /开始拆解/);
+  assert.match(html, /inputMode="url"/);
+  assert.doesNotMatch(html, /type="url"/);
   assert.doesNotMatch(html, /样本档案/);
   assert.doesNotMatch(html, /证据画布/);
   assert.doesNotMatch(html, /审核与交接/);

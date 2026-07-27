@@ -1,4 +1,5 @@
 import json
+import time
 import tempfile
 import unittest
 from pathlib import Path
@@ -101,6 +102,25 @@ class VideoAnalysisWorkerTests(unittest.IsolatedAsyncioTestCase):
             saved = store.get(job["jobId"])
             self.assertEqual(saved["status"], "model_not_configured")
             self.assertEqual(saved["transcript"][0]["text"], "证据")
+            self.assertFalse(work.exists())
+
+    async def test_worker_fails_instead_of_hanging_when_model_load_times_out(self) -> None:
+        from src.api.video_analysis_routes import _run_job
+        from src.services.video_analysis_jobs import VideoAnalysisJobStore
+
+        with tempfile.TemporaryDirectory() as root:
+            store = VideoAnalysisJobStore(Path(root) / "jobs.json")
+            job = store.create({"filename": "sample.mp4"})
+            work = Path(root) / "work"; work.mkdir()
+            (work / "sample.mp4").write_bytes(b"source video")
+            request = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(video_analysis_job_store=store)))
+
+            with patch("src.api.video_analysis_routes._model_load_timeout_seconds", return_value=0.001), patch("src.api.video_analysis_routes._load_whisper_model", side_effect=lambda: time.sleep(0.05)):
+                await _run_job(request, job["jobId"], work, None)
+
+            saved = store.get(job["jobId"])
+            self.assertEqual(saved["status"], "failed")
+            self.assertIn("模型加载超时", saved["error"]["message"])
             self.assertFalse(work.exists())
 
 

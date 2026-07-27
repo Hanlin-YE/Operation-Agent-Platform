@@ -204,14 +204,76 @@ export type MarketAnalysisReport = {
   createdAt: string;
 };
 
-export type LearningCategory = "product" | "market" | "script";
+export type CompanyEvidence = {
+  title: string;
+  url?: string;
+  source: "天眼 AI" | "公开网页" | "小红书" | "微信评论" | "手动导入" | "Neo4j";
+  excerpt?: string;
+  collectedAt?: string;
+  verificationStatus: "待人工核验" | "已核验" | "已拒绝";
+};
+
+export type CompanyProfile = {
+  id: string;
+  companyName: string;
+  aliases: string[];
+  creditCode?: string;
+  registrationStatus?: string;
+  registeredCapital?: string;
+  location?: string;
+  industryTags: string[];
+  productKeywords: string[];
+  applicationScenarios: string[];
+  painSignals: string[];
+  technologySignals: string[];
+  procurementSignals: string[];
+  riskSummary: string;
+  evidenceLinks: CompanyEvidence[];
+  verificationStatus: "待人工核验" | "已核验" | "已拒绝";
+  updatedAt: string;
+  createdAt: string;
+};
+
+export type CompanyComparisonDimension =
+  | "主体有效性"
+  | "规模与采购能力"
+  | "技术积累"
+  | "场景匹配度"
+  | "需求强度"
+  | "风险健康度"
+  | "证据可信度";
+
+export type CompanyComparisonItem = {
+  companyId: string;
+  companyName: string;
+  totalScore: number;
+  priority: "优先跟进" | "继续观察" | "暂缓";
+  dimensionScores: { dimension: CompanyComparisonDimension; score: number; reason: string }[];
+  recommendedAction: string;
+};
+
+export type CompanyComparisonResult = {
+  dimensions: CompanyComparisonDimension[];
+  items: CompanyComparisonItem[];
+  generatedAt: string;
+};
+
+export type GraphImportPreview = {
+  nodes: { id: string; type: string; label: string; action: "create_or_update"; properties: Record<string, unknown> }[];
+  relationships: { source: string; target: string; type: string; action: "create_or_update" }[];
+  conflicts: { id: string; field: string; existing?: unknown; incoming?: unknown; resolution: "manual_review" }[];
+  summary: { company_count: number; new_node_count: number; new_relationship_count: number; conflict_count: number };
+};
+
+export type LearningCategory = "product" | "script" | "customer";
 export type LearningMessage = { id: string; role: "learner" | "coach"; content: string; createdAt: string };
 export type LearningConversation = {
   id: string;
   title: string;
   category?: LearningCategory;
-  targetCompanyPersonaId?: string;
   targetCompanyName?: string;
+  targetCompanyUrl?: string;
+  targetCompanyPrompt?: string;
   messages: LearningMessage[];
   createdAt: string;
   updatedAt: string;
@@ -263,6 +325,7 @@ export type AppData = {
   leads: Lead[];
   products: Product[];
   companyPersonas?: CompanyPersona[];
+  companyProfiles?: CompanyProfile[];
   knowledge: KnowledgeDocument[];
   knowledgeChunks?: KnowledgeVectorChunk[];
   scores: LeadScore[];

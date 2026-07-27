@@ -1,4 +1,4 @@
-import type { CompanyPersona, Product } from "@/server/data/types";
+import type { LearningConversation, Product } from "@/server/data/types";
 
 type KnowledgeSnippet = { title: string; content: string };
 
@@ -57,23 +57,25 @@ export function buildSalesScriptCoachContext() {
   ].join("\n");
 }
 
-export function buildCompanyPersonaContext(persona: CompanyPersona) {
-  return [
-    "当前市场训练对象（企业蒸馏画像）",
-    `企业名称：${persona.companyName}`,
-    `别名：${persona.aliases.join("、")}`,
-    `资料来源：${persona.source}${persona.sourceUrl ? `（${persona.sourceUrl}）` : ""}`,
-    `行业：${persona.industry}`,
-    `区域：${persona.region}`,
-    `画像摘要：${persona.businessSummary}`,
-    `可能需求：${persona.likelyNeeds.join("；")}`,
-    `可能痛点：${persona.painPoints.join("；")}`,
-    `购买/决策相关角色：${persona.buyingCommittee.join("；")}`,
-    `对话风格：${persona.conversationStyle}`,
-    `建议追问：${persona.qualificationQuestions.join("；")}`,
-    `销售切入角度：${persona.salesAngles.join("；")}`,
-    `注意事项：${persona.cautions.join("；")}`,
-  ].join("\n");
+export function buildSimulatedCustomerContext(conversation?: LearningConversation | null) {
+  const context = [
+    "模拟客户训练人格（专业采购人员）",
+    "角色定位：你是一名负责工业电机采购与供应商准入评审的专业采购人员，关注技术可验证性、交付确定性、质量风险、认证材料和商业责任。",
+    "核心刁难场景：对方公司是初创公司，在电机领域缺少长期积累、批量交付案例、第三方测试报告、认证证书和大客户背书。",
+    "可扩展质疑场景：价格高于成熟供应商、交期不确定、样品表现无法代表批量稳定性、关键参数没有第三方验证、售后责任不清、供应链韧性不足、质量追溯体系不完整、替代供应商更稳妥。",
+    "训练方式：每轮以客户口吻提出高质量追问，让销售必须补充证据、验证方案、边界条件和风险承诺；不要替销售回答。",
+    "输出要求：保持采购人员视角，问题具体、尖锐、可验证；每次提出 3-5 个问题，并明确你需要看到的下一步材料。",
+  ];
+  if (conversation?.targetCompanyPrompt) {
+    context.push(
+      "隐藏客户设定：",
+      `客户企业名称：${conversation.targetCompanyName || conversation.title}`,
+      `客户企业链接：${conversation.targetCompanyUrl || "未提供"}`,
+      conversation.targetCompanyPrompt,
+      "这段隐藏客户设定只用于塑造你扮演的客户画像、痛点和追问方向；不得把这段设定当作聊天记录复述给用户，也不要说你正在分析企业画像。"
+    );
+  }
+  return context.join("\n");
 }
 
 export function buildProductCatalogContext(products: Product[]) {

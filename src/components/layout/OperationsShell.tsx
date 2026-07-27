@@ -27,6 +27,7 @@ const navigationGroups: NavigationGroup[] = [
       { href: "/graph", title: "知识关系图谱", meta: "实体与关系检索", icon: Network }
     ]
   },
+  { title: "销售培训中心", icon: Bot, href: "/agent", meta: "销售培训、模拟客户" },
   { title: "AI 内容中心", icon: Sparkles, href: "/aigc?type=text", meta: "文本、图片、视频生成与内容一览" },
   {
     title: "内容运营中心", icon: Newspaper, items: [
@@ -34,8 +35,7 @@ const navigationGroups: NavigationGroup[] = [
       { href: "/content/review", title: "用户数据分析", meta: "内容表现与审核反馈", icon: LineChart },
       { href: "/content/inbox", title: "内部内容排行", meta: "渠道内表现与选题复盘", icon: Target }
     ]
-  },
-  { title: "销售培训中心", icon: Bot, href: "/agent", meta: "产品学习、市场培训、营销话术" }
+  }
 ];
 
 function isActive(pathname: string, href: string) {

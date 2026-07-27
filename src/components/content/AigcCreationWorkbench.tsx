@@ -6,11 +6,15 @@ import {
   CircleAlert,
   Clapperboard,
   Clock3,
+  Clipboard,
+  ClipboardCheck,
+  FileText,
+  Images,
   Layers3,
   LoaderCircle,
+  MessageSquareText,
   Package2,
   Play,
-  PlugZap,
   RefreshCw,
   Send,
   Sparkles,
@@ -23,6 +27,7 @@ import type {
   AigcCreationResponse,
   AigcExecutionSpec,
   AigcJobStatus,
+  AigcTargetPlatform,
   AigcVideoType,
   PromptLanguage
 } from "@/server/aigc/types";
@@ -38,6 +43,13 @@ const languageOptions: { value: PromptLanguage; label: string }[] = [
   { value: "zh", label: "中文提示词" },
   { value: "en", label: "英文提示词" },
   { value: "bilingual", label: "双语提示词" }
+];
+
+const targetPlatformOptions: { value: AigcTargetPlatform; label: string; description: string; icon: typeof FileText }[] = [
+  { value: "wechat_article", label: "公众号长文", description: "正文结构、证据边界、配图建议", icon: FileText },
+  { value: "xhs_image_cards", label: "小红书图文", description: "短文案、分页卡片、图片提示词", icon: Images },
+  { value: "xhs_video_script", label: "小红书短视频", description: "口播脚本、镜头节奏、首帧提示词", icon: MessageSquareText },
+  { value: "video_asset_pack", label: "视频资产包", description: "配音、镜头、资产一致性提示", icon: Clapperboard }
 ];
 
 const statusLabel: Record<AigcJobStatus, string> = {
@@ -56,6 +68,7 @@ const executionPlatform = ["running", "hub"].join("") as AigcCreationRequest["pl
 const initialForm: AigcCreationRequest = {
   requirement: "做一个 30 秒的工业产品卖点视频，突出稳定性、性能和应用场景。",
   platform: executionPlatform,
+  targetPlatforms: ["wechat_article", "xhs_image_cards"],
   videoType: "product_ad",
   durationSec: 30,
   aspectRatio: "16:9",
@@ -104,8 +117,17 @@ export function AigcCreationWorkbench() {
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState("");
   const [showIntake, setShowIntake] = useState(true);
+  const [copiedProductionId, setCopiedProductionId] = useState<string | null>(null);
 
   const activeJob = useMemo(() => jobs.find((job) => job.jobId === activeJobId) || null, [activeJobId, jobs]);
+  const selectedTargets = form.targetPlatforms?.length ? form.targetPlatforms : targetPlatformOptions.map((option) => option.value);
+
+  function toggleTargetPlatform(value: AigcTargetPlatform) {
+    const next = selectedTargets.includes(value)
+      ? selectedTargets.filter((item) => item !== value)
+      : [...selectedTargets, value];
+    setForm({ ...form, targetPlatforms: next.length ? next : [value] });
+  }
 
   const loadJobs = useCallback(async () => {
     const response = await fetch("/api/aigc/jobs", { cache: "no-store" });
@@ -184,6 +206,12 @@ export function AigcCreationWorkbench() {
     }
   }
 
+  async function copyProductionContent(id: string, content: string) {
+    await navigator.clipboard.writeText(displayProviderText(content));
+    setCopiedProductionId(id);
+    window.setTimeout(() => setCopiedProductionId((current) => current === id ? null : current), 1600);
+  }
+
   return (
     <div className="aigc-workbench">
       <section className="panel aigc-intake-panel">
@@ -205,6 +233,22 @@ export function AigcCreationWorkbench() {
             <span>执行平台</span>
             <input value="内容生产适配器" readOnly aria-readonly="true" />
           </label>
+          <fieldset className="aigc-platform-picker full">
+            <legend>目标内容平台</legend>
+            <div className="aigc-platform-options">
+              {targetPlatformOptions.map((option) => {
+                const Icon = option.icon;
+                const checked = selectedTargets.includes(option.value);
+                return (
+                  <label className={`aigc-platform-option${checked ? " is-selected" : ""}`} key={option.value}>
+                    <input type="checkbox" checked={checked} onChange={() => toggleTargetPlatform(option.value)} />
+                    <Icon size={16} />
+                    <span><strong>{option.label}</strong><small>{option.description}</small></span>
+                  </label>
+                );
+              })}
+            </div>
+          </fieldset>
           <label className="field">
             <span>视频类型</span>
             <select value={form.videoType} onChange={(event) => setForm({ ...form, videoType: event.target.value as AigcVideoType })}>
@@ -253,28 +297,18 @@ export function AigcCreationWorkbench() {
 
           <section className="aigc-production-board" aria-label="多平台内容生产">
             <div className="aigc-production-head"><div><p className="eyebrow">Production Outputs</p><h2>按平台交付内容</h2></div><span>{result.skillOrchestration.production.length} 个待审核产物</span></div>
-            <div className="aigc-production-grid">{result.skillOrchestration.production.map((item) => <article className={`aigc-production-card ${item.id}`} key={item.id}><div className="aigc-production-card-head"><span>{displayProviderText(item.platform)}</span><small>{item.format}</small></div><h3>{item.title}</h3><div className="aigc-production-copy">{displayProviderText(item.copy)}</div><footer>{displayProviderText(item.nextAction)}</footer></article>)}</div>
+            <div className="aigc-production-grid">{result.skillOrchestration.production.map((item) => {
+              const copied = copiedProductionId === item.id;
+              return <article className={`aigc-production-card ${item.id}`} key={item.id}><button className={`aigc-copy-button${copied ? " copied" : ""}`} type="button" onClick={() => copyProductionContent(item.id, item.copy)} aria-label={`复制${item.title}正文`} title={copied ? "已复制" : "复制正文"}>{copied ? <ClipboardCheck size={15} /> : <Clipboard size={15} />}<span>{copied ? "已复制" : "复制"}</span></button><div className="aigc-production-card-head"><span>{displayProviderText(item.platform)}</span><small>{item.format}</small></div><h3>{item.title}</h3><p className="aigc-production-strategy">{item.strategy}</p><div className="aigc-production-copy">{displayProviderText(item.copy)}</div>{item.imagePrompts?.length ? <div className="aigc-image-prompt-list"><span>图片提示词</span>{item.imagePrompts.map((prompt, index) => <p key={`${item.id}-prompt-${index}`}>{prompt}</p>)}</div> : null}<footer>{displayProviderText(item.nextAction)}</footer></article>;
+            })}</div>
           </section>
 
-          <section className="grid cols-2">
-            <section className="panel">
+          <section className="panel">
               <div className="rag-section-head"><div><p className="eyebrow">Asset Gate</p><h2>资产锁定</h2></div><Package2 size={19} /></div>
               <div className="aigc-block-list">{result.assets.map((asset) => {
                 const approval = assetApprovals[asset.assetId] || "pending";
                 return <article key={asset.assetId} className="aigc-block-card"><div className="aigc-asset-head"><strong>{asset.assetId} · {asset.name}</strong><span className={`aigc-approval approval-${approval}`}>{approval === "approved" ? "已审批" : approval === "rejected" ? "已驳回" : "待审批"}</span></div><p>{asset.promptHint}</p><small>{asset.approvalGate}</small><div className="aigc-approval-actions"><button type="button" className="button secondary" onClick={() => setAssetApprovals((current) => ({ ...current, [asset.assetId]: "approved" }))}>批准资产</button><button type="button" className="button ghost" onClick={() => setAssetApprovals((current) => ({ ...current, [asset.assetId]: "rejected" }))}>驳回</button></div></article>;
               })}</div>
-            </section>
-
-            <section className="panel">
-              <div className="rag-section-head"><div><p className="eyebrow">Adapter Strategy</p><h2>生产适配</h2></div><PlugZap size={19} /></div>
-              <div className="aigc-adapter-meta">
-                <div><span>执行路由</span><strong>已配置适配器</strong></div><div><span>首帧模型</span><strong>{result.adapter.imageModel}</strong></div>
-                <div><span>视频模型</span><strong>{result.adapter.videoModel}</strong></div><div><span>任务策略</span><strong>首帧 → 图生视频</strong></div>
-              </div>
-              <div className="aigc-tag-row">{result.adapter.capabilityRoute.map((item) => <span className="badge" key={item}>{displayProviderText(item)}</span>)}</div>
-              {result.adapter.modelNote ? <p className="subtle">{displayProviderText(result.adapter.modelNote)}</p> : null}
-              {result.adapter.standardModelUrl ? <a className="button secondary" href={result.adapter.standardModelUrl} target="_blank" rel="noreferrer">打开模型配置页</a> : null}
-            </section>
           </section>
 
           <section className="grid cols-2">

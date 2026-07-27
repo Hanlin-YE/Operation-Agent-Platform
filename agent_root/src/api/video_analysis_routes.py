@@ -104,6 +104,13 @@ def _whisper_model_reference() -> str:
     return str(local_model) if local_model.exists() else "small"
 
 
+def _model_load_timeout_seconds() -> float:
+    try:
+        return max(1.0, float(os.getenv("VIDEO_WHISPER_MODEL_LOAD_TIMEOUT_SECONDS", "180")))
+    except ValueError:
+        return 180.0
+
+
 def _transcribe(model: Any, path: Path) -> list[dict[str, Any]]:
     segments, _ = model.transcribe(str(path), language="zh", vad_filter=True)
     return [{"startSec": round(segment.start, 2), "endSec": round(segment.end, 2), "text": segment.text.strip()} for segment in segments if segment.text.strip()]
@@ -216,7 +223,10 @@ async def _run_job(request: Request, job_id: str, directory: Path, source_url: s
     max_bytes = int(os.getenv("VIDEO_ANALYSIS_MAX_BYTES", str(300 * 1024 * 1024)))
     try:
         store.update(job_id, status="processing", step="准备本地模型", percent=12, message="正在检查或下载 Whisper 本地模型缓存。")
-        model = await asyncio.to_thread(_load_whisper_model)
+        try:
+            model = await asyncio.wait_for(asyncio.to_thread(_load_whisper_model), timeout=_model_load_timeout_seconds())
+        except TimeoutError as exc:
+            raise RuntimeError("Whisper 模型加载超时。请确认 agent_root/models/faster-whisper-small 已挂载到容器，或配置可访问的 VIDEO_WHISPER_MODEL/HF_ENDPOINT。") from exc
         store.update(job_id, step="解析/下载视频", percent=28, message="正在解析公开视频链接或读取上传文件。")
         if source_url:
             path, source = await _download_public_video(source_url, directory, max_bytes)

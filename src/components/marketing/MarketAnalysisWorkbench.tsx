@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Building2, CircleAlert, FileSearch, LoaderCircle, Search, ShieldCheck, Sparkles } from "lucide-react";
-import { MarketAnalysisReport, MarketFocus } from "@/server/data/types";
+import { useEffect, useState } from "react";
+import { Building2, CircleAlert, DatabaseZap, FileSearch, GitCompare, LoaderCircle, Search, ShieldCheck, Sparkles, Upload, UserRoundPlus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import type { CompanyComparisonResult, CompanyProfile, GraphImportPreview, MarketAnalysisReport, MarketFocus } from "@/server/data/types";
 
 export type MarketWorkbenchView = "overview" | "opportunities" | "competitors" | "strategy";
 
@@ -42,6 +43,7 @@ function tianyanCompanyUrl(companyId?: string) {
 }
 
 export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: { initialReports: MarketAnalysisReport[]; view?: MarketWorkbenchView }) {
+  const router = useRouter();
   const [reports, setReports] = useState(initialReports);
   const [focus, setFocus] = useState<MarketFocus>("all");
   const [loading, setLoading] = useState(false);
@@ -53,6 +55,14 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
   const [tianyanProfile, setTianyanProfile] = useState<TianyanProfile | null>(null);
   const [selectedTianyanCandidate, setSelectedTianyanCandidate] = useState<TianyanCandidate | null>(null);
   const [tianyanLoading, setTianyanLoading] = useState(false);
+  const [importingCustomer, setImportingCustomer] = useState(false);
+  const [companyProfiles, setCompanyProfiles] = useState<CompanyProfile[]>([]);
+  const [companyImportText, setCompanyImportText] = useState("");
+  const [companyProfileLoading, setCompanyProfileLoading] = useState(false);
+  const [selectedProfileIds, setSelectedProfileIds] = useState<string[]>([]);
+  const [comparison, setComparison] = useState<CompanyComparisonResult | null>(null);
+  const [graphPreview, setGraphPreview] = useState<GraphImportPreview | null>(null);
+  const [graphImporting, setGraphImporting] = useState(false);
   const [error, setError] = useState("");
   const active = reports[0];
   const sourceStatus = active?.sourceStatus || { xiaohongshu: "未配置" as const, note: "历史报告尚未接入公开信号来源，请重新运行市场分析。" };
@@ -64,6 +74,14 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
     strategy: { eyebrow: "Go-to-Market Strategy", title: "营销策略与行动", description: "把优先市场转化为可执行的验证、内容和获客行动。" }
   };
   const page = viewCopy[view];
+
+  useEffect(() => {
+    if (view !== "overview") return;
+    fetch("/api/market-intelligence/company-profiles", { cache: "no-store" })
+      .then((response) => response.ok ? response.json() : { profiles: [] })
+      .then((payload: { profiles?: CompanyProfile[] }) => setCompanyProfiles(payload.profiles || []))
+      .catch(() => setCompanyProfiles([]));
+  }, [view]);
 
   async function runAnalysis() {
     setLoading(true);
@@ -99,6 +117,7 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
   }
 
   async function searchTianyanCompany() {
+    if (tianyanQuery.trim().length < 2) return;
     setTianyanLoading(true); setError(""); setTianyanProfile(null); setSelectedTianyanCandidate(null); setTianyanCandidates([]);
     try {
       const response = await fetch("/api/market-intelligence/tianyan", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ action: "search", query: tianyanQuery }) });
@@ -121,6 +140,187 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "天眼 AI 企业情报暂时不可用");
     } finally { setTianyanLoading(false); }
+  }
+
+  async function importTianyanProfileAsCustomer() {
+    if (!tianyanProfile) return;
+    setImportingCustomer(true); setError("");
+    try {
+      const companyUrl = tianyanCompanyUrl(selectedTianyanCandidate?.companyId) || `天眼 AI：${tianyanProfile.companyName}`;
+      const response = await fetch("/api/learning-conversations", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          category: "customer",
+          importSource: "market-intelligence",
+          companyName: tianyanProfile.companyName,
+          companyUrl
+        })
+      });
+      const payload = await response.json().catch(() => ({})) as { id?: string; error?: string };
+      if (!response.ok || !payload.id) throw new Error(payload.error || "导入模拟客户失败");
+      router.push(`/agent?module=customer&conversation=${encodeURIComponent(payload.id)}`);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "导入模拟客户失败");
+    } finally {
+      setImportingCustomer(false);
+    }
+  }
+
+  async function saveTianyanProfileAsCompanyProfile() {
+    if (!tianyanProfile) return;
+    setCompanyProfileLoading(true); setError("");
+    try {
+      const response = await fetch("/api/market-intelligence/company-profiles", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ source: "tianyan", profile: tianyanProfile })
+      });
+      const payload = await response.json().catch(() => ({})) as { profiles?: CompanyProfile[]; error?: string };
+      if (!response.ok || !payload.profiles?.length) throw new Error(payload.error || "企业画像保存失败");
+      setCompanyProfiles((items) => {
+        const map = new Map(items.map((item) => [item.id, item]));
+        payload.profiles?.forEach((item) => map.set(item.id, item));
+        return Array.from(map.values()).sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
+      });
+      setSelectedProfileIds((ids) => ids.includes(payload.profiles![0].id) ? ids : [...ids, payload.profiles![0].id].slice(-5));
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "企业画像保存失败");
+    } finally {
+      setCompanyProfileLoading(false);
+    }
+  }
+
+  async function importTianyanCandidateAsCustomer(candidate: TianyanCandidate) {
+    setImportingCustomer(true); setError("");
+    try {
+      const response = await fetch("/api/learning-conversations", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          category: "customer",
+          importSource: "market-intelligence",
+          companyName: candidate.companyName,
+          companyUrl: tianyanCompanyUrl(candidate.companyId) || `天眼 AI：${candidate.companyName}`
+        })
+      });
+      const payload = await response.json().catch(() => ({})) as { id?: string; error?: string };
+      if (!response.ok || !payload.id) throw new Error(payload.error || "导入模拟客户失败");
+      router.push(`/agent?module=customer&conversation=${encodeURIComponent(payload.id)}`);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "导入模拟客户失败");
+    } finally {
+      setImportingCustomer(false);
+    }
+  }
+
+  function parseCompanyImportText() {
+    const text = companyImportText.trim();
+    if (!text) return [];
+    if (text.startsWith("[") || text.startsWith("{")) {
+      const parsed = JSON.parse(text);
+      return Array.isArray(parsed) ? parsed : [parsed];
+    }
+    const [headerLine, ...lines] = text.split(/\r?\n/).filter(Boolean);
+    const headers = headerLine.split(",").map((item) => item.trim());
+    return lines.map((line) => {
+      const cells = line.split(",").map((item) => item.trim());
+      return Object.fromEntries(headers.map((header, index) => [header, cells[index] || ""]));
+    });
+  }
+
+  async function importCompanyRecords() {
+    setCompanyProfileLoading(true); setError("");
+    try {
+      const records = parseCompanyImportText();
+      if (!records.length) throw new Error("请粘贴 JSON 或 CSV 企业数据。");
+      const response = await fetch("/api/market-intelligence/company-profiles", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ source: "manual", records })
+      });
+      const payload = await response.json().catch(() => ({})) as { profiles?: CompanyProfile[]; error?: string };
+      if (!response.ok || !payload.profiles?.length) throw new Error(payload.error || "企业数据加工失败");
+      setCompanyProfiles((items) => {
+        const map = new Map(items.map((item) => [item.id, item]));
+        payload.profiles?.forEach((item) => map.set(item.id, item));
+        return Array.from(map.values()).sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
+      });
+      setCompanyImportText("");
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "企业数据加工失败");
+    } finally {
+      setCompanyProfileLoading(false);
+    }
+  }
+
+  function toggleProfileSelection(id: string) {
+    setComparison(null);
+    setGraphPreview(null);
+    setSelectedProfileIds((ids) => ids.includes(id) ? ids.filter((item) => item !== id) : [...ids, id].slice(-5));
+  }
+
+  function selectedProfiles() {
+    const ids = new Set(selectedProfileIds);
+    return companyProfiles.filter((profile) => ids.has(profile.id));
+  }
+
+  async function compareSelectedProfiles() {
+    setCompanyProfileLoading(true); setError("");
+    try {
+      const response = await fetch("/api/market-intelligence/company-comparison", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ profileIds: selectedProfileIds })
+      });
+      const payload = await response.json().catch(() => ({})) as { result?: CompanyComparisonResult; error?: string };
+      if (!response.ok || !payload.result) throw new Error(payload.error || "请选择 2-5 家企业进行对比。");
+      setComparison(payload.result);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "企业对比失败");
+    } finally {
+      setCompanyProfileLoading(false);
+    }
+  }
+
+  async function previewGraphImport() {
+    const profiles = selectedProfiles();
+    if (!profiles.length) { setError("请先选择要写入图谱的企业画像。"); return; }
+    setGraphImporting(true); setError("");
+    try {
+      const response = await fetch("/api/graph/import/preview", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ profiles, source: "market-knowledge-company-profiles" })
+      });
+      const payload = await response.json().catch(() => ({})) as GraphImportPreview & { message?: string; error?: string };
+      if (!response.ok || !payload.summary) throw new Error(payload.message || payload.error || "图谱导入预览失败");
+      setGraphPreview(payload);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "图谱导入预览失败");
+    } finally {
+      setGraphImporting(false);
+    }
+  }
+
+  async function confirmGraphImport() {
+    const profiles = selectedProfiles();
+    if (!profiles.length) return;
+    setGraphImporting(true); setError("");
+    try {
+      const response = await fetch("/api/graph/import/confirm", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ profiles, source: "market-knowledge-company-profiles" })
+      });
+      const payload = await response.json().catch(() => ({})) as GraphImportPreview & { message?: string; error?: string };
+      if (!response.ok || !payload.summary) throw new Error(payload.message || payload.error || "写入 Neo4j 失败");
+      setGraphPreview(payload);
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "写入 Neo4j 失败");
+    } finally {
+      setGraphImporting(false);
+    }
   }
 
   return (
@@ -146,17 +346,38 @@ export function MarketAnalysisWorkbench({ initialReports, view = "overview" }: {
         <p className="subtle">输入企业全称、简称或统一社会信用代码，先确认主体，再查看基础经营信息与风险总览。查询由本机天眼 AI CLI 发起，可能消耗天眼额度。</p>
         <div className="market-research-form tianyan-search-form">
           <label className="field"><span>企业主体</span><input value={tianyanQuery} onChange={(event) => setTianyanQuery(event.target.value)} placeholder="例如：北京字节跳动科技有限公司" onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); searchTianyanCompany(); } }} /></label>
-          <button className="button" onClick={searchTianyanCompany} disabled={tianyanLoading || tianyanQuery.trim().length < 2}>{tianyanLoading ? <LoaderCircle className="spin" size={16} /> : <Search size={16} />}{tianyanLoading ? "查询中" : "搜索企业"}</button>
+          <button className="button" type="button" onClick={searchTianyanCompany} disabled={tianyanLoading}>{tianyanLoading ? <LoaderCircle className="spin" size={16} /> : <Search size={16} />}{tianyanLoading ? "查询中" : "搜索企业"}</button>
         </div>
         {tianyanCandidates.length ? <div className="tianyan-candidate-list" aria-label="天眼 AI 企业候选">{tianyanCandidates.map((candidate) => {
           const manualUrl = tianyanCompanyUrl(candidate.companyId);
-          return <div className="tianyan-candidate-row" key={candidate.companyId || candidate.creditCode || candidate.companyName}><button type="button" onClick={() => loadTianyanProfile(candidate)} disabled={tianyanLoading}><div><strong>{candidate.companyName}</strong><span>{[candidate.status, candidate.legalRepresentative ? `法定代表人：${candidate.legalRepresentative}` : undefined].filter(Boolean).join(" · ") || "待核验"}</span></div><small>查看情报</small></button>{manualUrl ? <a className="tianyan-manual-link" href={manualUrl} target="_blank" rel="noreferrer">人工打开</a> : null}</div>;
+          return <div className="tianyan-candidate-row" key={candidate.companyId || candidate.creditCode || candidate.companyName}><button type="button" onClick={() => importTianyanCandidateAsCustomer(candidate)} disabled={tianyanLoading || importingCustomer}><div><strong>{candidate.companyName}</strong><span>{[candidate.status, candidate.legalRepresentative ? `法定代表人：${candidate.legalRepresentative}` : undefined].filter(Boolean).join(" · ") || "待核验"}</span></div><small>{importingCustomer ? "导入中" : "导入模拟客户"}</small></button>{manualUrl ? <a className="tianyan-manual-link" href={manualUrl} target="_blank" rel="noreferrer">人工打开</a> : null}</div>;
         })}</div> : null}
-        {tianyanProfile ? <article className="tianyan-profile"><div className="report-heading"><div><strong>{tianyanProfile.companyName}</strong><p>{tianyanProfile.source} · 已确认主体</p></div><div className="badge-row"><span className="badge grade-B">需人工核验</span>{tianyanCompanyUrl(selectedTianyanCandidate?.companyId) ? <a className="badge tianyan-profile-link" href={tianyanCompanyUrl(selectedTianyanCandidate?.companyId)} target="_blank" rel="noreferrer">天眼查页面</a> : null}</div></div><div className="tianyan-profile-grid"><div><span>登记状态</span><strong>{tianyanProfile.registration.status || "未返回"}</strong></div><div><span>法定代表人</span><strong>{tianyanProfile.registration.legalRepresentative || "未返回"}</strong></div><div><span>成立时间</span><strong>{tianyanProfile.registration.establishedAt || "未返回"}</strong></div><div><span>注册资本</span><strong>{tianyanProfile.registration.registeredCapital || "未返回"}</strong></div><div><span>注册地</span><strong>{tianyanProfile.registration.location || "未返回"}</strong></div></div><p className="tianyan-risk"><ShieldCheck size={15} /><span>{tianyanProfile.risk.summary}</span></p>{tianyanProfile.registration.businessScope ? <p className="tianyan-scope"><strong>经营范围：</strong>{tianyanProfile.registration.businessScope}</p> : null}</article> : null}
+        {tianyanProfile ? <article className="tianyan-profile"><div className="report-heading"><div><strong>{tianyanProfile.companyName}</strong><p>{tianyanProfile.source} · 已确认主体</p></div><div className="badge-row"><span className="badge grade-B">需人工核验</span>{tianyanCompanyUrl(selectedTianyanCandidate?.companyId) ? <a className="badge tianyan-profile-link" href={tianyanCompanyUrl(selectedTianyanCandidate?.companyId)} target="_blank" rel="noreferrer">天眼查页面</a> : null}<button className="button tianyan-import-customer" type="button" onClick={saveTianyanProfileAsCompanyProfile} disabled={companyProfileLoading}>{companyProfileLoading ? <LoaderCircle className="spin" size={15} /> : <DatabaseZap size={15} />}{companyProfileLoading ? "加工中" : "生成企业画像"}</button><button className="button tianyan-import-customer" type="button" onClick={importTianyanProfileAsCustomer} disabled={importingCustomer}>{importingCustomer ? <LoaderCircle className="spin" size={15} /> : <UserRoundPlus size={15} />}{importingCustomer ? "导入中" : "导入模拟客户"}</button></div></div><div className="tianyan-profile-grid"><div><span>登记状态</span><strong>{tianyanProfile.registration.status || "未返回"}</strong></div><div><span>法定代表人</span><strong>{tianyanProfile.registration.legalRepresentative || "未返回"}</strong></div><div><span>成立时间</span><strong>{tianyanProfile.registration.establishedAt || "未返回"}</strong></div><div><span>注册资本</span><strong>{tianyanProfile.registration.registeredCapital || "未返回"}</strong></div><div><span>注册地</span><strong>{tianyanProfile.registration.location || "未返回"}</strong></div></div><p className="tianyan-risk"><ShieldCheck size={15} /><span>{tianyanProfile.risk.summary}</span></p>{tianyanProfile.registration.businessScope ? <p className="tianyan-scope"><strong>经营范围：</strong>{tianyanProfile.registration.businessScope}</p> : null}</article> : null}
         <div className="tianyan-indicator-table" aria-label="企业情报优先指标">
           <div className="tianyan-indicator-row tianyan-indicator-head"><span>优先指标</span><span>数据来源</span><span>关键信号</span><span>销售判断</span></div>
           {tianyanPriorityIndicators.map((indicator) => <div className="tianyan-indicator-row" key={indicator.name}><strong>{indicator.name}</strong><span>{indicator.source}</span><span>{indicator.signal}</span><span>{indicator.use}</span></div>)}
         </div>
+      </section> : null}
+
+      {view === "overview" ? <section className="panel market-research-panel" style={{ marginTop: 16 }}>
+        <div className="report-heading"><div><p className="eyebrow">Company Intelligence Pipeline</p><h2>企业数据加工与对比</h2></div><GitCompare size={19} /></div>
+        <div className="market-research-form">
+          <label className="field"><span>JSON / CSV 企业数据</span><textarea value={companyImportText} onChange={(event) => setCompanyImportText(event.target.value)} placeholder={'companyName,creditCode,businessScope\\n示例机器人,911...,机器人关节与空心杯电机'} rows={4} /></label>
+          <button className="button" type="button" onClick={importCompanyRecords} disabled={companyProfileLoading}>{companyProfileLoading ? <LoaderCircle className="spin" size={16} /> : <Upload size={16} />}{companyProfileLoading ? "加工中" : "清洗入库"}</button>
+        </div>
+        <div className="tianyan-candidate-list" aria-label="企业画像列表">
+          {companyProfiles.length ? companyProfiles.slice(0, 8).map((profile) => <div className="tianyan-candidate-row" key={profile.id}><button type="button" onClick={() => toggleProfileSelection(profile.id)}><div><strong>{profile.companyName}</strong><span>{[profile.registrationStatus || "待核验", profile.location, profile.applicationScenarios.slice(0, 2).join("、")].filter(Boolean).join(" · ")}</span></div><small>{selectedProfileIds.includes(profile.id) ? "已选择" : "选择对比"}</small></button></div>) : <p className="empty">暂无企业画像。可以从天眼 AI 查询结果生成，或粘贴 JSON/CSV 企业数据清洗入库。</p>}
+        </div>
+        <div className="actions" style={{ marginTop: 14 }}>
+          <button className="button" type="button" onClick={compareSelectedProfiles} disabled={companyProfileLoading || selectedProfileIds.length < 2}>{companyProfileLoading ? <LoaderCircle className="spin" size={16} /> : <GitCompare size={16} />}对比选中企业</button>
+          <button className="button" type="button" onClick={previewGraphImport} disabled={graphImporting || !selectedProfileIds.length}>{graphImporting ? <LoaderCircle className="spin" size={16} /> : <DatabaseZap size={16} />}Neo4j 导入预览</button>
+        </div>
+        {comparison ? <div className="tianyan-indicator-table" aria-label="企业对比结果" style={{ marginTop: 14 }}>
+          <div className="tianyan-indicator-row tianyan-indicator-head"><span>企业</span><span>总分</span><span>优先级</span><span>建议动作</span></div>
+          {comparison.items.map((item) => <div className="tianyan-indicator-row" key={item.companyId}><strong>{item.companyName}</strong><span>{item.totalScore}</span><span>{item.priority}</span><span>{item.recommendedAction}</span></div>)}
+        </div> : null}
+        {comparison ? <div className="market-segment-grid" style={{ marginTop: 14 }}>{comparison.items.map((item) => <article className="market-segment-card" key={`${item.companyId}-detail`}><div className="report-heading"><h3>{item.companyName}</h3><span className="badge grade-B">{item.priority}</span></div>{item.dimensionScores.map((dimension) => <p key={dimension.dimension}><strong>{dimension.dimension} {dimension.score}：</strong>{dimension.reason}</p>)}</article>)}</div> : null}
+        {graphPreview ? <article className="market-research-result" style={{ marginTop: 14 }}><div className="report-heading"><div><strong>Neo4j 导入预览</strong><p>{graphPreview.summary.company_count} 家企业 · {graphPreview.summary.new_node_count} 个节点 · {graphPreview.summary.new_relationship_count} 条关系 · {graphPreview.summary.conflict_count} 个冲突</p></div><span className="badge grade-C">需人工确认</span></div>{graphPreview.conflicts.length ? <p><strong>冲突：</strong>{graphPreview.conflicts.map((item) => `${item.id} ${item.field}`).join("；")}</p> : <p>未发现需要人工处理的字段冲突。</p>}<button className="button" type="button" onClick={confirmGraphImport} disabled={graphImporting}>{graphImporting ? <LoaderCircle className="spin" size={16} /> : <DatabaseZap size={16} />}{graphImporting ? "写入中" : "确认写入 Neo4j"}</button></article> : null}
       </section> : null}
 
       {view === "overview" ? <section className="panel market-research-panel" style={{ marginTop: 16 }}>

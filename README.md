@@ -188,7 +188,14 @@ src/server/
 
 ## LLM 配置
 
-默认没有配置 `OPENAI_API_KEY` 时，系统会使用可演示的本地模板生成专业话术。
+销售培训中心的产品学习、市场培训和营销话术问答默认接入 DeepSeek。没有配置 `DEEPSEEK_API_KEY` 时，系统会返回明确的服务未连接提示。
+
+```bash
+DEEPSEEK_API_KEY=...
+DEEPSEEK_MODEL=deepseek-chat
+```
+
+其它 Agent 能力没有配置 `OPENAI_API_KEY` 时，会使用可演示的本地模板生成专业话术。
 
 如需接入 OpenAI-compatible API：
 

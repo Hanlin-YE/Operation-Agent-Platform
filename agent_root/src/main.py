@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 
 from src.api.rag_routes import router as rag_router
 from src.api.market_research_routes import router as market_research_router
+from src.api.graph_import_routes import router as graph_import_router
 from src.api.video_analysis_routes import router as video_analysis_router, setup_video_analysis_jobs
 from src.api.v1_routes import graph_router, router as runs_router
 from src.core.run_service import RunService
@@ -141,6 +142,7 @@ def create_app(*, start_runner: bool = True, initialize_graph: bool | None = Non
     app.include_router(graph_router)
     app.include_router(rag_router)
     app.include_router(market_research_router)
+    app.include_router(graph_import_router)
     app.include_router(video_analysis_router)
     setup_video_analysis_jobs(app)
 

@@ -8,9 +8,16 @@ export type AigcVideoType =
 
 export type PromptLanguage = "zh" | "en" | "bilingual";
 
+export type AigcTargetPlatform =
+  | "wechat_article"
+  | "xhs_image_cards"
+  | "xhs_video_script"
+  | "video_asset_pack";
+
 export type AigcCreationRequest = {
   requirement: string;
   platform: AigcPlatform;
+  targetPlatforms?: AigcTargetPlatform[];
   videoType: AigcVideoType;
   durationSec: number;
   aspectRatio: "16:9" | "9:16" | "1:1";
@@ -95,11 +102,13 @@ export type AigcSkillOrchestration = {
     safetyNote: string;
   }[];
   production: {
-    id: "wechat_article" | "xhs_image_cards" | "xhs_video_script" | "video_asset_pack";
+    id: AigcTargetPlatform;
     platform: "微信公众号" | "小红书图文" | "小红书短视频" | "视频资产包";
     title: string;
     format: string;
+    strategy: string;
     copy: string;
+    imagePrompts?: string[];
     nextAction: string;
   }[];
   publish: {

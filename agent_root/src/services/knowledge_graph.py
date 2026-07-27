@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from src.services.company_graph_importer import import_company_profiles_to_neo4j
 from src.services.neo4j_client import Neo4jClient
 
 
@@ -26,11 +27,11 @@ class KnowledgeGraphService:
         rows = await self._client.run_cypher(
             """
             MATCH (source:GraphEntity)-[relationship]->(target:GraphEntity)
-            RETURN source, type(relationship) AS relationship_type, target
+            RETURN source, coalesce(relationship.type, type(relationship)) AS relationship_type, target
             ORDER BY source.name, target.name
             LIMIT $limit
             """,
-            {"limit": 200},
+            {"limit": 500},
         )
         nodes: dict[str, dict[str, object]] = {}
         edges: list[dict[str, str]] = []
@@ -55,6 +56,9 @@ class KnowledgeGraphService:
             "edges": edges,
             "meta": {"node_count": len(nodes), "edge_count": len(edges)},
         }
+
+    async def import_company_profiles(self, profiles: list[dict[str, Any]], source: str) -> dict[str, Any]:
+        return await import_company_profiles_to_neo4j(self._client, profiles, source=source)
 
     @staticmethod
     def _node(node: Any) -> dict[str, object]:

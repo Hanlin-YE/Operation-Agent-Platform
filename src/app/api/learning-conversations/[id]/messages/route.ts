@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { makeId, readData } from "@/server/data/store";
 import { listKnowledge } from "@/server/repositories/knowledge";
-import { appendLearningMessages, setLearningConversationPersona } from "@/server/repositories/learningConversations";
-import { findCompanyPersonaById, findCompanyPersonaByName } from "@/server/repositories/companyPersonas";
-import { buildCompanyPersonaContext, buildKnowledgeContext, buildProductCatalogContext, buildProductRagContext, buildSalesScriptCoachContext } from "@/server/learning/answerSalesLearningQuestion";
+import { appendLearningMessages } from "@/server/repositories/learningConversations";
+import { buildKnowledgeContext, buildProductCatalogContext, buildProductRagContext, buildSalesScriptCoachContext, buildSimulatedCustomerContext } from "@/server/learning/answerSalesLearningQuestion";
 import { searchProductRag } from "@/server/rag/ragClient";
 import { askDeepSeekSalesCoach, type SalesLearningCategory } from "@/server/ai/deepseek";
 
@@ -25,18 +24,12 @@ export async function POST(request: Request, { params }: { params: { id: string 
   if (category === "product") {
     const hits = await searchProductRag(question, 5);
     context = [buildProductCatalogContext(data.products), buildProductRagContext(hits)].filter(Boolean).join("\n\n");
-  } else if (category === "market") {
-    const matchedPersona = await findCompanyPersonaByName(question);
-    const existingPersona = !matchedPersona && conversation?.targetCompanyPersonaId
-      ? await findCompanyPersonaById(conversation.targetCompanyPersonaId)
-      : null;
-    const persona = matchedPersona || existingPersona;
-    const knowledge = await listKnowledge();
-    context = [persona ? buildCompanyPersonaContext(persona) : "", buildKnowledgeContext(question, knowledge)].filter(Boolean).join("\n\n");
-    if (matchedPersona) await setLearningConversationPersona(params.id, matchedPersona);
   } else if (category === "script") {
     const knowledge = await listKnowledge();
     context = [buildSalesScriptCoachContext(), buildKnowledgeContext(question, knowledge)].filter(Boolean).join("\n\n");
+  } else if (category === "customer") {
+    const knowledge = await listKnowledge();
+    context = [buildSimulatedCustomerContext(conversation), buildKnowledgeContext(question, knowledge)].filter(Boolean).join("\n\n");
   } else {
     const knowledge = await listKnowledge();
     context = buildKnowledgeContext(question, knowledge);

@@ -248,7 +248,7 @@ export function buildAigcCreationPlan(request: AigcCreationRequest): AigcCreatio
   const assets = buildAssets(request);
   const shots = buildShots(request);
   const execution = buildExecution(request, shots);
-  const skillOrchestration = buildSkillOrchestration({ requirement: normalized });
+  const skillOrchestration = buildSkillOrchestration({ requirement: normalized, targetPlatforms: request.targetPlatforms });
 
   return {
     projectTitle: `${videoTypeLabels[request.videoType]} · ${request.platform.toUpperCase()} 执行封装`,
