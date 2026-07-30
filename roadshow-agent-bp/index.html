@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>运营自动化企业级 Agent 路演稿</title>
+  <meta name="description" content="运营自动化企业级 Agent HTML PPT" />
+  <style>
+    :root {
+      --bg: #090d12;
+      --surface: #111923;
+      --surface-2: #172130;
+      --panel: #1a2530;
+      --line: #3a4855;
+      --line-strong: #6e8494;
+      --ink: #f8fcfb;
+      --soft: #dce8e4;
+      --muted: #a5b6bd;
+      --mint: #65e0b4;
+      --blue: #7eb3ff;
+      --amber: #f1c56f;
+      --red: #ff8d8d;
+      --violet: #bba4ff;
+      --shadow: 0 30px 90px rgba(0, 0, 0, .34);
+      --radius: 8px;
+      --font-body: ui-sans-serif, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+      --font-title: "STKaiti", "Kaiti SC", "KaiTi", "楷体", "PingFang SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(101, 224, 180, .12), transparent 28%),
+        radial-gradient(circle at 78% 18%, rgba(126, 179, 255, .11), transparent 26%),
+        linear-gradient(135deg, #080c12 0%, #0d141c 54%, #090d12 100%);
+      font: 15px/1.58 var(--font-body);
+    }
+
+    button, a { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; text-decoration: none; }
+
+    .deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 620px;
+      display: grid;
+      place-items: center;
+      padding: 34px 38px 74px;
+    }
+
+    .slide {
+      position: absolute;
+      width: min(1500px, calc(100vw - 76px));
+      aspect-ratio: 16 / 9;
+      max-height: calc(100vh - 118px);
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(101, 224, 180, .24);
+      border-radius: 16px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+        linear-gradient(145deg, rgba(23, 34, 45, .98), rgba(12, 18, 25, .98));
+      background-size: 56px 56px, 56px 56px, auto;
+      box-shadow: var(--shadow);
+    }
+
+    .slide.active {
+      display: grid;
+      animation: slideIn .32s ease both;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px) scale(.992); }
+      to { opacity: 1; transform: none; }
+    }
+
+    .slide-inner {
+      width: 100%;
+      height: 100%;
+      padding: clamp(34px, 4vw, 66px);
+      display: grid;
+      gap: 24px;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      pointer-events: none;
+      border: 1px solid rgba(255,255,255,.075);
+      border-radius: 12px;
+    }
+
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      width: max-content;
+      color: var(--mint);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .slide-tag::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 20px rgba(101, 224, 180, .78);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      max-width: 1120px;
+      font-family: var(--font-title);
+      font-size: clamp(44px, 5.45vw, 78px);
+      line-height: 1.1;
+      letter-spacing: 0;
+      font-weight: 760;
+    }
+
+    .hero-title-singleline {
+      max-width: none;
+      white-space: nowrap;
+      font-size: clamp(44px, 4.55vw, 66px);
+      line-height: 1.12;
+    }
+
+    h2 {
+      max-width: 1020px;
+      font-family: var(--font-title);
+      font-size: clamp(31px, 3.65vw, 54px);
+      line-height: 1.16;
+      letter-spacing: 0;
+      font-weight: 760;
+    }
+
+    h3 {
+      color: var(--ink);
+      font-size: clamp(17px, 1.42vw, 23px);
+      line-height: 1.25;
+      font-weight: 760;
+    }
+
+    .lead {
+      max-width: 790px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.2vw, 19px);
+    }
+
+    .accent { color: var(--mint); }
+    .blue { color: var(--blue); }
+    .amber { color: var(--amber); }
+    .red { color: var(--red); }
+
+    .hero-grid {
+      grid-template-columns: minmax(0, 1.12fr) minmax(390px, .88fr);
+      align-items: center;
+      gap: 64px;
+    }
+
+    .hero-copy {
+      display: grid;
+      gap: 22px;
+      align-content: center;
+    }
+
+    .hero-subtitle {
+      color: var(--soft);
+      max-width: 700px;
+      font-size: clamp(20px, 1.8vw, 30px);
+      line-height: 1.45;
+      font-weight: 680;
+    }
+
+    .hero-note {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 11px;
+      border: 1px solid rgba(101, 224, 180, .34);
+      border-radius: 999px;
+      background: rgba(14, 21, 29, .86);
+    }
+
+    .system-radar {
+      position: relative;
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+    }
+
+    .radar-ring {
+      position: absolute;
+      width: min(82%, 470px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(101, 224, 180, .36);
+      border-radius: 50%;
+    }
+
+    .radar-ring::before,
+    .radar-ring::after {
+      content: "";
+      position: absolute;
+      inset: 15%;
+      border: 1px solid rgba(126, 179, 255, .32);
+      border-radius: 50%;
+    }
+
+    .radar-ring::after {
+      inset: 31%;
+      border-color: rgba(241, 197, 111, .32);
+    }
+
+    .radar-card {
+      position: relative;
+      width: min(520px, 94%);
+      padding: 28px;
+      border: 1px solid var(--line-strong);
+      border-radius: 12px;
+      background: rgba(16, 24, 33, .97);
+      box-shadow: 0 24px 80px rgba(0,0,0,.3);
+    }
+
+    .radar-subtitle {
+      margin: 18px 0 18px;
+      color: var(--soft);
+      font-size: clamp(18px, 1.55vw, 24px);
+      line-height: 1.5;
+      font-weight: 720;
+    }
+
+    .signal-line {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 14px;
+      padding: 14px 0;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .signal-line strong { color: var(--soft); font-weight: 620; }
+
+    .overview-grid,
+    .feature-grid,
+    .future-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 190px;
+      padding: 22px;
+      border: 1px solid rgba(58, 72, 85, .98);
+      border-radius: var(--radius);
+      background: rgba(18, 27, 37, .96);
+    }
+
+    .card p,
+    .feature-panel p,
+    .mini-card p {
+      color: var(--muted);
+      font-size: clamp(13px, 1.1vw, 16px);
+    }
+
+    .card-kicker {
+      color: var(--mint);
+      font-size: 12px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .pain-card {
+      display: grid;
+      align-content: space-between;
+      gap: 18px;
+      min-height: 260px;
+      padding: 20px 22px;
+    }
+
+    .pain-card h3 {
+      font-size: clamp(22px, 1.9vw, 30px);
+    }
+
+    .pain-card p {
+      font-size: clamp(16px, 1.32vw, 20px);
+      line-height: 1.7;
+    }
+
+    .pain-card > p:last-child {
+      color: var(--soft);
+      font-size: clamp(17px, 1.42vw, 21px);
+    }
+
+    .pain-card:nth-child(1) { border-color: rgba(255, 141, 141, .45); }
+    .pain-card:nth-child(2) { border-color: rgba(241, 197, 111, .45); }
+    .pain-card:nth-child(3) { border-color: rgba(126, 179, 255, .45); }
+
+    .mapping-arrow {
+      color: var(--mint);
+      font-weight: 760;
+      letter-spacing: .08em;
+    }
+
+    .function-label {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 12px;
+      border-radius: 7px;
+      color: #07120e;
+      background: var(--mint);
+      text-align: center;
+      font-weight: 760;
+    }
+
+    .feature-layout {
+      grid-template-columns: .78fr 1.22fr;
+      align-items: stretch;
+      gap: 20px;
+    }
+
+    .feature-side {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+      padding: 26px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      background: rgba(11, 17, 24, .82);
+    }
+
+    .pain-badge {
+      width: max-content;
+      max-width: 100%;
+      padding: 8px 11px;
+      border: 1px solid rgba(255, 141, 141, .58);
+      border-radius: 999px;
+      color: var(--red);
+      font-size: 13px;
+    }
+
+    .feature-panel {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .feature-panel .mini-card {
+      min-height: 210px;
+      padding: 20px;
+      border: 1px solid rgba(58, 72, 85, .98);
+      border-radius: var(--radius);
+      background: rgba(21, 31, 43, .97);
+    }
+
+    .mini-card b {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(101, 224, 180, .56);
+      border-radius: 50%;
+      color: var(--mint);
+      font-size: 13px;
+    }
+
+    .output-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .output-strip span {
+      min-height: 48px;
+      display: grid;
+      place-items: center;
+      padding: 8px;
+      border: 1px solid rgba(126, 179, 255, .38);
+      border-radius: 7px;
+      color: var(--soft);
+      background: rgba(126, 179, 255, .13);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .distill-flow {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: stretch;
+      gap: 16px;
+    }
+
+    .distill-column {
+      padding: 22px;
+      border: 1px solid rgba(58, 72, 85, .98);
+      border-radius: var(--radius);
+      background: rgba(18, 27, 37, .96);
+    }
+
+    .distill-column h3 { margin-bottom: 18px; }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .chip-list span {
+      padding: 8px 10px;
+      border: 1px solid rgba(255,255,255,.11);
+      border-radius: 7px;
+      color: var(--soft);
+      background: rgba(255,255,255,.06);
+      font-size: 13px;
+    }
+
+    .process-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .process-list span {
+      padding: 10px 12px;
+      border-left: 3px solid var(--mint);
+      color: var(--soft);
+      background: rgba(101, 224, 180, .12);
+    }
+
+    .thinking-grid {
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .thinking-flow {
+      display: grid;
+      grid-template-columns: .82fr 1.18fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .thought-card {
+      min-height: 430px;
+      display: grid;
+      align-content: center;
+      gap: 22px;
+      padding: 30px;
+      border: 1px solid rgba(101, 224, 180, .34);
+      border-radius: 10px;
+      background: rgba(14, 21, 29, .9);
+    }
+
+    .thought-card strong {
+      font-family: var(--font-title);
+      color: var(--mint);
+      font-size: clamp(29px, 3vw, 44px);
+      line-height: 1.14;
+      font-weight: 760;
+    }
+
+    .thought-points {
+      display: grid;
+      gap: 12px;
+    }
+
+    .thought-points div {
+      padding: 18px;
+      border: 1px solid rgba(58, 72, 85, .98);
+      border-radius: var(--radius);
+      background: rgba(18, 27, 37, .96);
+    }
+
+    .distill-bridge {
+      position: relative;
+      min-height: 430px;
+      display: grid;
+      align-content: center;
+      gap: 18px;
+      padding: 30px;
+      border: 1px solid rgba(58, 72, 85, .98);
+      border-radius: 10px;
+      background: rgba(10, 16, 23, .86);
+      overflow: hidden;
+    }
+
+    .distill-bridge::before {
+      content: "";
+      position: absolute;
+      inset: 8%;
+      border: 1px solid rgba(101, 224, 180, .12);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .distill-node {
+      position: relative;
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 22px;
+      border: 1px solid rgba(201, 214, 212, .74);
+      border-radius: 999px;
+      background: rgba(18, 27, 37, .94);
+    }
+
+    .distill-node span {
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: 760;
+    }
+
+    .distill-node strong {
+      color: var(--ink);
+      font-size: clamp(20px, 1.8vw, 28px);
+      line-height: 1.28;
+    }
+
+    .distill-arrow {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 14px;
+      color: var(--mint);
+      font-size: 18px;
+      font-weight: 760;
+      text-align: center;
+    }
+
+    .distill-arrow::before,
+    .distill-arrow::after {
+      content: "";
+      height: 1px;
+      background: rgba(101, 224, 180, .42);
+    }
+
+    .distill-arrow span {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 13px;
+      border: 1px solid rgba(101, 224, 180, .44);
+      border-radius: 999px;
+      background: rgba(101, 224, 180, .09);
+    }
+
+    .distill-arrow span::after { content: "→"; }
+
+    .expert-layout {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr .9fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .expert-core {
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      border: 1px solid rgba(101, 224, 180, .58);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(101, 224, 180, .2), rgba(18, 27, 37, .94) 62%);
+      text-align: center;
+    }
+
+    .expert-core strong {
+      display: block;
+      color: var(--ink);
+      font-family: var(--font-title);
+      font-size: clamp(31px, 3.45vw, 50px);
+      line-height: 1.08;
+      font-weight: 760;
+    }
+
+    .expert-core span {
+      display: block;
+      margin-top: 12px;
+      color: var(--mint);
+      font-size: 14px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .mapping-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .mapping-row {
+      display: grid;
+      grid-template-columns: 1fr 96px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .mapping-row .card {
+      min-height: 116px;
+      display: grid;
+      align-content: center;
+      gap: 8px;
+    }
+
+    .arrow-box {
+      min-height: 56px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(101, 224, 180, .38);
+      border-radius: 999px;
+      color: var(--mint);
+      background: rgba(101, 224, 180, .08);
+      font-weight: 780;
+    }
+
+    .architecture-wrap {
+      display: grid;
+      grid-template-columns: 1fr .9fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .layer-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .layer-box {
+      position: relative;
+      padding: 17px 20px;
+      border: 1px solid rgba(201, 214, 212, .78);
+      border-radius: 4px;
+      background: rgba(11, 17, 24, .92);
+    }
+
+    .layer-box:not(:last-child)::after {
+      content: attr(data-flow);
+      position: absolute;
+      left: 50%;
+      bottom: -36px;
+      transform: translateX(-50%);
+      color: var(--soft);
+      font-size: 14px;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .layer-box:not(:last-child) { margin-bottom: 30px; }
+
+    .layer-box:not(:last-child) .downline {
+      position: absolute;
+      left: 50%;
+      bottom: -31px;
+      width: 1px;
+      height: 25px;
+      background: var(--blue);
+    }
+
+    .layer-box:not(:last-child) .downline::after {
+      content: "↓";
+      position: absolute;
+      left: -7px;
+      bottom: -15px;
+      color: var(--blue);
+      font-size: 18px;
+    }
+
+    .layer-title {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      font-size: clamp(20px, 2vw, 30px);
+      font-weight: 760;
+    }
+
+    .layer-title span {
+      color: var(--soft);
+      font-family: var(--font-mono);
+      font-size: .78em;
+    }
+
+    .layer-box p {
+      margin-top: 8px;
+      color: var(--soft);
+      font-size: clamp(15px, 1.3vw, 20px);
+    }
+
+    .architecture-notes {
+      display: grid;
+      gap: 12px;
+    }
+
+    .architecture-notes .card {
+      min-height: auto;
+      padding: 18px;
+    }
+
+    .tech-slide .slide-inner {
+      padding: clamp(28px, 3vw, 44px);
+      gap: 16px;
+      grid-template-rows: auto 1fr;
+    }
+
+    .tech-slide h2 {
+      font-size: clamp(28px, 3vw, 44px);
+    }
+
+    .tech-slide .architecture-wrap {
+      gap: 16px;
+      align-items: start;
+    }
+
+    .tech-slide .layer-box {
+      padding: 14px 18px;
+    }
+
+    .tech-slide .layer-box p {
+      font-size: clamp(13px, 1.1vw, 17px);
+    }
+
+    .tech-slide .architecture-notes .card {
+      padding: 16px;
+    }
+
+    .tech-slide .architecture-notes p {
+      font-size: 13px;
+    }
+
+    .expert-stack-slide .slide-inner {
+      padding: clamp(24px, 2.6vw, 38px);
+      gap: 12px;
+      grid-template-rows: auto 1fr;
+    }
+
+    .expert-stack-slide .architecture-wrap {
+      grid-template-columns: 1fr;
+      align-items: center;
+    }
+
+    .expert-stack-slide .layer-stack {
+      width: min(930px, 100%);
+      margin: 0 auto;
+      gap: 6px;
+    }
+
+    .expert-stack-slide .layer-box {
+      padding: 11px 20px;
+    }
+
+    .expert-stack-slide .layer-box p {
+      font-size: clamp(14px, 1.08vw, 18px);
+    }
+
+    .expert-stack-slide .layer-box:not(:last-child) { margin-bottom: 24px; }
+
+    .expert-stack-slide .layer-box:not(:last-child)::after {
+      bottom: -31px;
+      font-size: 13px;
+    }
+
+    .expert-stack-slide .layer-box:not(:last-child) .downline {
+      bottom: -27px;
+      height: 21px;
+    }
+
+    .feature-demo-layout {
+      grid-template-columns: .56fr 1.44fr;
+      align-items: stretch;
+      gap: 18px;
+      min-height: 0;
+    }
+
+    .feature-demo-copy {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      min-height: 0;
+      padding: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      background: rgba(11, 17, 24, .82);
+    }
+
+    .feature-demo-copy h2 {
+      font-size: clamp(28px, 2.7vw, 40px);
+    }
+
+    .feature-demo-copy .lead {
+      font-size: clamp(14px, 1.05vw, 17px);
+    }
+
+    .feature-demo-copy .feature-panel {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .feature-demo-copy .mini-card {
+      min-height: auto;
+      padding: 12px;
+    }
+
+    .feature-demo-copy .mini-card b {
+      width: 28px;
+      height: 28px;
+      margin-bottom: 7px;
+    }
+
+    .feature-demo-copy .mini-card h3 {
+      font-size: clamp(15px, 1.15vw, 19px);
+    }
+
+    .feature-demo-copy .mini-card p {
+      font-size: clamp(12px, .92vw, 14px);
+      line-height: 1.45;
+    }
+
+    .product-shot {
+      overflow: hidden;
+      display: grid;
+      align-content: center;
+      min-height: 0;
+      margin: 0;
+      border: 1px solid rgba(101, 224, 180, .24);
+      border-radius: 10px;
+      background: rgba(6, 11, 16, .78);
+      box-shadow: 0 22px 64px rgba(0, 0, 0, .28);
+    }
+
+    .product-shot img {
+      display: block;
+      width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .video-slide .slide-inner {
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .video-frame {
+      overflow: hidden;
+      display: grid;
+      min-height: 0;
+      height: min(500px, 52vh);
+      align-self: stretch;
+      border: 1px solid rgba(101, 224, 180, .3);
+      border-radius: 12px;
+      background: #05080c;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, .34);
+    }
+
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      max-height: 100%;
+      object-fit: contain;
+      background: #05080c;
+    }
+
+    .future-grid .card {
+      min-height: 170px;
+    }
+
+    .thanks-slide .slide-inner {
+      place-items: center;
+      text-align: center;
+    }
+
+    .thanks-slide h1 {
+      max-width: 980px;
+      color: var(--ink);
+      font-size: clamp(46px, 5.35vw, 78px);
+    }
+
+    .thanks-mark {
+      width: 104px;
+      height: 104px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(101, 224, 180, .54);
+      border-radius: 50%;
+      color: var(--mint);
+      background: rgba(101, 224, 180, .13);
+      font-size: 40px;
+      font-weight: 780;
+    }
+
+    .controls {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 20;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 13px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 999px;
+      background: rgba(6, 8, 12, .9);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-btn {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(58, 72, 85, .98);
+      border-radius: 50%;
+      background: rgba(21, 31, 43, .97);
+      cursor: pointer;
+    }
+
+    .nav-btn:hover { border-color: var(--mint); color: var(--mint); }
+    .nav-btn:disabled { opacity: .35; cursor: default; }
+
+    .dots {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border: 0;
+      border-radius: 50%;
+      background: #394550;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      width: 26px;
+      border-radius: 999px;
+      background: var(--mint);
+    }
+
+    .counter {
+      min-width: 48px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+
+    @media (max-width: 940px) {
+      body { overflow: auto; }
+      .deck {
+        min-height: 100vh;
+        height: auto;
+        padding: 14px 14px 82px;
+        align-content: start;
+      }
+
+      .slide {
+        position: relative;
+        width: 100%;
+        max-height: none;
+        min-height: calc(100vh - 100px);
+        aspect-ratio: auto;
+        display: none;
+      }
+
+      .slide.active { display: grid; }
+      .slide-inner { padding: 28px; }
+      .hero-grid,
+      .feature-layout,
+      .feature-demo-layout,
+      .architecture-wrap,
+      .distill-flow,
+      .thinking-flow,
+      .thinking-grid,
+      .expert-layout,
+      .mapping-row {
+        grid-template-columns: 1fr;
+      }
+
+      .overview-grid,
+      .feature-grid,
+      .feature-panel,
+      .future-grid,
+      .output-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .system-radar { min-height: 360px; }
+      .layer-box:not(:last-child)::after { display: none; }
+      .layer-box:not(:last-child) .downline { display: none; }
+      .layer-box:not(:last-child) { margin-bottom: 0; }
+      .hero-title-singleline { white-space: normal; }
+      .distill-node { grid-template-columns: 1fr; border-radius: 18px; }
+      .video-frame { height: auto; min-height: 260px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media print {
+      body {
+        overflow: visible;
+        background: #fff;
+      }
+
+      .deck {
+        display: block;
+        width: auto;
+        height: auto;
+        min-height: 0;
+        padding: 0;
+      }
+
+      .slide,
+      .slide.active {
+        position: relative;
+        display: grid;
+        width: 100vw;
+        height: 56.25vw;
+        max-height: none;
+        break-after: page;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .controls { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-label="运营自动化企业级 Agent 路演 PPT">
+    <section class="slide active" aria-label="封面">
+      <div class="slide-inner hero-grid">
+        <div class="hero-copy">
+          <p class="slide-tag">Operations Automation Agent</p>
+          <h1 class="hero-title-singleline">蒸腾万象，孪生新生</h1>
+          <p class="hero-subtitle">从资料到动作，从经验到系统。运营自动化企业级 Agent</p>
+          <div class="hero-note">
+            <span class="pill">知识资产中心</span>
+            <span class="pill">AI 内容中心</span>
+            <span class="pill">销售培训中心</span>
+            <span class="pill">市场营销中心</span>
+          </div>
+        </div>
+        <div class="system-radar" aria-hidden="true">
+          <div class="radar-ring"></div>
+          <div class="radar-card">
+            <p class="slide-tag">Live System</p>
+            <p class="radar-subtitle">把零散业务知识蒸馏成可执行的内容、销售与市场增长动作。</p>
+            <div class="signal-line"><span>输入</span><strong>文档、对话、内容、市场信号</strong></div>
+            <div class="signal-line"><span>蒸馏</span><strong>选题、话术、画像、机会、规则</strong></div>
+            <div class="signal-line"><span>输出</span><strong>内容生产、销售训练、市场策略</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="行业痛点">
+      <div class="slide-inner">
+        <div>
+          <p class="slide-tag">Industry Pain</p>
+          <h2>行业痛点不是缺少工具，而是运营能力没有被系统化。</h2>
+          <p class="lead">内容、渠道和销售看似是三个问题，本质上都卡在知识无法被稳定复用。</p>
+        </div>
+        <div class="overview-grid">
+          <article class="card pain-card">
+            <div>
+              <p class="card-kicker red">Pain 01</p>
+              <h3>缺少市场部内容</h3>
+              <p>选题、结构、表达和审核主要依赖人工经验，稳定产出压力大。</p>
+            </div>
+            <p>结果：内容生产节奏不稳定，专业表达和品牌边界难以统一。</p>
+          </article>
+          <article class="card pain-card">
+            <div>
+              <p class="card-kicker amber">Pain 02</p>
+              <h3>内容发布渠道单一，缺乏体系</h3>
+              <p>内容经常只停留在单一触点，缺少跨渠道分发、承接和复盘机制。</p>
+            </div>
+            <p>结果：好内容无法变成矩阵动作，市场反馈也难以沉淀。</p>
+          </article>
+          <article class="card pain-card">
+            <div>
+              <p class="card-kicker blue">Pain 03</p>
+              <h3>销售绩效不尽理想</h3>
+              <p>新人训练慢，优秀话术难复制，客户异议和场景问诊缺少反馈。</p>
+            </div>
+            <p>结果：销售能力更多依赖个人经验，而不是组织能力。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="我们对行业痛点的思考">
+      <div class="slide-inner">
+        <div>
+          <p class="slide-tag">Our Thinking</p>
+          <h2>我们的判断：先把专家经验沉淀下来，AI 才能稳定产出业务结果。</h2>
+        </div>
+        <div class="thinking-flow">
+          <article class="thought-card">
+            <strong>行业真正缺的，是可复制的专家层。</strong>
+            <p class="lead">企业已经拥有产品资料、销售经验、市场观察和过往内容，但这些知识分散在文档、对话和个人脑海中。</p>
+          </article>
+          <div class="distill-bridge" aria-label="输入蒸馏输出流程">
+            <div class="distill-node">
+              <span>输入</span>
+              <strong>文档、对话、内容、市场信号</strong>
+            </div>
+            <div class="distill-arrow"><span>蒸馏：选题、话术、画像、机会、规则</span></div>
+            <div class="distill-node">
+              <span>输出</span>
+              <strong>内容生产、销售训练、市场策略</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide expert-stack-slide" aria-label="专家层知识蒸馏">
+      <div class="slide-inner">
+        <div>
+          <p class="slide-tag">Expert Layer</p>
+          <h2>知识蒸馏的核心，是构建一个强大的专家层。</h2>
+          <p class="lead">专家层把零散资料变成业务判断，让后续三大模块都不是从空白生成，而是从专业经验出发。</p>
+        </div>
+        <div class="architecture-wrap">
+          <div class="layer-stack" aria-label="专家层四层架构图">
+            <div class="layer-box" data-flow="标准化请求">
+              <div class="downline"></div>
+              <div class="layer-title">交互层 <span>Interaction Layer</span></div>
+              <p>接收输入 / 展示输出 / 操作入口</p>
+            </div>
+            <div class="layer-box" data-flow="任务上下文">
+              <div class="downline"></div>
+              <div class="layer-title">任务层 <span>Task Layer</span></div>
+              <p>意图识别 / 任务编排 / 状态管理</p>
+            </div>
+            <div class="layer-box" data-flow="知识查询 / 结果写入">
+              <div class="downline"></div>
+              <div class="layer-title">智能层 <span>Intelligence Layer</span></div>
+              <p>理解 / 推理 / 生成 / 模拟 / 评估</p>
+            </div>
+            <div class="layer-box">
+              <div class="layer-title">知识层 <span>Knowledge Layer</span></div>
+              <p>事实 / 文档 / 画像 / 记忆 / 索引</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="痛点与解决方案一一对应">
+      <div class="slide-inner">
+        <div>
+          <p class="slide-tag">Pain To Solution</p>
+          <h2>痛点与解决方案一一对应，形成三大功能板块。</h2>
+        </div>
+        <div class="mapping-grid">
+          <div class="mapping-row">
+            <article class="card"><p class="card-kicker red">Pain 01</p><h3>缺少市场部内容</h3></article>
+            <div class="arrow-box">→</div>
+            <article class="card"><p class="card-kicker">Solution 01</p><h3>市场营销区块</h3><p>市场情报、公开信号、渠道策略</p></article>
+          </div>
+          <div class="mapping-row">
+            <article class="card"><p class="card-kicker amber">Pain 02</p><h3>内容发布渠道单一，缺乏体系</h3></article>
+            <div class="arrow-box">→</div>
+            <article class="card"><p class="card-kicker">Solution 02</p><h3>内容生产与审核区块</h3><p>爆款分析、内容辅助、内容诊断</p></article>
+          </div>
+          <div class="mapping-row">
+            <article class="card"><p class="card-kicker blue">Pain 03</p><h3>销售绩效不尽理想</h3></article>
+            <div class="arrow-box">→</div>
+            <article class="card"><p class="card-kicker">Solution 03</p><h3>AI Agent 销售培训区块</h3><p>销售教练、模拟客户、训练复盘</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="内容生产与审核区块">
+      <div class="slide-inner feature-demo-layout">
+        <aside class="feature-demo-copy">
+          <p class="slide-tag">Function 01</p>
+          <h2>内容生产与审核区块</h2>
+          <span class="pain-badge">对应痛点：内容发布渠道单一，缺乏体系</span>
+          <p class="lead">把专家层中的内容方法、产品知识和审核边界转成可持续的内容生产能力。</p>
+          <div class="feature-panel">
+            <article class="mini-card">
+              <b>01</b>
+              <h3>爆款分析</h3>
+              <p>拆解高表现内容的主题、钩子、结构、证据与互动点，形成可复用创作方法。</p>
+            </article>
+            <article class="mini-card">
+              <b>02</b>
+              <h3>内容辅助</h3>
+              <p>基于企业知识和产品资料生成标题、脚本、图文大纲、短视频分镜和渠道素材。</p>
+            </article>
+            <article class="mini-card">
+              <b>03</b>
+              <h3>内容诊断</h3>
+              <p>检查内容是否清晰、可信、贴近人群需求，并提示证据缺口与表达风险。</p>
+            </article>
+          </div>
+        </aside>
+        <figure class="product-shot">
+          <img src="roadshow-assets/function-ai-content.jpg" alt="AI 内容中心页面截图" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="AI Agent 销售培训区块">
+      <div class="slide-inner feature-demo-layout">
+        <aside class="feature-demo-copy">
+          <p class="slide-tag">Function 02</p>
+          <h2>AI Agent 销售培训区块</h2>
+          <span class="pain-badge">对应痛点：销售绩效不尽理想</span>
+          <p class="lead">把专家层中的产品知识、销售 SOP 和客户画像转成可练习、可反馈、可复盘的训练场景。</p>
+          <div class="feature-panel">
+            <article class="mini-card">
+              <b>01</b>
+              <h3>销售问答教练</h3>
+              <p>围绕产品、客户异议、沟通原则给出诊断、话术建议和下一步追问。</p>
+            </article>
+            <article class="mini-card">
+              <b>02</b>
+              <h3>模拟客户对话</h3>
+              <p>模拟采购、技术、老板等不同角色，让销售在真实压力下练习问诊。</p>
+            </article>
+            <article class="mini-card">
+              <b>03</b>
+              <h3>训练复盘建议</h3>
+              <p>识别表达漏洞、证据不足和过度承诺风险，沉淀个人改进动作。</p>
+            </article>
+          </div>
+        </aside>
+        <figure class="product-shot">
+          <img src="roadshow-assets/function-sales-training.jpg" alt="销售培训中心页面截图" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide" aria-label="市场营销区块">
+      <div class="slide-inner feature-demo-layout">
+        <aside class="feature-demo-copy">
+          <p class="slide-tag">Function 03</p>
+          <h2>市场营销区块</h2>
+          <span class="pain-badge">对应痛点：缺少市场部内容</span>
+          <p class="lead">把专家层中的市场判断、公开信号和渠道经验转成体系化的营销动作。</p>
+          <div class="feature-panel">
+            <article class="mini-card">
+              <b>01</b>
+              <h3>市场情报分析</h3>
+              <p>整合企业资料、行业信息与公开信号，形成市场机会和优先级判断。</p>
+            </article>
+            <article class="mini-card">
+              <b>02</b>
+              <h3>公开信号提炼</h3>
+              <p>从用户讨论、行业内容和竞品动态中识别需求、痛点与可验证假设。</p>
+            </article>
+            <article class="mini-card">
+              <b>03</b>
+              <h3>渠道策略建议</h3>
+              <p>把市场机会拆成公众号、短视频、私域、销售跟进等不同渠道动作。</p>
+            </article>
+          </div>
+        </aside>
+        <figure class="product-shot">
+          <img src="roadshow-assets/function-market-strategy.jpg" alt="市场策略总览页面截图" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="slide video-slide" aria-label="产品演示视频">
+      <div class="slide-inner">
+        <div>
+          <p class="slide-tag">Product Demo</p>
+          <h2>产品演示视频</h2>
+          <p class="lead">用真实操作画面展示从知识、内容、销售到市场策略的闭环。</p>
+        </div>
+        <div class="video-frame">
+          <video src="roadshow-assets/roadshow-demo.mp4" controls playsinline preload="metadata"></video>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide thanks-slide" aria-label="致谢页">
+      <div class="slide-inner">
+        <div class="thanks-mark">✓</div>
+        <h1>欢迎各位老师批评指正！</h1>
+      </div>
+    </section>
+  </main>
+
+  <div class="controls" aria-label="幻灯片控制">
+    <button class="nav-btn" type="button" data-prev aria-label="上一页">‹</button>
+    <div class="dots" aria-label="页码导航"></div>
+    <span class="counter" aria-live="polite">01 / 09</span>
+    <button class="nav-btn" type="button" data-next aria-label="下一页">›</button>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const dotsWrap = document.querySelector(".dots");
+    const counter = document.querySelector(".counter");
+    const prevButton = document.querySelector("[data-prev]");
+    const nextButton = document.querySelector("[data-next]");
+    let current = 0;
+
+    slides.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "dot";
+      dot.setAttribute("aria-label", `跳转到第 ${index + 1} 页`);
+      dot.addEventListener("click", () => showSlide(index));
+      dotsWrap.appendChild(dot);
+    });
+
+    const dots = Array.from(document.querySelectorAll(".dot"));
+
+    function pad(number) {
+      return String(number).padStart(2, "0");
+    }
+
+    function showSlide(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === current);
+        slide.setAttribute("aria-hidden", slideIndex === current ? "false" : "true");
+      });
+      dots.forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === current);
+        dot.setAttribute("aria-current", dotIndex === current ? "step" : "false");
+      });
+      counter.textContent = `${pad(current + 1)} / ${pad(slides.length)}`;
+      prevButton.disabled = current === 0;
+      nextButton.disabled = current === slides.length - 1;
+      document.title = `运营自动化企业级 Agent 路演稿 ${current + 1}/${slides.length}`;
+    }
+
+    prevButton.addEventListener("click", () => showSlide(current - 1));
+    nextButton.addEventListener("click", () => showSlide(current + 1));
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft" || event.key === "PageUp") showSlide(current - 1);
+      if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+        event.preventDefault();
+        showSlide(current + 1);
+      }
+      if (event.key === "Home") showSlide(0);
+      if (event.key === "End") showSlide(slides.length - 1);
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>
