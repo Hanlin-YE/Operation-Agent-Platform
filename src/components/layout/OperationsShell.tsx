@@ -18,6 +18,8 @@ type NavigationItem = { href: string; title: string; meta: string; icon: typeof 
 type NavigationGroup = { title: string; icon: typeof LayoutDashboard; href?: string; meta?: string; items?: NavigationItem[] };
 
 const navigationGroups: NavigationGroup[] = [
+  {title:"后台任务",icon:Bot,href:"/tasks",meta:"进度、结果与失败重试"},
+  {title:"本地设置",icon:Network,href:"/settings",meta:"模型连接与数据备份"},
   { title: "首页", icon: LayoutDashboard, href: "/", meta: "计划、市场与生成记录" },
   {
     title: "知识资产中心", icon: BookOpen, items: [

@@ -7,6 +7,8 @@ turns that evidence into a reviewable script package.
 from __future__ import annotations
 
 import asyncio
+import json
+import hashlib
 import ipaddress
 import os
 import shutil
@@ -24,6 +26,7 @@ from pydantic import BaseModel, Field
 from src.api.rag_routes import _read_multipart
 from src.services.llm_provider import GraphContext
 from src.services.video_analysis_jobs import VideoAnalysisJobStore
+from src.services.local_model_settings import video_provider, verify_model_snapshot
 
 router = APIRouter(prefix="/api/video-analysis", tags=["video-analysis"])
 
@@ -246,13 +249,14 @@ async def _run_job(request: Request, job_id: str, directory: Path, source_url: s
         store.update(job_id, scenes=scenes)
         api_key = os.getenv("LLM_API_KEY", "").strip() or os.getenv("OPENAI_API_KEY", "").strip()
         model_name = os.getenv("LLM_MODEL", "").strip() or os.getenv("OPENAI_MODEL", "").strip()
-        if not api_key or not model_name:
+        shared_provider = video_provider(store.get(job_id).get("model"))
+        if shared_provider is None and (not api_key or not model_name):
             store.update(job_id, status="model_not_configured", step="等待 LLM 配置", percent=82,
                          message="证据提取完成；尚未配置兼容 LLM，未生成策略结论。", warnings=["已保留转写和场景证据。请配置 LLM_PROVIDER、LLM_API_KEY、LLM_MODEL（Ollama/LM Studio 可使用兼容端点）。", "场景标签仅表示切分结果，不代表视觉语义判断。"])
             return
         store.update(job_id, step="拉片结构分析", percent=82, message="正在基于证据生成故事大纲、爆点结构和分镜。")
         try:
-            script = await request.app.state.llm_provider.generate_json(
+            script = await (shared_provider or request.app.state.llm_provider).generate_json(
                 GraphContext(evidence=[evidence]), ScriptPackage,
                 "根据转写和镜头边界生成中文可编辑视频剧本与爆款拉片结论。只根据给出的证据陈述，无法确认的视觉内容应明确写为待人工核验；每段必须包含时间、画面、台词和段落目的。额外输出 storyOutline，以及 viralBreakdown：hook、structure、reusablePatterns、b2bAdaptation、risks。不得照抄原视频文案，不得把原视频的性能说法当作我方承诺。",
             )
@@ -263,8 +267,9 @@ async def _run_job(request: Request, job_id: str, directory: Path, source_url: s
         message = str(exc) or "视频分析任务失败。"
         store.update(job_id, status="failed", step="处理失败", message=message, log_level="error", error={"code": "video_analysis_failed", "message": message})
     finally:
-        # Keep only text evidence and review results, never the original source video.
-        shutil.rmtree(directory, ignore_errors=True)
+        # Scratch files are disposable; retained source paths are available for retry.
+        if not store.get(job_id).get("sourceDirectory"):
+            shutil.rmtree(directory, ignore_errors=True)
 
 
 async def _create_video_job(request: Request) -> dict[str, object]:
@@ -291,14 +296,26 @@ async def _create_video_job(request: Request) -> dict[str, object]:
             raise HTTPException(status_code=415, detail="仅支持 MP4、MOV 或 WebM 视频。")
         source = {"filename": filename}
     store = _job_store(request)
-    if source_url:
+    try:
+        snapshot = verify_model_snapshot(fields["model_snapshot"], request.headers.get("X-Local-Model-Signature", "")) if fields.get("model_snapshot") else None
+    except (ValueError, RuntimeError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    if source_url and not snapshot:
         completed = store.find_completed_by_source_url(source_url)
         if completed:
             return completed
-    job = store.create(source)
-    directory = Path(tempfile.mkdtemp(prefix=f"video-analysis-{job['jobId']}-"))
+    dedupe = request.headers.get("Idempotency-Key")
+    if not dedupe:
+        digest = hashlib.sha256(bytes(uploaded_file["content"]) if uploaded_file else source_url.encode()).hexdigest()
+        dedupe = digest + json.dumps(snapshot, sort_keys=True)
+    job = store.create(source, dedupe=dedupe, model=snapshot)
+    if not store.claim(str(job["jobId"])):
+        return store.get(str(job["jobId"]))
+    directory = store.source_directory / str(job["jobId"])
+    directory.mkdir(parents=True, exist_ok=True)
     if uploaded_file:
         (directory / str(source["filename"])).write_bytes(bytes(uploaded_file["content"]))
+    store.update(str(job["jobId"]), sourceDirectory=str(directory.resolve()))
     asyncio.create_task(_run_job(request, str(job["jobId"]), directory, source_url or None))
     return job
 

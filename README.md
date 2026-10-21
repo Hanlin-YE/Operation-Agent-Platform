@@ -217,3 +217,9 @@ CRM-first 销售工作台
 + 专业话术生成
 + 前后端一体演示
 ```
+
+## 本地 SQLite 与后台任务中心
+
+本地运行需要 Node.js 22.13+。`npm run dev` / `npm start` 同时启动 Web 与独立任务 worker。侧栏「后台任务」提供进度、结果与失败重试，「本地设置」统一配置模型、测试连接并创建数据备份。
+
+旧 JSON 在首次运行自动迁移，原文件保留。手动命令：`npm run db:migrate`、`npm run db:backup`；停止服务后用 `npm run db:restore -- /备份目录 --offline` 恢复。附件继续保存在本地目录。完整使用与验证说明见 [本地持久化指南](docs/local-persistence.md)。

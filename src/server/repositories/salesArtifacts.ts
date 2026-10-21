@@ -9,11 +9,13 @@ export async function listScoresByLead(leadId: string) {
     .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 }
 
-export async function saveScore(score: Omit<LeadScore, "id" | "createdAt">) {
+export async function saveScore(score: Omit<LeadScore, "id" | "createdAt">, resultId?: string) {
   const data = await readData();
+  const existing = resultId && data.scores.find(item => item.id === resultId);
+  if (existing) return existing;
   const item: LeadScore = {
     ...score,
-    id: makeId("score"),
+    id: resultId || makeId("score"),
     createdAt: new Date().toISOString()
   };
   data.scores.unshift(item);

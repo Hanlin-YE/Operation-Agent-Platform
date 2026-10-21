@@ -1,36 +1,11 @@
-type DeepSeekMessage = {
-  role: "system" | "user" | "assistant";
-  content: string;
-};
-
-type DeepSeekChatResponse = {
-  choices?: Array<{
-    message?: {
-      content?: string;
-    };
-  }>;
-  error?: {
-    message?: string;
-  };
-};
-
+import { resolveModel, modelRequest } from "../models/settings";
 export type SalesLearningCategory = "product" | "script" | "customer";
-
-const fallbackByCategory: Record<SalesLearningCategory, string> = {
-  product: "我暂时无法连接智能问答服务。你可以先描述产品型号、应用场景和客户问题，我会在服务恢复后基于内部产品资料帮你整理复习要点。",
-  script: "我暂时无法连接智能问答服务。你可以先写出客户异议或沟通场景，我会在服务恢复后基于内部资料帮你打磨话术。",
-  customer: "我暂时无法连接智能问答服务。你可以先输入销售开场或产品说明，服务恢复后我会以采购人员视角继续追问资质、交付、测试和商务风险。",
-};
 
 const categoryLabels: Record<SalesLearningCategory, string> = {
   product: "产品学习",
   script: "营销话术",
   customer: "模拟客户",
 };
-
-function getApiKey() {
-  return process.env.DEEPSEEK_API_KEY?.trim();
-}
 
 function createSystemPrompt(category: SalesLearningCategory) {
   const basePrompt = [
@@ -91,39 +66,9 @@ export async function askDeepSeekSalesCoach(args: {
   question: string;
   context: string;
 }) {
-  const apiKey = getApiKey();
-  if (!apiKey) return fallbackByCategory[args.category];
-
-  const messages: DeepSeekMessage[] = [
+  const profile = resolveModel("learning");
+  return modelRequest(profile, [
     { role: "system", content: createSystemPrompt(args.category) },
     { role: "user", content: createUserPrompt(args) },
-  ];
-
-  try {
-    const response = await fetch("https://api.deepseek.com/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: process.env.DEEPSEEK_MODEL?.trim() || "deepseek-chat",
-        messages,
-        temperature: 0.4,
-        max_tokens: 900,
-      }),
-    });
-
-    const data = (await response.json().catch(() => ({}))) as DeepSeekChatResponse;
-    if (!response.ok) {
-      console.error("DeepSeek API request failed", response.status, data.error?.message || response.statusText);
-      return fallbackByCategory[args.category];
-    }
-
-    const content = data.choices?.[0]?.message?.content?.trim();
-    return content || fallbackByCategory[args.category];
-  } catch (error) {
-    console.error("DeepSeek API request error", error);
-    return fallbackByCategory[args.category];
-  }
+  ]);
 }

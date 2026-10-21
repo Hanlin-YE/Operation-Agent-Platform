@@ -40,3 +40,17 @@ potential_customers.csv
 agent_root/models/
 agent_root/.cache/
 agent_root/data/video-analysis-jobs.json
+.vercel
+
+# Local SQLite state, secrets, attachments and recovery bundles
+data/*.sqlite*
+data/*.pre-sqlite.bak
+data/model-settings.json
+data/attachments/
+data/backups/
+data/.maintenance
+agent_root/data/*.sqlite*
+agent_root/data/*.pre-sqlite.bak
+agent_root/data/video-sources/
+data/*.tmp
+.next-local-review/

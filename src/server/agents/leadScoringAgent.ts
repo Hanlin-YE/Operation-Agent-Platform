@@ -2,7 +2,7 @@ import { getLead } from "@/server/repositories/leads";
 import { saveScore } from "@/server/repositories/salesArtifacts";
 import { buildScoreExplanation } from "@/server/scoring/scoreLead";
 
-export async function runLeadScoringAgent(leadId: string) {
+export async function runLeadScoringAgent(leadId: string, resultId?: string) {
   const lead = await getLead(leadId);
   if (!lead) {
     throw new Error("Lead not found");
@@ -12,5 +12,5 @@ export async function runLeadScoringAgent(leadId: string) {
   return saveScore({
     leadId,
     ...score
-  });
+  }, resultId);
 }

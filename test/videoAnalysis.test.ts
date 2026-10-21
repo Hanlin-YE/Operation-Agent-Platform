@@ -91,45 +91,19 @@ test("video source URL validation accepts public http links without browser patt
   assert.throws(() => validateVideoSourceUrl("file:///tmp/video.mp4"), /HTTP\(S\)/);
 });
 
-test("a pasted public video URL is forwarded to the local analysis job service", async (context) => {
-  const sourceUrl = "https://b23.tv/example";
-  let forwardedUrl = "";
-  context.mock.method(globalThis, "fetch", async (_input: Parameters<typeof fetch>[0], init?: Parameters<typeof fetch>[1]) => {
-    const outbound = init?.body as FormData;
-    forwardedUrl = String(outbound.get("source_url") || "");
-    return Response.json({
-      jobId: "video-url",
-      status: "queued",
-      step: "等待队列",
-      percent: 0,
-      message: "任务已进入队列",
-      source: { filename: "remote-video", sourceUrl },
-      transcript: [],
-      scenes: [],
-      warnings: [],
-    }, { status: 202 });
-  });
-
-  const form = new FormData();
-  form.set("sourceUrl", sourceUrl);
-  const response = await createVideoAnalysisJob(new Request("http://localhost/api/video-analysis/jobs", { method: "POST", body: form }));
-
-  assert.equal(response.status, 202);
-  assert.equal(forwardedUrl, sourceUrl);
-  assert.equal((await response.json()).jobId, "video-url");
-});
-
-test("missing local video route is translated instead of leaking Not Found", async (context) => {
-  context.mock.method(globalThis, "fetch", async () => Response.json({ detail: "Not Found" }, { status: 404 }));
-
-  const form = new FormData();
-  form.set("sourceUrl", "https://b23.tv/example");
-  const response = await createVideoAnalysisJob(new Request("http://localhost/api/video-analysis/jobs", { method: "POST", body: form }));
-  const payload = await response.json();
-
-  assert.equal(response.status, 404);
-  assert.match(payload.error, /本地 Agent 未加载视频拆解服务/);
-  assert.doesNotMatch(payload.error, /^Not Found$/);
+test("video submission validates model configuration before any remote work", async (context) => {
+  const old = process.env.OPENAI_API_KEY; const oldLlm = process.env.LLM_API_KEY;
+  delete process.env.OPENAI_API_KEY; delete process.env.LLM_API_KEY;
+  let calls = 0;
+  context.mock.method(globalThis, "fetch", async () => { calls++; return Response.json({}); });
+  try {
+    const form = new FormData(); form.set("sourceUrl", "https://b23.tv/example");
+    const response = await createVideoAnalysisJob(new Request("http://localhost/api/video-analysis/jobs", {method:"POST",body:form}));
+    assert.equal(response.status,422); assert.match((await response.json()).error,/模型配置不完整/); assert.equal(calls,0);
+  } finally {
+    if(old)process.env.OPENAI_API_KEY=old;
+    if(oldLlm)process.env.LLM_API_KEY=oldLlm;
+  }
 });
 
 test("video analysis health check reports the configured local agent status", async (context) => {

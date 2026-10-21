@@ -40,14 +40,15 @@ class OpenAICompatibleProvider:
                 endpoint = f"{endpoint}/responses"
             payload: dict[str, Any] = {
                 "model": self._config.model,
+                "max_output_tokens": self._config.max_tokens,
                 "input": [
                     {"role": "system", "content": "Use only supplied evidence. Return valid JSON, no prose outside JSON."},
                     {"role": "user", "content": f"Instruction: {instruction}\nContext: {context.model_dump_json()}"},
                 ],
                 "text": {"format": {"type": "json_schema", "name": output_model.__name__, "strict": True, "schema": output_model.model_json_schema()}},
             }
-            timeout = float(os.getenv("LLM_REQUEST_TIMEOUT_SECONDS", "600"))
-            for attempt in range(3):
+            timeout = self._config.timeout_seconds
+            for attempt in range(1):
                 try:
                     # Some local developer environments export proxy/no_proxy values
                     # that make httpx hang while curl reaches the same endpoint.
@@ -56,7 +57,7 @@ class OpenAICompatibleProvider:
                         response.raise_for_status()
                     break
                 except httpx.TimeoutException as exc:
-                    raise RuntimeError(f"远程模型请求超过 {int(timeout)} 秒，请重试或提高 LLM_REQUEST_TIMEOUT_SECONDS。") from exc
+                    raise RuntimeError(f"远程模型请求超过 {int(timeout)} 秒，请在本地设置检查连接或调整超时。") from exc
                 except httpx.HTTPStatusError as exc:
                     code = exc.response.status_code
                     try:
@@ -65,7 +66,7 @@ class OpenAICompatibleProvider:
                         error_body = {}
                     if error_body.get("code") == "INSUFFICIENT_BALANCE":
                         raise RuntimeError("远程模型账户余额不足，请充值或更换可用的 API Key 后重试。") from exc
-                    if code not in {502, 503, 504} or attempt == 2:
+                    if code not in {502, 503, 504} or attempt == 0:
                         raise RuntimeError(f"远程模型服务暂时不可用（HTTP {code}），请稍后重试。") from exc
                     await asyncio.sleep(2 ** attempt)
             body = response.json()
@@ -82,9 +83,11 @@ class OpenAICompatibleProvider:
             raise ValueError("LLM_API_MODE 仅支持 chat_completions 或 responses。")
         from openai import AsyncOpenAI
 
-        client = AsyncOpenAI(api_key=self._config.api_key, base_url=self._config.base_url)
+        client = AsyncOpenAI(api_key=self._config.api_key, base_url=self._config.base_url, timeout=self._config.timeout_seconds, max_retries=0)
         response = await client.chat.completions.create(
             model=self._config.model,
+            temperature=self._config.temperature,
+            max_tokens=self._config.max_tokens,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": "Use only supplied evidence. Return valid JSON, no prose outside JSON."},

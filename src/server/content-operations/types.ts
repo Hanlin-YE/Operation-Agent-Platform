@@ -150,7 +150,7 @@ export type ContentOperationsData = {
 };
 
 export type ContentOperationsStorageInfo = {
-  mode: "file" | "memory";
+  mode: "sqlite" | "file" | "memory";
   durable: boolean;
   warning: string | null;
 };

@@ -1,3 +1,4 @@
+import { saveAttachment } from "@/server/storage/attachments";
 import { NextResponse } from "next/server";
 import { parseKnowledgePdfUpload } from "@/server/knowledge/pdfUpload";
 import { createKnowledge, updateKnowledge } from "@/server/repositories/knowledge";
@@ -18,6 +19,7 @@ export async function POST(request: Request) {
       title: parsed.title,
       content: parsed.content,
       sourceFile: parsed.sourceFile,
+      storagePath: await saveAttachment(new Uint8Array(await file.arrayBuffer()), "pdf"),
       type: "product",
     });
     const ragDocument = await ingestProductTextToRag({

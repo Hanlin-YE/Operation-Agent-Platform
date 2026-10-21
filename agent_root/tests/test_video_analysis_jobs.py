@@ -16,7 +16,7 @@ class VideoAnalysisJobStoreTests(unittest.TestCase):
         with patch.dict("os.environ", {"VIDEO_WHISPER_MODEL": "/tmp/custom-whisper"}, clear=False):
             self.assertEqual(_whisper_model_reference(), "/tmp/custom-whisper")
 
-    def test_interrupted_jobs_are_failed_but_completed_results_are_retained(self) -> None:
+    def test_interrupted_jobs_are_marked_and_completed_results_are_retained(self) -> None:
         from src.services.video_analysis_jobs import VideoAnalysisJobStore
 
         with tempfile.TemporaryDirectory() as directory:
@@ -27,11 +27,11 @@ class VideoAnalysisJobStoreTests(unittest.TestCase):
             }}), encoding="utf-8")
 
             store = VideoAnalysisJobStore(path)
-            self.assertEqual(store.get("running")["status"], "failed")
+            self.assertEqual(store.get("running")["status"], "interrupted")
             self.assertIn("服务重启", store.get("running")["error"]["message"])
             self.assertEqual(store.get("done")["transcript"][0]["text"], "保留证据")
 
-    def test_job_updates_are_persisted_as_json(self) -> None:
+    def test_job_updates_are_persisted_in_sqlite_after_reopening(self) -> None:
         from src.services.video_analysis_jobs import VideoAnalysisJobStore
 
         with tempfile.TemporaryDirectory() as directory:
@@ -39,9 +39,26 @@ class VideoAnalysisJobStoreTests(unittest.TestCase):
             store = VideoAnalysisJobStore(path)
             job = store.create({"filename": "sample.mp4"})
             store.update(job["jobId"], status="processing", step="准备本地模型", percent=15, message="正在检查模型缓存")
-            persisted = json.loads(path.read_text(encoding="utf-8"))
-            self.assertEqual(persisted["jobs"][job["jobId"]]["step"], "准备本地模型")
-            self.assertEqual(persisted["jobs"][job["jobId"]]["status"], "processing")
+            reopened = VideoAnalysisJobStore(path)
+            self.assertEqual(reopened.get(job["jobId"])["step"], "准备本地模型")
+            self.assertEqual(reopened.get(job["jobId"])["status"], "processing")
+            self.assertFalse(path.exists())
+            self.assertTrue(path.with_suffix(".sqlite").exists())
+
+    def test_two_store_instances_preserve_independent_jobs_and_claim_once(self) -> None:
+        from src.services.video_analysis_jobs import VideoAnalysisJobStore
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "jobs.json"
+            first, second = VideoAnalysisJobStore(path), VideoAnalysisJobStore(path)
+            a = first.create({"filename": "a.mp4"}, dedupe="same")
+            self.assertEqual(second.create({"filename": "a.mp4"}, dedupe="same")["jobId"], a["jobId"])
+            b = second.create({"filename": "b.mp4"})
+            first.update(a["jobId"], step="transcribe")
+            second.update(b["jobId"], step="scenes")
+            self.assertEqual(second.get(a["jobId"])["step"], "transcribe")
+            self.assertEqual(first.get(b["jobId"])["step"], "scenes")
+            self.assertTrue(first.claim(a["jobId"]))
+            self.assertFalse(second.claim(a["jobId"]))
 
     def test_successful_retry_clears_the_previous_error(self) -> None:
         from src.services.video_analysis_jobs import VideoAnalysisJobStore

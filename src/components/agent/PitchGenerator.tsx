@@ -1,5 +1,6 @@
 "use client";
 
+import { awaitBackgroundResult } from "@/components/content/backgroundTaskClient";
 import { useState } from "react";
 import { MessageSquareText, Save } from "lucide-react";
 import { GeneratedPitch, PitchChannel } from "@/server/data/types";
@@ -18,20 +19,24 @@ export function PitchGenerator({ leadId, initialPitch }: { leadId: string; initi
   const [pitch, setPitch] = useState<GeneratedPitch | undefined>(initialPitch);
   const [content, setContent] = useState(initialPitch?.content || "");
   const [loading, setLoading] = useState(false);
+  const [error,setError] = useState("");
   const [saved, setSaved] = useState(false);
 
   async function generate() {
     setLoading(true);
     setSaved(false);
+    setError("");
+    try {
     const response = await fetch("/api/agent/generate-pitch", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ leadId, channel })
     });
-    const nextPitch = await response.json();
+    const nextPitch = await awaitBackgroundResult<GeneratedPitch>(response);
     setPitch(nextPitch);
     setContent(nextPitch.content);
-    setLoading(false);
+    } catch(error) { setError(error instanceof Error?error.message:"生成失败"); }
+    finally { setLoading(false); }
   }
 
   async function savePitch() {
@@ -58,6 +63,8 @@ export function PitchGenerator({ leadId, initialPitch }: { leadId: string; initi
   return (
     <div className="panel">
       <h2>专业销售话术</h2>
+      {error && <p role="alert">{error}</p>}
+      {loading && <p>后台任务已提交，可关闭页面并在<a href="/tasks">任务中心</a>查看结果。</p>}
       <div className="actions">
         <select value={channel} onChange={(event) => setChannel(event.target.value as PitchChannel)}>
           {channelOptions.map((item) => (

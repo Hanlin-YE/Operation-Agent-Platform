@@ -1,9 +1,8 @@
+import { database, dataDirectory } from "@/server/storage/database";
 import { AppData } from "./types";
 import { seedData } from "./seed";
-import { promises as fs } from "fs";
 import path from "path";
 
-const dataFile = path.join(process.cwd(), "data", "app-data.json");
 const memoryStoreKey = "__MOTOR_SALES_AGENT_STORE__";
 
 type GlobalStore = typeof globalThis & {
@@ -26,13 +25,12 @@ function getMemoryStore() {
   return storeHost[memoryStoreKey];
 }
 
-async function ensureStore() {
-  await fs.mkdir(path.dirname(dataFile), { recursive: true });
-  try {
-    await fs.access(dataFile);
-  } catch {
-    await fs.writeFile(dataFile, JSON.stringify(seedData, null, 2), "utf8");
-  }
+function ensureStore() {
+  database().migrate("app", path.join(dataDirectory(), "app-data.json"), seedData, (data) => {
+    for (const key of ["leads", "products", "knowledge", "scores", "pitches", "followUps", "marketReports"]) {
+      if (!Array.isArray(data[key])) throw new Error(`旧业务数据缺少集合：${key}`);
+    }
+  });
 }
 
 export async function readData(): Promise<AppData> {
@@ -41,8 +39,7 @@ export async function readData(): Promise<AppData> {
   }
 
   await ensureStore();
-  const raw = await fs.readFile(dataFile, "utf8");
-  return JSON.parse(raw) as AppData;
+  return database().read<AppData>("app");
 }
 
 export async function writeData(data: AppData) {
@@ -53,7 +50,7 @@ export async function writeData(data: AppData) {
   }
 
   await ensureStore();
-  await fs.writeFile(dataFile, JSON.stringify(data, null, 2), "utf8");
+  database().write("app", data);
 }
 
 export function makeId(prefix: string) {

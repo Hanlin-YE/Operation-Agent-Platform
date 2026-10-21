@@ -1,9 +1,8 @@
-import { promises as fs } from "fs";
+import { database, dataDirectory } from "@/server/storage/database";
 import path from "path";
 import { AigcAdapterJob } from "@/server/aigc/types";
 import { makeId } from "@/server/data/store";
 
-const jobsFile = path.join(process.cwd(), "data", "aigc-jobs.json");
 const memoryStoreKey = "__AIGC_JOB_STORE__";
 
 type GlobalStore = typeof globalThis & {
@@ -14,14 +13,13 @@ function shouldUseMemoryStore() {
   return process.env.CLOUDFLARE === "true" || process.env.DEMO_EPHEMERAL_STORE === "true";
 }
 
-async function ensureStore() {
-  await fs.mkdir(path.dirname(jobsFile), { recursive: true });
-  try {
-    await fs.access(jobsFile);
-  } catch {
-    await fs.writeFile(jobsFile, "[]", "utf8");
-  }
+function ensureStore() {
+  database().migrate("aigc", path.join(dataDirectory(), "aigc-jobs.json"), { jobs: [] }, undefined, (jobs) => {
+    if (!Array.isArray(jobs)) throw new Error("AIGC 旧任务数据结构无效");
+    return { jobs };
+  });
 }
+const snapshots = new WeakMap<AigcAdapterJob[], {jobs: AigcAdapterJob[]}>();
 
 function getMemoryStore() {
   const host = globalThis as GlobalStore;
@@ -37,8 +35,9 @@ export async function readAigcJobs() {
   }
 
   await ensureStore();
-  const raw = await fs.readFile(jobsFile, "utf8");
-  return JSON.parse(raw) as AigcAdapterJob[];
+  const data = database().read<{jobs: AigcAdapterJob[]}>("aigc");
+  snapshots.set(data.jobs, data);
+  return data.jobs;
 }
 
 export async function writeAigcJobs(jobs: AigcAdapterJob[]) {
@@ -49,15 +48,16 @@ export async function writeAigcJobs(jobs: AigcAdapterJob[]) {
   }
 
   await ensureStore();
-  const temporaryFile = `${jobsFile}.${process.pid}.${Date.now()}.tmp`;
-  await fs.writeFile(temporaryFile, JSON.stringify(jobs, null, 2), "utf8");
-  await fs.rename(temporaryFile, jobsFile);
+  const data = snapshots.get(jobs);
+  if (!data) throw new Error("保存 AIGC 任务需要数据库快照");
+  database().write("aigc", data);
 }
 
 export async function saveAigcJob(job: AigcAdapterJob) {
   const jobs = await readAigcJobs();
-  const next = [job, ...jobs.filter((item) => item.jobId !== job.jobId)].slice(0, 50);
-  await writeAigcJobs(next);
+  const index = jobs.findIndex(item => item.jobId === job.jobId);
+  if (index >= 0) jobs[index] = job; else jobs.unshift(job);
+  await writeAigcJobs(jobs);
   return job;
 }
 

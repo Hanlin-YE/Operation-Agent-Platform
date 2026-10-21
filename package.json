@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NEXT_DIST_DIR=.next-dev next dev",
+    "dev": "node scripts/local-runtime.mjs dev",
     "build": "next build",
     "build:verify": "NEXT_DIST_DIR=.next-verify next build",
-    "start": "next start",
+    "start": "node scripts/local-runtime.mjs start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test:content": "tsx --test test/contentOperations*.test.ts",
@@ -14,7 +14,12 @@
     "test:rag": "tsx --test test/ragPdfText.test.ts",
     "test:market": "tsx --test test/marketAnalysis.test.ts",
     "preview:cloudflare": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy:cloudflare": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "deploy:cloudflare": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "worker": "tsx scripts/task-worker.ts",
+    "db:migrate": "tsx scripts/local-data.ts migrate",
+    "db:backup": "tsx scripts/local-data.ts backup",
+    "db:restore": "tsx scripts/local-data.ts restore",
+    "test:local": "tsx --test test/storage/*.test.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
@@ -35,5 +40,8 @@
     "tsx": "^4.23.1",
     "typescript": "^5.5.3",
     "wrangler": "^4.59.2"
+  },
+  "engines": {
+    "node": ">=22.13.0"
   }
 }

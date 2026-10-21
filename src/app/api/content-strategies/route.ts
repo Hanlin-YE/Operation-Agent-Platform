@@ -1,5 +1,8 @@
+import { requireLocalMutation } from "@/server/http/local";
 import { NextResponse } from "next/server";
-import { analyzeContentStrategy } from "@/server/contentStrategy/service";
+import { submitTask } from "@/server/tasks/submit";
+import { saveAttachment } from "@/server/storage/attachments";
+import { modelSnapshot } from "@/server/models/settings";
 import { listContentStrategies } from "@/server/repositories/contentStrategies";
 import { ContentStrategyPlatform } from "@/server/data/types";
 
@@ -10,6 +13,7 @@ export async function GET() { return NextResponse.json(await listContentStrategi
 
 export async function POST(request: Request) {
   try {
+  requireLocalMutation(request);
     const form = await request.formData();
     const files = form.getAll("images").filter((value): value is File => value instanceof File && value.size > 0);
     if (files.length > 3) return NextResponse.json({ error: "最多上传 3 张图片样本。" }, { status: 422 });
@@ -19,12 +23,13 @@ export async function POST(request: Request) {
     const metrics = Object.fromEntries(["views", "likes", "comments", "saves", "shares"].flatMap((key) => {
       const value = Number(form.get(key)); return Number.isFinite(value) && value >= 0 ? [[key, value]] : [];
     }));
-    const imageData = await Promise.all(files.map(async (file) => ({ mimeType: file.type, dataUrl: `data:${file.type};base64,${Buffer.from(await file.arrayBuffer()).toString("base64")}` })));
-    const record = await analyzeContentStrategy({
+    modelSnapshot("content");
+    const imagePaths = await Promise.all(files.map(async file=>({mimeType:file.type,path:await saveAttachment(new Uint8Array(await file.arrayBuffer()),file.name.split(".").pop() || "bin")})));
+    const record = submitTask("content-strategy", {
       platform, title: String(form.get("title") || ""), content: String(form.get("content") || ""), sourceUrl: String(form.get("sourceUrl") || ""),
-      metrics, images: files.map((file) => ({ filename: file.name, mimeType: file.type, size: file.size })), imageData
+      metrics, images: files.map((file) => ({ filename: file.name, mimeType: file.type, size: file.size })), imagePaths
     });
-    return NextResponse.json(record, { status: record.status === "error" ? 422 : 201 });
+    return NextResponse.json(record, { status: 202 });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : "无法创建内容策略包。" }, { status: 422 });
   }

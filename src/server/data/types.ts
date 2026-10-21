@@ -77,6 +77,7 @@ export type KnowledgeDocument = {
   type: "product" | "case" | "objection" | "selection" | "faq";
   content: string;
   sourceFile?: string;
+  storagePath?: string;
   ragDocumentId?: string;
   ragReviewStatus?: "pending" | "approved" | "rejected";
   ragIngestedAt?: string;
@@ -285,6 +286,7 @@ export type ContentStrategyImage = { filename: string; mimeType: string; size: n
 export type ContentStrategyMetrics = { views?: number; likes?: number; comments?: number; saves?: number; shares?: number };
 export type ContentStrategyPack = {
   id: string;
+  backgroundTaskId?: string;
   status: ContentStrategyStatus;
   sample: { platform: ContentStrategyPlatform; title: string; content: string; sourceUrl?: string; metrics: ContentStrategyMetrics; images: ContentStrategyImage[] };
   analysis?: {

@@ -69,10 +69,10 @@ class LlmProviderContractTests(unittest.IsolatedAsyncioTestCase):
 
         with patch("httpx.AsyncClient", return_value=TimeoutClient()), patch.dict("os.environ", {"LLM_REQUEST_TIMEOUT_SECONDS": "600"}):
             provider = OpenAICompatibleProvider(LlmProviderConfig(provider="openai_compatible", api_key="test-key", base_url="https://models.example.test", model="gpt-5.4", api_mode="responses"))
-            with self.assertRaisesRegex(RuntimeError, "超过 600 秒"):
+            with self.assertRaisesRegex(RuntimeError, "超过 60 秒"):
                 await provider.generate_json(GraphContext(evidence=[]), _Answer, "生成答案")
 
-    async def test_responses_mode_retries_temporary_upstream_failures(self) -> None:
+    async def test_responses_mode_leaves_temporary_failure_for_explicit_task_retry(self) -> None:
         from src.services.llm_provider import GraphContext, LlmProviderConfig
         from src.services.openai_compatible_provider import OpenAICompatibleProvider
 
@@ -96,10 +96,10 @@ class LlmProviderContractTests(unittest.IsolatedAsyncioTestCase):
 
         with patch("httpx.AsyncClient", RetryClient), patch("asyncio.sleep", new=AsyncMock()):
             provider = OpenAICompatibleProvider(LlmProviderConfig(provider="openai_compatible", api_key="test-key", base_url="https://models.example.test", model="gpt-5.4", api_mode="responses"))
-            answer = await provider.generate_json(GraphContext(evidence=[]), _Answer, "生成答案")
+            with self.assertRaisesRegex(RuntimeError, "HTTP 502"):
+                await provider.generate_json(GraphContext(evidence=[]), _Answer, "生成答案")
 
-        self.assertEqual(answer.answer, "重试成功")
-        self.assertEqual(RetryClient.calls, 3)
+        self.assertEqual(RetryClient.calls, 1)
 
     async def test_responses_mode_reports_insufficient_provider_balance(self) -> None:
         from src.services.llm_provider import GraphContext, LlmProviderConfig

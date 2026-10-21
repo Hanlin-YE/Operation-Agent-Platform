@@ -22,6 +22,7 @@ export async function createKnowledge(input: Partial<KnowledgeInput>) {
     type: input.type || "faq",
     content: input.content?.trim() || "",
     sourceFile: input.sourceFile,
+    storagePath: input.storagePath,
     createdAt: now,
     updatedAt: now
   };

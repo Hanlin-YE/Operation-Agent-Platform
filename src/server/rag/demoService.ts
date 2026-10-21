@@ -1,3 +1,4 @@
+import { database, dataDirectory } from "@/server/storage/database";
 import { createHash } from "crypto";
 import { promises as fs } from "fs";
 import path from "path";
@@ -41,8 +42,7 @@ type SearchHit = {
   };
 };
 
-const dataFile = path.join(process.cwd(), "data", "rag-demo-data.json");
-const storageDirectory = path.join(process.cwd(), "data", "rag-demo-files");
+const storageDirectory = path.join(dataDirectory(), "rag-demo-files");
 const memoryStoreKey = "__RAG_DEMO_STORE__";
 
 type GlobalStore = typeof globalThis & {
@@ -65,13 +65,8 @@ function getMemoryStore() {
   return storeHost[memoryStoreKey];
 }
 
-async function ensureStore() {
-  await fs.mkdir(path.dirname(dataFile), { recursive: true });
-  try {
-    await fs.access(dataFile);
-  } catch {
-    await fs.writeFile(dataFile, JSON.stringify(createEmptyStore(), null, 2), "utf8");
-  }
+function ensureStore() {
+  database().migrate("rag", path.join(dataDirectory(), "rag-demo-data.json"), createEmptyStore());
 }
 
 async function readStore() {
@@ -80,8 +75,7 @@ async function readStore() {
   }
 
   await ensureStore();
-  const raw = await fs.readFile(dataFile, "utf8");
-  return JSON.parse(raw) as DemoRagStore;
+  return database().read<DemoRagStore>("rag");
 }
 
 async function writeStore(store: DemoRagStore) {
@@ -92,7 +86,7 @@ async function writeStore(store: DemoRagStore) {
   }
 
   await ensureStore();
-  await fs.writeFile(dataFile, JSON.stringify(store, null, 2), "utf8");
+  database().write("rag", store);
 }
 
 function makeId(prefix: string) {

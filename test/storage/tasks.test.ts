@@ -1,0 +1,20 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { LocalDatabase } from '../../src/server/storage/database';
+import { TaskStore } from '../../src/server/tasks/store';
+test('atomic deduplication, single claim, expired lease interruption and explicit retry', () => {
+ const db = new LocalDatabase(':memory:'); const store = new TaskStore(db);
+ const a = store.submit('batch-score', {leadIds:['a']}, null);
+ assert.equal(store.submit('batch-score', {leadIds:['a']}, null).id, a.id);
+ const claimed = store.claim('worker1', 1000)!;
+ assert.equal(claimed.id,a.id); assert.equal(store.claim('worker2',1000),null);
+ assert.throws(()=>store.retry(a.id,null),/重试/);
+ store.recover(100000);
+ assert.equal(store.get(a.id)?.status,'interrupted');
+ store.retry(a.id,null); const retry = store.claim('worker2',100000)!;
+ assert.equal(retry.attempt,2);
+ assert.equal(store.finish(a.id,'worker1','succeeded',{bad:true}),false);
+ store.finish(a.id,'worker2','succeeded',{ok:true});
+ assert.deepEqual(store.get(a.id)?.result,{ok:true}); assert.equal(store.get(a.id)?.progress,100);
+ db.close();
+});

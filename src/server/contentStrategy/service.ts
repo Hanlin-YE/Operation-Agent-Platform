@@ -1,6 +1,6 @@
 import { ContentStrategyImage, ContentStrategyMetrics, ContentStrategyPack, ContentStrategyPlatform } from "@/server/data/types";
 import { generateJsonCompletion } from "@/server/llm/provider";
-import { createContentStrategy, updateContentStrategy } from "@/server/repositories/contentStrategies";
+import { createContentStrategy, updateContentStrategy, createReworkDraft } from "@/server/repositories/contentStrategies";
 
 export type StrategyInput = { platform: ContentStrategyPlatform; title: string; content: string; sourceUrl?: string; metrics: ContentStrategyMetrics; images: ContentStrategyImage[]; imageData?: { mimeType: string; dataUrl: string }[] };
 const maxContentLength = 12000;
@@ -39,13 +39,11 @@ export async function analyzeContentStrategy(input: StrategyInput): Promise<Cont
   return createContentStrategy({ ...base, status: "needs_review", analysis });
 }
 
-export async function requestContentStrategyRework(parent: ContentStrategyPack, input: { operator: string; stage: "strategy_review" | "production_confirmation" | "production_draft"; reason: string }) {
+export async function requestContentStrategyRework(parent: ContentStrategyPack, input: { operator: string; stage: "strategy_review" | "production_confirmation" | "production_draft"; reason: string }, taskId?: string) {
   const reason = input.reason.trim();
   if (!reason) throw new Error("返工意见不能为空。");
   const rework = { operator: input.operator || "当前运营人员", stage: input.stage, reason, requestedAt: new Date().toISOString(), targetVersion: parent.version + 1 };
-  await updateContentStrategy(parent.id, { status: "superseded", productionConfirmation: undefined, productionDraft: parent.productionDraft ? { ...parent.productionDraft, invalidatedAt: new Date().toISOString() } : undefined, rework });
-  const base = { version: parent.version + 1, parentId: parent.id, sample: parent.sample, rework };
-  const draft = await createContentStrategy({ ...base, status: "rework_processing" });
+  const draft = await createReworkDraft(parent.id, rework, taskId);
   return retryContentStrategyRework(draft, parent.analysis);
 }
 

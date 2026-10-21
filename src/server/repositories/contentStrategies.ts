@@ -27,3 +27,17 @@ export async function updateContentStrategy(id: string, patch: Partial<ContentSt
   const updated = { ...data.contentStrategies[index], ...patch, id, updatedAt: new Date().toISOString() };
   data.contentStrategies[index] = updated; await writeData(data); return updated;
 }
+
+// Supersede the parent and persist its replacement in one SQLite commit.
+export async function createReworkDraft(parentId: string, rework: NonNullable<ContentStrategyPack["rework"]>, taskId?: string) {
+  const data = await readData();
+  const existing = taskId && data.contentStrategies?.find(item => item.backgroundTaskId === taskId);
+  if (existing) return existing;
+  const parent = data.contentStrategies?.find(item => item.id === parentId);
+  if (!parent || parent.status === "superseded") throw new Error("策略版本已变化，请刷新后重试");
+  const now = new Date().toISOString();
+  const draft: ContentStrategyPack = {id:makeId("strategy"),backgroundTaskId:taskId,status:"rework_processing",version:parent.version+1,parentId:parent.id,sample:parent.sample,rework,createdAt:now,updatedAt:now};
+  parent.status="superseded";parent.productionConfirmation=undefined;parent.rework=rework;parent.updatedAt=now;
+  if(parent.productionDraft)parent.productionDraft.invalidatedAt=now;
+  data.contentStrategies!.unshift(draft);await writeData(data);return draft;
+}

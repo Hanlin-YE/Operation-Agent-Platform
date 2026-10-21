@@ -31,6 +31,9 @@ class LlmProviderConfig:
     model: str
     api_mode: str = "chat_completions"
     token_warn_threshold: int = 2000
+    timeout_seconds: float = 60
+    temperature: float = 0.3
+    max_tokens: int = 4096
 
 
 class UnsupportedLlmProviderError(ValueError):

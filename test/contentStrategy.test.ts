@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { analyzeContentStrategy } from "../src/server/contentStrategy/service";
+import { analyzeContentStrategy, requestContentStrategyRework } from "../src/server/contentStrategy/service";
 import { createContentStrategy } from "../src/server/repositories/contentStrategies";
 import { POST as createDraft } from "../src/app/api/content-strategies/[id]/create-draft/route";
 import { POST as requestRework } from "../src/app/api/content-strategies/[id]/request-rework/route";
@@ -33,7 +33,8 @@ test("rework requires feedback and supersedes the former strategy", async () => 
   const missing = await requestRework(new Request("http://localhost", { method: "POST", body: JSON.stringify({ stage: "strategy_review" }) }), { params: { id: strategy.id } });
   assert.equal(missing.status, 422);
   const response = await requestRework(new Request("http://localhost", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ stage: "strategy_review", reason: "补足证据" }) }), { params: { id: strategy.id } });
-  assert.equal(response.status, 201);
+  assert.equal(response.status, 422); // Ephemeral demos cannot enqueue durable tasks.
+  await requestContentStrategyRework(strategy,{operator:"运营",stage:"strategy_review",reason:"补足证据"});
   const oldDraft = await createDraft(new Request("http://localhost"), { params: { id: strategy.id } });
   assert.equal(oldDraft.status, 409);
 });
