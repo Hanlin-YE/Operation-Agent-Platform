@@ -1,3 +1,4 @@
+import { assertPitchCompliance } from "@/lib/sales/pitchCompliance";
 import { FollowUp, GeneratedPitch, LeadScore } from "@/server/data/types";
 import { getFrictionXCatalogProduct } from "@/server/data/frictionxCatalog";
 import { makeId, readData, writeData } from "@/server/data/store";
@@ -31,6 +32,7 @@ export async function listPitchesByLead(leadId: string) {
 }
 
 export async function savePitch(pitch: Omit<GeneratedPitch, "id" | "createdAt">) {
+  assertPitchCompliance(pitch.content);
   const data = await readData();
   const item: GeneratedPitch = {
     ...pitch,
@@ -43,10 +45,12 @@ export async function savePitch(pitch: Omit<GeneratedPitch, "id" | "createdAt">)
 }
 
 export async function updatePitchContent(id: string, content: string) {
+  assertPitchCompliance(content);
   const data = await readData();
   const pitch = data.pitches.find((item) => item.id === id);
   if (!pitch) return null;
   pitch.content = content.trim();
+  pitch.updatedAt = new Date().toISOString();
   await writeData(data);
   return pitch;
 }
@@ -59,6 +63,7 @@ export async function listFollowUpsByLead(leadId: string) {
 }
 
 export async function saveFollowUp(followUp: Omit<FollowUp, "id" | "createdAt">) {
+  if (followUp.pitchId) assertPitchCompliance(followUp.content);
   const data = await readData();
   const item: FollowUp = {
     ...followUp,

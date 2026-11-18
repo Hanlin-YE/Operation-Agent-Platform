@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test:sales": "node --import tsx --test test/salesWorkflow.test.ts test/leadFilters.test.ts",
     "test:content": "tsx --test test/contentOperations*.test.ts",
     "mcp:content": "tsx src/mcp/runContentOperationsMcp.ts",
     "test:rag": "tsx --test test/ragPdfText.test.ts",

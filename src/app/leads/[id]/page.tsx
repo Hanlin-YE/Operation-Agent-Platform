@@ -1,9 +1,9 @@
+import { LeadEditor } from "@/components/leads/LeadEditor";
 import { notFound } from "next/navigation";
 import { PitchGenerator } from "@/components/agent/PitchGenerator";
 import { LeadTimeline } from "@/components/leads/LeadTimeline";
 import { ScoreBreakdown } from "@/components/scoring/ScoreBreakdown";
 import { ProductRecommendationCard } from "@/components/agent/ProductRecommendationCard";
-import { CustomerServiceSimulator } from "@/components/agent/CustomerServiceSimulator";
 import { FollowUpForm } from "@/components/leads/FollowUpForm";
 import { LeadStatusControl } from "@/components/leads/LeadStatusControl";
 import { getLead } from "@/server/repositories/leads";
@@ -36,7 +36,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
 
       <div className="grid cols-2">
         <div className="panel">
-          <h2>客户画像</h2>
+          <div className="actions"><h2>客户画像</h2><LeadEditor lead={lead} /></div>
           <p><strong>联系人：</strong>{lead.contactName} / {lead.contactTitle}</p>
           <p><strong>联系方式：</strong>{lead.contactMethod}</p>
           <p><strong>来源：</strong>{lead.source}</p>
@@ -48,7 +48,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
           </div>
           <p className="subtle" style={{ marginTop: 12 }}>{lead.notes}</p>
         </div>
-        <ScoreBreakdown leadId={lead.id} initialScore={scores[0]} />
+        <ScoreBreakdown leadId={lead.id} initialScore={scores[0]} leadUpdatedAt={lead.updatedAt} />
       </div>
 
       <div className="grid cols-2" style={{ marginTop: 16 }}>
@@ -57,7 +57,6 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
         <FollowUpForm leadId={lead.id} followUps={followUps} />
         <LeadTimeline scores={scores} pitches={pitches} followUps={followUps} />
       </div>
-      <div style={{ marginTop: 16 }}><CustomerServiceSimulator leadId={lead.id} tier={lead.accountTier} /></div>
     </>
   );
 }

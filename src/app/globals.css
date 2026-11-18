@@ -1630,3 +1630,28 @@ h3 { font-size: 13px; }
   .showcase-stats { gap: 8px; }
   .showcase-stat-item { padding: 0 10px; }
 }
+
+/* Daily sales workflow */
+.sales-task-list { display: grid; gap: 12px; margin-top: 14px; }
+.sales-task { display: block; padding: 16px; border: 1px solid #2c3946; border-radius: 12px; overflow-wrap: anywhere; }
+.sales-task > p { margin: 8px 0; white-space: pre-wrap; }
+.sales-task .actions { flex-wrap: wrap; gap: 8px; }
+.sales-task > .badge { margin-left: 12px; }
+.experiment-notice { border: 1px solid #80612b; border-radius: 12px; background: #282114; padding: 16px; margin-bottom: 20px; color: #e6d3a7; }
+.experiment-notice p { margin: 8px 0; }
+.sales-modal { width: min(740px, calc(100% - 32px)); max-height: 90vh; overflow: auto; border: 0; padding: 0; border-radius: 12px; background: #10161e; color: var(--ink); }
+.sales-modal::backdrop { background: #000a; }
+.pitch-box { width: 100%; min-height: 240px; resize: vertical; }
+@media (max-width: 900px) {
+  .context-sidebar { display: flex; }
+  .app-shell { display: flex; flex-direction: column; }
+  .context-sidebar .context-status { display: none; }
+}
+@media (max-width: 900px) {
+  .context-sidebar { padding: 12px; }
+  .context-sidebar > .nav-home-link, .nav-groups > p { display: none; }
+  .context-brand { margin-bottom: 8px; }
+  .nav-groups { grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; }
+  .nav-groups .nav-home-link { min-height: 34px; padding: 8px 4px; justify-content: center; }
+  .nav-groups .nav-home-link > svg, .nav-groups .nav-home-link small { display: none; }
+}

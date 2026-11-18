@@ -1,0 +1,335 @@
+\documentclass[UTF8,fontset=fandol,zihao=5,a4paper]{ctexart}
+\usepackage[margin=20mm,headheight=16pt]{geometry}
+\usepackage{booktabs,tabularx,array,enumitem,fancyhdr,fvextra,xcolor,hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=black,pdftitle={销售工作台使用与维护手册},pdfauthor={项目维护文档}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\linespread{1.12}
+\setlist{nosep,leftmargin=1.7em,topsep=4pt}
+\renewcommand{\arraystretch}{1.18}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\DefineVerbatimEnvironment{shell}{Verbatim}{fontsize=\small,breaklines=true,breakanywhere=true,frame=single,rulecolor=\color{gray},framesep=5pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Friction X 销售工作台}
+\fancyhead[R]{\small 使用与维护手册}
+\fancyfoot[C]{\small \thepage}
+\ctexset{section={format=\Large\bfseries,beforeskip=12pt,afterskip=8pt},subsection={format=\normalsize\bfseries,beforeskip=8pt,afterskip=5pt}}
+\newcommand{\code}[1]{\texttt{\detokenize{#1}}}
+\begin{document}
+
+{\LARGE\bfseries 销售工作台使用与维护手册}\par
+版本：内部销售流程改造分支\quad 文档日期：2026 年 11 月 18 日
+
+\section*{1\quad 获取、安装与启动}
+本手册对应 \code{codex/sales-daily-workflow} 分支。该分支将日常入口集中到线索、规则评分、话术和跟进任务。上游主分支在 PR 合并前不包含这些修改，请使用 PR 的分支版本。
+
+\subsection*{运行条件}
+使用 Node.js 20 和 npm，安装 Git。首次安装依赖需要联网。日常运行不要求配置模型密钥；未配置模型时，话术生成返回明确标识的本地询问模板。当前版本用于单机、顺序操作，尚未提供用户登录和并发写入保护。
+
+\subsection*{取得对应分支并运行}
+在终端执行：
+\begin{shell}
+git clone https://github.com/sakustars/Operation-Agent-Platform.git
+cd Operation-Agent-Platform
+git switch codex/sales-daily-workflow
+npm ci
+npm run dev -- --hostname 127.0.0.1 --port 3210
+\end{shell}
+打开 \url{http://127.0.0.1:3210/}。终端出现 Ready 后再开始操作。终端需要保持运行；停止时在该终端按 Ctrl+C。之后重新启动，只需进入同一个项目目录，执行最后一条启动命令。
+
+\subsection*{需要使用生产构建时}
+先停止已有服务，再在项目根目录执行：
+\begin{shell}
+npm run build
+npm start -- --hostname 127.0.0.1 --port 3210
+\end{shell}
+\code{npm start} 使用 \code{npm run build} 的产物。验证构建 \code{npm run build:verify} 使用另一目录，不能替代生产构建。不要把当前无登录保护的服务直接暴露到公网。
+
+\subsection*{主要入口}
+\par\noindent
+\begin{tabularx}{\linewidth}{@{}lY@{}}
+\toprule
+入口 & 用途 \\
+\midrule
+今日待跟进 & 查看逾期、当天到期及未安排日期的任务。\\
+线索管理 & 查找客户，进入资料、评分、话术和跟进页面。\\
+销售知识 & 收录产品资料、选型经验及销售知识。\\
+实验区 & 查阅已封存的内容运营、研究、图谱及培训页面。\\
+\bottomrule
+\end{tabularx}
+\par
+
+\newpage
+\section*{2\quad 线索管理与规则评分}
+\subsection*{新建和查找客户}
+进入左侧「线索管理」，填写「新建线索」表单，点击「保存线索」。公司名称必填。联系人、联系方式、行业、来源和需求备注应尽量完整，否则评分及话术会缺少判断依据。线索列表支持关键词、状态和账户分层筛选。
+
+\subsection*{修改已有资料}
+点击列表中的公司名称进入详情页，点击「编辑线索」。可维护公司名称、行业、地区、规模、联系人、职位、联系方式、来源、标签和备注。点击「保存线索」后确认页面出现新内容。点击「取消」或按 Escape 会放弃本次尚未保存的编辑。
+
+标签可以用英文逗号、中文逗号或顿号分隔。编辑时标签会去重，账户分层及路由会根据修改后的资料重新计算。公司名称不能为空。当前未提供线索删除功能；确定无效的线索可将状态设为「无效」。
+
+\subsection*{更新状态}
+在客户画像中的「线索状态」选择相应状态：
+\par\noindent
+\begin{tabularx}{\linewidth}{@{}lY@{}}
+\toprule
+状态 & 记录含义及首页行为 \\
+\midrule
+新线索 & 尚未建立明确联系；无待办时会进入尚未建立任务列表。\\
+待跟进 & 需要继续联系；无待办时会进入尚未建立任务列表。\\
+已联系 & 已发生联系；具体下一步应另建跟进任务。\\
+有意向 & 存在进一步沟通意向；无待办时会进入尚未建立任务列表。\\
+暂缓 & 暂停主动推进；已有明确日期的未完成任务仍会显示。\\
+无效 & 已确认不继续推进；关联任务不在首页待办显示。\\
+\bottomrule
+\end{tabularx}
+\par
+
+状态和任务分别保存。把线索设为「已联系」不会自动完成任务；把任务标为完成也不会自动改变线索状态。
+
+\subsection*{计算评分}
+点击客户详情中的「规则评分」，查看总分、等级、各项得分、判断理由及推荐动作。评分和解释均由现有词表与规则计算，不代表模型判断，也不等于采购意愿已经核实。
+
+修改客户资料后，页面可能提示重新评分。此时再次点击「规则评分」，使用当前资料生成一条新记录。旧评分保留在时间线中，便于追溯当时的判断。
+
+\subsection*{CSV 批量导入}
+在列表页选择 UTF-8 编码的 CSV，检查解析条数后再点击确认导入。每批最多处理 500 条记录；超过部分不要依赖当前页面完整导入，应先拆分文件。表头支持公司名称、行业、地区、公司规模、联系人、职位、联系方式、来源、标签、备注。
+
+当前导入不会自动合并重复客户。先检查已有记录，避免重复点击导入。CSV 中的多行单元格不适合当前逐行解析方式，导入前应整理成每条线索一行。
+
+\newpage
+\section*{3\quad 话术与跟进任务}
+\subsection*{生成和修改话术}
+在客户详情选择生成渠道，点击「生成话术」。渠道包括电话、微信、邮件、报价后跟进、价格异议处理和技术参数确认。生成的内容会保存为话术记录，仍需销售人工审核。
+
+直接在文本框内编辑，再点击「保存话术」更新当前记录。看到保存提示后再离开页面。渠道选择影响下一次生成；已有话术的渠道以「当前话术」显示的场景为准。重新生成会在当前编辑框展示一条新话术，应先保存需要保留的修改。
+
+\subsection*{处理参数承诺拦截}
+生成结果、手工保存，以及话术转跟进任务都会执行规则检查。检测到保证措辞、量化参数或期限时，页面会给出原因，手工保存按钮将不可操作；服务端也会返回 HTTP 422，拦截内容不会写入话术。
+
+按照提示删除未经技术确认的保证和数值结论，改为询问工况、目标参数和验证方式，再保存。规则比较保守，带数值的提问也可能被拦截。历史话术在打开后同样接受检查。
+
+规则检查不能识别所有表达，也无法核验产品数据或客户工况。通过检查不代表话术已获技术批准。具体性能、适配结果和交付安排应由相应人员核实并书面确认。
+
+\subsection*{把当前话术加入待办}
+点击「保存为跟进任务」会先保存当前文本，再把相同内容加入该客户的待跟进任务。邮件和微信话术保留对应跟进方式，其余场景按电话任务保存。系统不会给客户自动发送消息。
+
+这种方式产生的任务没有日期，会进入首页「未安排日期的跟进」。如需要明确提醒日期，可直接使用下方「跟进任务」表单创建带日期的行动记录。当前没有任务日期编辑功能，应避免先建立大量无日期任务再安排日程。
+
+\subsection*{创建行动和完成任务}
+在「跟进任务」中选择方式，填写行动内容及下次动作时间，点击「新建跟进」。时间按北京时间输入，与电脑系统时区无关。服务端保存为带时区的时间，页面按北京时间显示。
+
+完成实际沟通后，点击详情中的「完成」或首页的「标记完成」。记录仍在时间线中，首页待办会移除该任务。需要再次联系时，新增下一步任务并填写日期。
+
+\subsection*{首页如何归类}
+\par\noindent
+\begin{tabularx}{\linewidth}{@{}lY@{}}
+\toprule
+区域 & 显示条件 \\
+\midrule
+逾期跟进 & 日期早于北京时间今天，状态仍为未完成。\\
+今天到期 & 日期属于北京时间今天，包括今天较晚的时段。\\
+未安排日期 & 未填写日期，或历史日期无法解析。\\
+尚未建立任务 & 新线索、待跟进或有意向，且没有未完成任务。\\
+\bottomrule
+\end{tabularx}
+\par
+未来日期的任务在客户详情中查看。孤立任务和无效线索的任务不进入首页。当前没有系统通知、短信或日历提醒功能。
+
+\newpage
+\section*{4\quad 销售知识与模型配置}
+\subsection*{维护销售知识}
+进入「销售知识」，粘贴产品资料、选型经验、客户异议或案例，点击「收录」。资料第一条非空行会用于生成标题，也可上传不超过 20 MB 的 PDF。上传失败时先检查大小和文件是否可提取文字。
+
+收录后刷新页面，再通过「管理已建立的知识库」打开设置，核对并维护已有知识。知识会参与后续检索及话术生成；已保存的话术不会因为知识修改自动重写，应重新生成并审核。
+
+知识录入时应写明资料来源、适用产品、使用条件与确认日期。这些信息需要维护人员填写在正文中，当前版本尚未提供完整的来源核验、版本对比和审批历史。
+
+\subsection*{是否需要配置模型}
+规则评分不需要模型密钥。话术生成使用通用 OpenAI 兼容接口配置；培训实验模块使用的 DeepSeek 配置不会自动替代销售话术配置。
+
+不配置密钥时仍可测试完整保存流程，但返回的是本地询问模板。模型请求未成功或未返回内容时，也可能使用该模板；页面会标识来源。连接直接抛出异常时，界面会提示稍后重试。
+
+\subsection*{在本地设置环境变量}
+复制配置模板，随后使用本地编辑器填写真实值：
+\begin{shell}
+cp .env.example .env.local
+\end{shell}
+\par\noindent
+\begin{tabularx}{\linewidth}{@{}lY@{}}
+\toprule
+变量 & 含义 \\
+\midrule
+\code{OPENAI_API_KEY} & 通用接口的真实密钥；只在本地或服务端保存。\\
+\code{OPENAI_BASE_URL} & 完整聊天请求地址；默认值已包含聊天接口路径。\\
+\code{OPENAI_MODEL} & 服务商支持的模型名称；留空时使用代码默认模型。\\
+\code{DEMO_EPHEMERAL_STORE} & 设为 true 会使用内存数据，重启不保留修改。\\
+\code{CLOUDFLARE} & 设为 true 同样使用内存演示数据。\\
+\bottomrule
+\end{tabularx}
+\par
+修改环境变量后停止并重启服务。日常保存模式应让最后两个变量保持未设置或不等于 true。不要把带真实值的环境文件提交到 Git，也不要把密钥放到以 \code{NEXT_PUBLIC_} 开头的变量。
+
+配置外部模型后，生成请求会把相关客户名称、行业、联系人角色、备注、候选产品和检索知识发送给该接口。应先确认这些业务资料允许发给所配置的服务商。
+
+\subsection*{实验区的维护边界}
+内容生成、发布台账、数据排行、论文与专利库、市场分析、图谱及培训页面仍保留，页面会显示封存提示。封存没有关闭旧 API，也没有删除这些模块的依赖。本分支不新增 TIKHUB、采集机或其他外部接入，日常销售流程也不需要启动 Python Agent 服务。
+
+\newpage
+\section*{5\quad 数据保存、备份与恢复}
+\subsection*{明确保存位置}
+默认数据文件为项目根目录的 \code{data/app-data.json}，包括线索、评分、话术、跟进及部分历史模块数据。文件缺失时会自动创建示例数据，不能通过删除文件修复数据问题，否则会丢失当前业务记录。
+
+所有启动命令都应在同一个项目根目录执行。复制项目到新目录后，必须同时迁移业务数据和本地环境文件。当前没有数据库服务、账户隔离、写入锁、自动备份或后台恢复功能。
+
+\subsection*{备份操作}
+先在运行服务的终端按 Ctrl+C，确认其他终端也没有运行这个项目。停止写入后，在项目根目录执行：
+\begin{shell}
+mkdir -p ../sales-backups
+cp data/app-data.json \
+  "../sales-backups/app-data-$(date +%Y%m%d-%H%M%S).json"
+cp data/app-data.json ../sales-backups/app-data-latest.json
+node -e \
+  'JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"))' \
+  ../sales-backups/app-data-latest.json && echo "JSON OK"
+\end{shell}
+日期备份用于保留多个版本，latest 文件指向最近一次手工备份。备份目录放在仓库外，避免日后删除仓库时一起丢失。每日结束、依赖升级前和任何手工数据修复前都执行一次。
+
+JSON 可解析只表示文件语法完整，还应确认文件大小合理，且备份中包含近期记录。备份会包含客户资料，应使用受控目录保存。\code{.env.local} 需要另行安全备份，不要并入公开文档或 PR。
+
+\subsection*{恢复最近一次备份}
+保持服务停止，先保留当前文件，再恢复并检查：
+\begin{shell}
+cp data/app-data.json \
+  "../sales-backups/app-data-before-restore-$(date +%Y%m%d-%H%M%S).json"
+cp ../sales-backups/app-data-latest.json data/app-data.json
+node -e \
+  'JSON.parse(require("fs").readFileSync(process.argv[1],"utf8"))' \
+  data/app-data.json && echo "JSON OK"
+npm run dev -- --hostname 127.0.0.1 --port 3210
+\end{shell}
+打开页面，核对最近几条客户、话术及跟进内容。如果选择更早的日期备份，应将恢复命令中的备份路径改为所选文件。恢复会覆盖当前数据，不会合并两份文件；恢复后发生的记录需要另行核对。
+
+\subsection*{防止把客户资料推到远端}
+\code{data/app-data.json} 在仓库中原本就被 Git 跟踪，现有忽略规则不会自动保护其中新增的真实客户数据。提交前检查该文件是否变化，只提交代码和文档。不要用未经检查的整目录提交方式发布业务数据。
+
+\newpage
+\section*{6\quad 定期维护与更新}
+\par\noindent
+\begin{tabularx}{\linewidth}{@{}lY@{}}
+\toprule
+时间 & 需要完成的事项 \\
+\midrule
+每日结束 & 停止服务后备份数据，抽查当天保存的线索和任务。\\
+每周 & 检查长期逾期、重复线索及无日期任务；核对知识资料是否失效。\\
+每次改代码 & 运行销售回归测试、类型检查和验证构建，再检查页面操作。\\
+依赖更新前 & 记录当前提交，备份数据及环境配置，在维护分支更新指定依赖。\\
+更新之后 & 测试通过后启动服务，核对已有资料仍可读取，记录更新原因和结果。\\
+\bottomrule
+\end{tabularx}
+\par
+
+\subsection*{修改代码前}
+先停止服务并按上一页备份。确认工作目录的未提交修改属于本次维护内容，再建立维护分支：
+\begin{shell}
+git status --short
+git rev-parse HEAD
+git switch -c codex/maintenance
+npm ci
+\end{shell}
+把当前提交编号记入维护记录，作为回滚依据。若同名维护分支已经存在，使用新的具体分支名称。不要覆盖其他人的未完成修改。
+
+\subsection*{检查与更新依赖}
+\code{npm ci} 会按锁文件重新安装依赖，不负责升级。先用 \code{npm outdated} 查看差异，再根据目标依赖的官方说明更新选定版本，并检查 \code{package.json} 和锁文件的差异。不要一次升级全部依赖，也不要直接执行强制修复命令后跳过测试。
+
+当前 CI 使用 Node.js 20，应让本地维护环境与 CI 保持一致。升级 Node.js 或 Next.js 时，应单独评估构建、路由、客户端表单及文件写入行为。
+
+\subsection*{提交前检查}
+\begin{shell}
+npm run test:sales
+npm run typecheck
+npm run lint
+npm run build:verify
+git diff --check
+git diff --stat
+\end{shell}
+销售回归测试覆盖线索编辑、话术保存及拦截、跟进任务和时区归类；持久化测试在临时目录内启动新进程验证重启后的数据读取，不修改本地客户文件。
+
+验证构建使用 \code{.next-verify}，开发服务使用 \code{.next-dev}，因此验证构建不会覆盖开发缓存。运行正式服务前仍需执行 \code{npm run build}。培训实验模块目前存在一条原有 Hook 依赖警告，新增警告应单独检查。
+
+\newpage
+\section*{7\quad 故障排查与回滚}
+\par\noindent
+\begin{tabularx}{\linewidth}{@{}p{0.25\linewidth}Y@{}}
+\toprule
+现象 & 检查和处理 \\
+\midrule
+页面无法打开 & 检查终端是否仍运行、是否出现 Ready，以及访问端口是否与启动命令一致。端口占用时先停止已知旧进程，或用另一端口启动。\\
+保存后刷新丢失 & 检查是否启用了内存演示变量，是否从另一个项目副本启动，以及数据文件是否可写。\\
+重启后出现示例数据 & 检查启动目录及原数据文件是否仍在。先停止服务保留当前文件，再寻找已有备份；不要继续录入覆盖排查线索。\\
+模型一直返回模板 & 核对通用接口密钥、完整请求地址和模型名称，修改后重启。确认使用的是话术接口配置。\\
+话术保存被拦截 & 查看页面原因，删除未经确认的保证措辞或量化结论，改成工况确认和验证安排。不要直接绕过服务端规则。\\
+任务没有在首页显示 & 检查任务是否已完成、是否属于未来日期、线索是否无效。当天归类使用北京时间。\\
+日期偏移 & 表单始终按北京时间输入；检查历史数据是否来自其他时区。旧的无时区本地时间也按北京时间解释。\\
+JSON 读取或解析失败 & 停止所有写入，保留故障文件，从完整备份恢复。不要在程序运行时直接编辑 JSON。\\
+构建或类型检查失败 & 记录错误，确认锁文件与 Node.js 版本一致，重新 npm ci 后重试；问题出现于本次更新时回退代码。\\
+\bottomrule
+\end{tabularx}
+\par
+
+\subsection*{回退代码}
+先保存故障日志、停止服务并备份数据。使用上一页记录的已验证提交创建单独的恢复分支，再重新安装与构建。不要使用会清除本地业务文件的仓库清理命令。
+
+\begin{shell}
+git switch -c codex/rollback <已记录的正常提交编号>
+npm ci
+npm run test:sales
+npm run typecheck
+npm run build
+npm start -- --hostname 127.0.0.1 --port 3210
+\end{shell}
+执行前将尖括号内容整体替换为真实提交编号。若修改过数据结构，旧代码不一定能读取新数据，应在同一轮维护中验证相应备份。当前没有自动迁移或自动回滚数据的机制。
+
+\newpage
+\section*{8\quad 维护位置与交接检查}
+\subsection*{主要代码位置}
+下列路径均相对于项目根目录，可据此定位已有流程：
+\par\noindent
+{\small
+\begin{tabularx}{\linewidth}{@{}p{0.27\linewidth}Y@{}}
+\toprule
+需要维护的行为 & 文件或目录 \\
+\midrule
+首页待办 & \path{src/app/page.tsx}\newline \path{src/lib/sales/dailyWork.ts} \\
+导航与封存提示 & \path{src/components/layout/OperationsShell.tsx} \\
+线索编辑页面 & \path{src/components/leads/LeadEditor.tsx}\newline \path{src/components/leads/LeadForm.tsx} \\
+线索字段验证 & \path{src/lib/sales/leadInput.ts}\newline \path{src/app/api/leads/[id]/route.ts} \\
+话术生成与界面 & \path{src/server/agents/pitchGenerationAgent.ts}\newline \path{src/components/agent/PitchGenerator.tsx} \\
+参数承诺检查 & \path{src/lib/sales/pitchCompliance.ts} \\
+话术和跟进保存 & \path{src/server/repositories/salesArtifacts.ts}\newline \path{src/app/api/follow-ups/route.ts} \\
+存储与数据类型 & \path{src/server/data/store.ts}\newline \path{src/server/data/types.ts} \\
+销售回归测试 & \path{test/salesWorkflow.test.ts}\newline \path{test/leadFilters.test.ts} \\
+\bottomrule
+\end{tabularx}
+}
+\par
+
+\subsection*{修改规则时的要求}
+话术规则由客户端与服务端共同引用。更新规则后，应同时验证输入提示、按钮状态、生成结果、直接 API 保存和话术转跟进任务。增加新的拦截形式时，同时写入会触发拦截和应当通过的回归用例。只修改模型提示不能替代保存时的规则检查。
+
+\subsection*{交接给下一位维护者}
+交接内容应包含实际运行目录、分支与提交编号、Node.js 版本、启动端口、备份位置、最近一次恢复验证结果及未解决的问题。密钥通过团队认可的安全方式另行交接，不能写在本手册或公开 PR 中。
+
+交接前依次核对：修改线索后刷新仍在；规则评分可以重算；话术可以修改保存；参数承诺被拦截；保存为跟进任务使用当前文本；带日期任务进入正确区域；标记完成后从首页消失；服务重启后记录仍在。
+
+\subsection*{重新编译本手册}
+源码位于 \path{docs/manual/sales-workbench-manual.tex}。安装 Tectonic 后，在项目根目录执行：
+\begin{shell}
+tectonic --outdir docs/manual \
+  docs/manual/sales-workbench-manual.tex
+\end{shell}
+Tectonic 首次运行可能下载 TeX 包及 Fandol 中文字体。也可使用安装完整中文支持的 XeLaTeX，连续编译两次。修改后检查所有页面的换行、表格、代码块及页码，再提交 TeX 与对应 PDF。
+
+\end{document}
