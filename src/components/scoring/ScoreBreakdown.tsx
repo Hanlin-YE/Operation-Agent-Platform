@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Gauge } from "lucide-react";
 import { LeadScore } from "@/server/data/types";
 
-export function ScoreBreakdown({ leadId, initialScore }: { leadId: string; initialScore?: LeadScore }) {
+export function ScoreBreakdown({ leadId, initialScore, leadUpdatedAt }: { leadId: string; initialScore?: LeadScore; leadUpdatedAt?: string }) {
   const [score, setScore] = useState<LeadScore | undefined>(initialScore);
   const [loading, setLoading] = useState(false);
 
@@ -24,14 +24,15 @@ export function ScoreBreakdown({ leadId, initialScore }: { leadId: string; initi
       <div className="page-head" style={{ marginBottom: 8 }}>
         <div>
           <h2>潜客评分</h2>
-          <p className="subtle">规则分 + AI 销售解释，输出可复盘的 A/B/C/D 等级。</p>
+          <p className="subtle">按行业、应用场景、公司和触达信息计算规则分，并给出规则生成的说明。</p>
         </div>
         <button className="button" onClick={runScore} disabled={loading}>
           <Gauge size={17} />
-          {loading ? "评分中" : "AI 评分"}
+          {loading ? "评分中" : "规则评分"}
         </button>
       </div>
 
+      {score && leadUpdatedAt && score.createdAt < leadUpdatedAt ? <p role="status">客户资料已更新，请重新评分。</p> : null}
       {score ? (
         <>
           <div className="badge-row">
@@ -59,7 +60,7 @@ export function ScoreBreakdown({ leadId, initialScore }: { leadId: string; initi
           <p className="subtle">{score.recommendedAction}</p>
         </>
       ) : (
-        <p className="subtle">还没有评分记录。点击 AI 评分后会生成分项得分、等级和推荐动作。</p>
+        <p className="subtle">还没有评分记录。点击 规则评分后会生成分项得分、等级和推荐动作。</p>
       )}
     </div>
   );

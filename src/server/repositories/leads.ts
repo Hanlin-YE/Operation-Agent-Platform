@@ -1,3 +1,4 @@
+import { EditableLead } from "@/lib/sales/leadInput";
 import { Lead, LeadStatus } from "@/server/data/types";
 import { makeId, readData, writeData } from "@/server/data/store";
 import { deriveAccountRouting } from "@/server/segmentation/accountTier";
@@ -82,6 +83,18 @@ export async function updateLeadStatus(id: string, status: LeadStatus) {
   if (!lead) return null;
   lead.status = status;
   lead.updatedAt = new Date().toISOString();
+  await writeData(data);
+  return lead;
+}
+
+export async function updateLead(id: string, input: Partial<EditableLead>) {
+  const data = await readData();
+  const index = data.leads.findIndex((item) => item.id === id);
+  if (index === -1) return null;
+  const updated = { ...data.leads[index], ...input, updatedAt: new Date().toISOString() };
+  const lead: Lead = { ...updated, ...deriveAccountRouting(updated) };
+  data.leads[index] = lead;
+  // 旧评分仍保留在时间线中，客户资料修改后需要重新评分。
   await writeData(data);
   return lead;
 }

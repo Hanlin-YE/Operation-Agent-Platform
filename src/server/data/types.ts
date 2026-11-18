@@ -119,6 +119,7 @@ export type GeneratedPitch = {
   content: string;
   rationale: string;
   citations: string[];
+  updatedAt?: string;
   createdAt: string;
 };
 

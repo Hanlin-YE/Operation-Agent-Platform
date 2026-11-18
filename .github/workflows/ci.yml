@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Sales workflow regression tests
+        run: npm run test:sales
+
       - name: Type check
         run: npm run typecheck
 
