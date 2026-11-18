@@ -124,9 +124,10 @@ test("local file saves survive a fresh process without touching the repository d
     cwd: directory, encoding: "utf8", env: { ...process.env, DEMO_EPHEMERAL_STORE: "false", CLOUDFLARE: "false", TSX_TSCONFIG_PATH: join(root, "tsconfig.json") }
   });
   try {
+    // Older Node.js releases expose tsx-loaded CommonJS repositories via default.
     const first = run(`
-      const { createLead, updateLead } = await import(${JSON.stringify(leadModule)});
-      const { savePitch, updatePitchContent, saveFollowUp } = await import(${JSON.stringify(artifactsModule)});
+      const { createLead, updateLead } = await import(${JSON.stringify(leadModule)}).then(module => module.default ?? module);
+      const { savePitch, updatePitchContent, saveFollowUp } = await import(${JSON.stringify(artifactsModule)}).then(module => module.default ?? module);
       const lead = await createLead({ companyName: '本地持久化测试' });
       await updateLead(lead.id, { contactName: '重启后仍在' });
       const pitch = await savePitch({ leadId: lead.id, channel: 'phone', scenario: '电话', content: '请确认工况。', rationale: 'test', citations: [] });
@@ -136,8 +137,8 @@ test("local file saves survive a fresh process without touching the repository d
     `);
     assert.equal(first.status, 0, first.stderr);
     const second = run(`
-      const { getLead } = await import(${JSON.stringify(leadModule)});
-      const { listPitchesByLead, listFollowUpsByLead } = await import(${JSON.stringify(artifactsModule)});
+      const { getLead } = await import(${JSON.stringify(leadModule)}).then(module => module.default ?? module);
+      const { listPitchesByLead, listFollowUpsByLead } = await import(${JSON.stringify(artifactsModule)}).then(module => module.default ?? module);
       const id = ${JSON.stringify(first.stdout.trim())};
       console.log(JSON.stringify({ lead: await getLead(id), pitches: await listPitchesByLead(id), followUps: await listFollowUpsByLead(id) }));
     `);
